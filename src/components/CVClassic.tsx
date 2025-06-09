@@ -1,4 +1,3 @@
-
 import { Mail, Phone, MapPin, User } from "lucide-react";
 
 interface CVClassicProps {
@@ -7,7 +6,7 @@ interface CVClassicProps {
 
 const CVClassic = ({ data }: CVClassicProps) => {
   return (
-    <div className="bg-white text-black p-8 shadow-lg w-[210mm] min-h-[297mm] mx-auto print:shadow-none print:m-0" style={{ fontSize: '12px', lineHeight: '1.4' }}>
+    <div className="bg-white text-black p-8 shadow-lg w-[210mm] min-h-[297mm] mx-auto print:shadow-none print:m-0" style={{ lineHeight: '1.4' }}>
       {/* Header con datos personales */}
       <header className="border-b-2 border-gray-300 pb-6 mb-6">
         <div className="flex justify-between items-start">

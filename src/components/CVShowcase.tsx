@@ -7,10 +7,12 @@ import CVClassic from "./CVClassic";
 import CVModern from "./CVModern";
 import { pedroData } from "../data/sampleData";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Slider } from "@/components/ui/slider";
 
 const CVShowcase = () => {
   const [selectedDesign, setSelectedDesign] = useState<"classic" | "modern">("classic");
   const [font, setFont] = useState<string>("default");
+  const [fontSize, setFontSize] = useState<number>(16);
 
   const handleExportPDF = () => {
     window.print();
@@ -33,6 +35,7 @@ const CVShowcase = () => {
 
   return (
     <div className="container mx-auto py-6 px-4">
+      {/* Header section */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
         <div>
           <h1 className="text-3xl font-bold text-foreground mb-2">
@@ -77,11 +80,14 @@ const CVShowcase = () => {
             <div 
               className="max-h-[800px] overflow-y-auto"
               style={{ 
-                fontFamily: font === "default" ? "inherit" : font 
+                fontFamily: font === "default" ? "inherit" : font,
+                fontSize: selectedDesign === "classic" ? `${fontSize}px` : "inherit",
               }}
             >
               {selectedDesign === "classic" ? (
-                <CVClassic data={pedroData} />
+                <div style={{ fontSize: `${fontSize}px` }}>
+                  <CVClassic data={pedroData} />
+                </div>
               ) : (
                 <CVModern data={pedroData} />
               )}
@@ -89,26 +95,49 @@ const CVShowcase = () => {
           </Card>
         </div>
 
+        {/* Toolbox section */}
         <div className="lg:col-span-1">
           <Card>
             <CardContent className="p-4">
               <h3 className="text-sm font-medium mb-2">Personalización</h3>
-              <div className="space-y-2">
-                <label className="text-sm text-muted-foreground">
-                  Tipografía
-                </label>
-                <Select value={font} onValueChange={setFont}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Seleccionar fuente" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {fontOptions.map(option => (
-                      <SelectItem key={option.value} value={option.value}>
-                        {option.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <label className="text-sm text-muted-foreground">
+                    Tipografía
+                  </label>
+                  <Select value={font} onValueChange={setFont}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Seleccionar fuente" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {fontOptions.map(option => (
+                        <SelectItem key={option.value} value={option.value}>
+                          {option.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {selectedDesign === "classic" && (
+                  <div className="space-y-2">
+                    <div className="flex justify-between">
+                      <label className="text-sm text-muted-foreground">
+                        Tamaño
+                      </label>
+                      <span className="text-sm text-muted-foreground">
+                        {fontSize}px
+                      </span>
+                    </div>
+                    <Slider
+                      value={[fontSize]}
+                      onValueChange={([value]) => setFontSize(value)}
+                      min={12}
+                      max={20}
+                      step={1}
+                    />
+                  </div>
+                )}
               </div>
             </CardContent>
           </Card>
