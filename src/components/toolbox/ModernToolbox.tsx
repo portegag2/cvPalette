@@ -1,26 +1,67 @@
+import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { RotateCcw } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Slider } from "@/components/ui/slider";
 import { cvThemes } from "@/constants/themes";
+import { useState, useEffect } from "react";
 
 interface ModernToolboxProps {
-  font: string;
-  setFont: (value: string) => void;
-  selectedTheme: typeof cvThemes.modern[0];
-  setSelectedTheme: (theme: typeof cvThemes.modern[0]) => void;
-  fontOptions: Array<{ value: string; label: string; }>;
+  initialStyles: {
+    font: string;
+    fontSize: number;
+    theme: typeof cvThemes.modern[0];
+  };
+  onStyleChange: (styles: {
+    font: string;
+    fontSize: number;
+    theme: typeof cvThemes.modern[0];
+  }) => void;
 }
 
-const ModernToolbox = ({
-  font,
-  setFont,
-  selectedTheme,
-  setSelectedTheme,
-  fontOptions,
-}: ModernToolboxProps) => {
+const ModernToolbox = ({ initialStyles, onStyleChange }: ModernToolboxProps) => {
+  const [font, setFont] = useState(initialStyles.font);
+  const [fontSize, setFontSize] = useState(initialStyles.fontSize);
+  const [selectedTheme, setSelectedTheme] = useState(initialStyles.theme);
+
+  const fontOptions = [
+    { value: "default", label: "Por defecto (Inter)" },
+    { value: "inter", label: "Inter" },
+    { value: "roboto", label: "Roboto" },
+    { value: "helvetica", label: "Helvetica" },
+  ];
+
+  useEffect(() => {
+    onStyleChange({ font, fontSize, theme: selectedTheme });
+  }, [font, fontSize, selectedTheme, onStyleChange]);
+
+  const handleReset = () => {
+    const defaultStyles = {
+      font: "default",
+      fontSize: 16,
+      theme: cvThemes.modern[0]
+    };
+    setFont(defaultStyles.font);
+    setFontSize(defaultStyles.fontSize);
+    setSelectedTheme(defaultStyles.theme);
+    onStyleChange(defaultStyles);
+  };
+
   return (
     <Card>
       <CardContent className="p-4">
-        <h3 className="text-sm font-medium mb-2">Personalización</h3>
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="text-sm font-medium">Personalización</h3>
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={handleReset}
+            className="h-8 px-2 text-xs"
+          >
+            <RotateCcw className="w-3 h-3 mr-2" />
+            Restaurar
+          </Button>
+        </div>
         <div className="space-y-4">
           <div className="space-y-2">
             <label className="text-sm text-muted-foreground">
@@ -69,6 +110,24 @@ const ModernToolbox = ({
                 ))}
               </SelectContent>
             </Select>
+          </div>
+
+          <div className="space-y-2">
+            <div className="flex justify-between">
+              <label className="text-sm text-muted-foreground">
+                Tamaño
+              </label>
+              <span className="text-sm text-muted-foreground">
+                {fontSize}px
+              </span>
+            </div>
+            <Slider
+              value={[fontSize]}
+              onValueChange={([value]) => setFontSize(value)}
+              min={14}
+              max={24}
+              step={1}
+            />
           </div>
         </div>
       </CardContent>

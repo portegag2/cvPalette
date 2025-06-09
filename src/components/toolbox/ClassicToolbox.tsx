@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
@@ -6,29 +7,48 @@ import { RotateCcw } from "lucide-react";
 import { cvThemes } from "@/constants/themes";
 
 interface ClassicToolboxProps {
-  font: string;
-  setFont: (value: string) => void;
-  fontSize: number;
-  setFontSize: (value: number) => void;
-  selectedTheme: typeof cvThemes.classic[0];
-  setSelectedTheme: (theme: typeof cvThemes.classic[0]) => void;
-  fontOptions: Array<{ value: string; label: string; }>;
+  initialStyles: {
+    font: string;
+    fontSize: number;
+    theme: typeof cvThemes.classic[0];
+  };
+  onStyleChange: (styles: {
+    font: string;
+    fontSize: number;
+    theme: typeof cvThemes.classic[0];
+  }) => void;
 }
 
-const ClassicToolbox = ({
-  font,
-  setFont,
-  fontSize,
-  setFontSize,
-  selectedTheme,
-  setSelectedTheme,
-  fontOptions,
-}: ClassicToolboxProps) => {
+const ClassicToolbox = ({ initialStyles, onStyleChange }: ClassicToolboxProps) => {
+  const [font, setFont] = useState(initialStyles.font);
+  const [fontSize, setFontSize] = useState(initialStyles.fontSize);
+  const [selectedTheme, setSelectedTheme] = useState(initialStyles.theme);
+
+  useEffect(() => {
+    onStyleChange({ font, fontSize, theme: selectedTheme });
+  }, [font, fontSize, selectedTheme]);
+
   const handleReset = () => {
-    setFont("default");
-    setFontSize(16);
-    setSelectedTheme(cvThemes.classic[0]);
+    const defaultStyles = {
+      font: "default",
+      fontSize: 16,
+      theme: cvThemes.classic[0]
+    };
+    setFont(defaultStyles.font);
+    setFontSize(defaultStyles.fontSize);
+    setSelectedTheme(defaultStyles.theme);
+    onStyleChange(defaultStyles);
   };
+
+  const fontOptions = [
+    { value: "default", label: "Por defecto (Times New Roman)" },
+    { value: "times-new-roman", label: "Times New Roman" },
+    { value: "georgia", label: "Georgia" },
+    { value: "garamond", label: "Garamond" },
+  ];
+
+  // Ensure we have a valid theme
+  const currentTheme = selectedTheme || cvThemes.classic[0];
 
   return (
     <Card>
@@ -51,10 +71,10 @@ const ClassicToolbox = ({
               Tema de Color
             </label>
             <Select 
-              value={selectedTheme.id} 
+              value={currentTheme.id} 
               onValueChange={(value) => {
-                const theme = cvThemes.classic.find(t => t.id === value);
-                if (theme) setSelectedTheme(theme);
+                const theme = cvThemes.classic.find(t => t.id === value) || cvThemes.classic[0];
+                setSelectedTheme(theme);
               }}
             >
               <SelectTrigger>

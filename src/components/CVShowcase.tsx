@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -14,29 +14,37 @@ import ModernToolbox from "./toolbox/ModernToolbox";
 
 const CVShowcase = () => {
   const [selectedDesign, setSelectedDesign] = useState<"classic" | "modern">("classic");
-  const [font, setFont] = useState<string>("default");
-  const [fontSize, setFontSize] = useState<number>(16);
-  const [selectedTheme, setSelectedTheme] = useState(cvThemes.classic[0]);
-  const [selectedModernTheme, setSelectedModernTheme] = useState(cvThemes.modern[0]);
+  const [classicStyles, setClassicStyles] = useState({
+    font: "default",
+    fontSize: 16,
+    theme: cvThemes.classic[0]
+  });
+  const [modernStyles, setModernStyles] = useState({
+    font: "default",
+    fontSize: 16,
+    theme: cvThemes.modern[0]
+  });
+
+  useEffect(() => {
+    // Reset theme when switching designs
+    if (selectedDesign === "classic") {
+      setClassicStyles((prev) => ({
+        ...prev,
+        theme: cvThemes.classic[0]
+      }));
+    } else {
+      setModernStyles((prev) => ({
+        ...prev,
+        theme: cvThemes.modern[0]
+      }));
+    }
+  }, [selectedDesign]);
 
   const handleExportPDF = () => {
     window.print();
   };
 
   const defaultFont = selectedDesign === "classic" ? "Times New Roman" : "Inter";
-  const fontOptions = selectedDesign === "classic" 
-    ? [
-        { value: "default", label: `Por defecto (${defaultFont})` },
-        { value: "times-new-roman", label: "Times New Roman" },
-        { value: "georgia", label: "Georgia" },
-        { value: "garamond", label: "Garamond" },
-      ]
-    : [
-        { value: "default", label: `Por defecto (${defaultFont})` },
-        { value: "inter", label: "Inter" },
-        { value: "roboto", label: "Roboto" },
-        { value: "helvetica", label: "Helvetica" },
-      ];
 
   return (
     <div className="container mx-auto py-6 px-4">
@@ -84,18 +92,26 @@ const CVShowcase = () => {
           <Card className="p-1">
             <div 
               className="max-h-[800px] overflow-y-auto"
-              style={{ 
-                fontFamily: font === "default" ? "inherit" : font,
-                fontSize: selectedDesign === "classic" ? `${fontSize}px` : "inherit",
-                '--cv-primary': selectedTheme.primary,
-                '--cv-secondary': selectedTheme.secondary,
-                '--cv-accent': selectedTheme.accent,
-              } as React.CSSProperties}
+              style={
+                selectedDesign === "classic" 
+                ? {
+                    fontFamily: classicStyles.font === "default" ? "inherit" : classicStyles.font,
+                    fontSize: `${classicStyles.fontSize}px`,
+                    '--cv-primary': classicStyles.theme.primary,
+                    '--cv-secondary': classicStyles.theme.secondary,
+                    '--cv-accent': classicStyles.theme.accent,
+                  }
+                : {
+                    fontFamily: modernStyles.font === "default" ? "inherit" : modernStyles.font,
+                    fontSize: `${modernStyles.fontSize}px`,
+                    '--cv-primary': modernStyles.theme.primary,
+                    '--cv-secondary': modernStyles.theme.secondary,
+                    '--cv-accent': modernStyles.theme.accent,
+                  }
+              }
             >
               {selectedDesign === "classic" ? (
-                <div style={{ fontSize: `${fontSize}px` }}>
-                  <CVClassic data={pedroData} />
-                </div>
+                <CVClassic data={pedroData} />
               ) : (
                 <CVModern data={pedroData} />
               )}
@@ -107,21 +123,13 @@ const CVShowcase = () => {
         <div className="lg:col-span-1">
           {selectedDesign === "classic" ? (
             <ClassicToolbox
-              font={font}
-              setFont={setFont}
-              fontSize={fontSize}
-              setFontSize={setFontSize}
-              selectedTheme={selectedTheme}
-              setSelectedTheme={setSelectedTheme}
-              fontOptions={fontOptions}
+              initialStyles={classicStyles}
+              onStyleChange={setClassicStyles}
             />
           ) : (
             <ModernToolbox
-              font={font}
-              setFont={setFont}
-              selectedTheme={selectedModernTheme}
-              setSelectedTheme={setSelectedModernTheme}
-              fontOptions={fontOptions}
+              initialStyles={modernStyles}
+              onStyleChange={setModernStyles}
             />
           )}
         </div>
