@@ -6,13 +6,30 @@ import { Download, FileText, Palette } from "lucide-react";
 import CVClassic from "./CVClassic";
 import CVModern from "./CVModern";
 import { pedroData } from "../data/sampleData";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const CVShowcase = () => {
   const [selectedDesign, setSelectedDesign] = useState<"classic" | "modern">("classic");
+  const [font, setFont] = useState<string>("default");
 
   const handleExportPDF = () => {
     window.print();
   };
+
+  const defaultFont = selectedDesign === "classic" ? "Times New Roman" : "Inter";
+  const fontOptions = selectedDesign === "classic" 
+    ? [
+        { value: "default", label: `Por defecto (${defaultFont})` },
+        { value: "times-new-roman", label: "Times New Roman" },
+        { value: "georgia", label: "Georgia" },
+        { value: "garamond", label: "Garamond" },
+      ]
+    : [
+        { value: "default", label: `Por defecto (${defaultFont})` },
+        { value: "inter", label: "Inter" },
+        { value: "roboto", label: "Roboto" },
+        { value: "helvetica", label: "Helvetica" },
+      ];
 
   return (
     <div className="container mx-auto py-6 px-4">
@@ -54,15 +71,49 @@ const CVShowcase = () => {
         </Card>
       </div>
 
-      <Card className="p-1">
-        <div className="max-h-[800px] overflow-y-auto">
-          {selectedDesign === "classic" ? (
-            <CVClassic data={pedroData} />
-          ) : (
-            <CVModern data={pedroData} />
-          )}
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <div className="lg:col-span-3">
+          <Card className="p-1">
+            <div 
+              className="max-h-[800px] overflow-y-auto"
+              style={{ 
+                fontFamily: font === "default" ? "inherit" : font 
+              }}
+            >
+              {selectedDesign === "classic" ? (
+                <CVClassic data={pedroData} />
+              ) : (
+                <CVModern data={pedroData} />
+              )}
+            </div>
+          </Card>
         </div>
-      </Card>
+
+        <div className="lg:col-span-1">
+          <Card>
+            <CardContent className="p-4">
+              <h3 className="text-sm font-medium mb-2">Personalización</h3>
+              <div className="space-y-2">
+                <label className="text-sm text-muted-foreground">
+                  Tipografía
+                </label>
+                <Select value={font} onValueChange={setFont}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Seleccionar fuente" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {fontOptions.map(option => (
+                      <SelectItem key={option.value} value={option.value}>
+                        {option.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
     </div>
   );
 };
