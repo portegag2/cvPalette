@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -12,39 +12,30 @@ import { cvThemes } from "@/constants/themes";
 import ClassicToolbox from "./toolbox/ClassicToolbox";
 import ModernToolbox from "./toolbox/ModernToolbox";
 
+type StyleConfig = {
+  font: string;
+  fontSize: number;
+  theme: typeof cvThemes.classic[0] | typeof cvThemes.modern[0];
+};
+
 const CVShowcase = () => {
   const [selectedDesign, setSelectedDesign] = useState<"classic" | "modern">("classic");
-  const [classicStyles, setClassicStyles] = useState({
+  const [classicStyles, setClassicStyles] = useState<StyleConfig>({
     font: "default",
     fontSize: 16,
     theme: cvThemes.classic[0]
   });
-  const [modernStyles, setModernStyles] = useState({
+  const [modernStyles, setModernStyles] = useState<StyleConfig>({
     font: "default",
     fontSize: 16,
     theme: cvThemes.modern[0]
   });
 
-  useEffect(() => {
-    // Reset theme when switching designs
-    if (selectedDesign === "classic") {
-      setClassicStyles((prev) => ({
-        ...prev,
-        theme: cvThemes.classic[0]
-      }));
-    } else {
-      setModernStyles((prev) => ({
-        ...prev,
-        theme: cvThemes.modern[0]
-      }));
-    }
-  }, [selectedDesign]);
-
   const handleExportPDF = () => {
     window.print();
   };
 
-  const defaultFont = selectedDesign === "classic" ? "Times New Roman" : "Inter";
+  const currentStyles = selectedDesign === "classic" ? classicStyles : modernStyles;
 
   return (
     <div className="container mx-auto py-6 px-4">
@@ -92,23 +83,13 @@ const CVShowcase = () => {
           <Card className="p-1">
             <div 
               className="max-h-[800px] overflow-y-auto"
-              style={
-                selectedDesign === "classic" 
-                ? {
-                    fontFamily: classicStyles.font === "default" ? "inherit" : classicStyles.font,
-                    fontSize: `${classicStyles.fontSize}px`,
-                    '--cv-primary': classicStyles.theme.primary,
-                    '--cv-secondary': classicStyles.theme.secondary,
-                    '--cv-accent': classicStyles.theme.accent,
-                  }
-                : {
-                    fontFamily: modernStyles.font === "default" ? "inherit" : modernStyles.font,
-                    fontSize: `${modernStyles.fontSize}px`,
-                    '--cv-primary': modernStyles.theme.primary,
-                    '--cv-secondary': modernStyles.theme.secondary,
-                    '--cv-accent': modernStyles.theme.accent,
-                  }
-              }
+              style={{ 
+                fontFamily: selectedDesign === "classic" ? classicStyles.font : modernStyles.font,
+                fontSize: `${selectedDesign === "classic" ? classicStyles.fontSize : modernStyles.fontSize}px`,
+                '--cv-primary': selectedDesign === "modern" ? modernStyles.theme.primary : selectedTheme.primary,
+                '--cv-secondary': selectedDesign === "modern" ? modernStyles.theme.secondary : selectedTheme.secondary,
+                '--cv-accent': selectedDesign === "modern" ? modernStyles.theme.accent : selectedTheme.accent,
+              } as React.CSSProperties}
             >
               {selectedDesign === "classic" ? (
                 <CVClassic data={pedroData} />

@@ -1,4 +1,3 @@
-
 import { Mail, Phone, MapPin, User, Code, Briefcase, GraduationCap, Languages } from "lucide-react";
 
 interface CVModernProps {
@@ -7,7 +6,14 @@ interface CVModernProps {
 
 const CVModern = ({ data }: CVModernProps) => {
   return (
-    <div className="bg-white text-black shadow-lg w-[210mm] min-h-[297mm] mx-auto print:shadow-none print:m-0" style={{ fontSize: '12px', lineHeight: '1.4' }}>
+    <div 
+      className="bg-white text-black p-8 shadow-lg w-[210mm] min-h-[297mm] mx-auto print:shadow-none print:m-0" 
+      style={{ 
+        color: 'var(--cv-primary)',
+        fontSize: 'inherit',
+        lineHeight: '1.4'
+      }}
+    >
       <div className="flex">
         {/* Sidebar izquierda */}
         <div className="w-1/3 bg-gray-800 text-white p-6">

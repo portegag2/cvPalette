@@ -6,6 +6,13 @@ import { Slider } from "@/components/ui/slider";
 import { cvThemes } from "@/constants/themes";
 import { useState, useEffect } from "react";
 
+const fontOptions = [
+  { value: "default", label: "Por defecto (Inter)" },
+  { value: "inter", label: "Inter" },
+  { value: "roboto", label: "Roboto" },
+  { value: "helvetica", label: "Helvetica" },
+];
+
 interface ModernToolboxProps {
   initialStyles: {
     font: string;
@@ -24,16 +31,17 @@ const ModernToolbox = ({ initialStyles, onStyleChange }: ModernToolboxProps) => 
   const [fontSize, setFontSize] = useState(initialStyles.fontSize);
   const [selectedTheme, setSelectedTheme] = useState(initialStyles.theme);
 
-  const fontOptions = [
-    { value: "default", label: "Por defecto (Inter)" },
-    { value: "inter", label: "Inter" },
-    { value: "roboto", label: "Roboto" },
-    { value: "helvetica", label: "Helvetica" },
-  ];
+  // Ensure we have a valid theme
+  const currentTheme = selectedTheme || cvThemes.modern[0];
 
   useEffect(() => {
-    onStyleChange({ font, fontSize, theme: selectedTheme });
-  }, [font, fontSize, selectedTheme, onStyleChange]);
+    // Ensure we're passing the complete style object
+    onStyleChange({
+      font,
+      fontSize,
+      theme: currentTheme
+    });
+  }, [font, fontSize, currentTheme, onStyleChange]);
 
   const handleReset = () => {
     const defaultStyles = {
@@ -44,7 +52,26 @@ const ModernToolbox = ({ initialStyles, onStyleChange }: ModernToolboxProps) => 
     setFont(defaultStyles.font);
     setFontSize(defaultStyles.fontSize);
     setSelectedTheme(defaultStyles.theme);
-    onStyleChange(defaultStyles);
+    onStyleChange(defaultStyles); // Directly call onStyleChange
+  };
+
+  // Update immediately when any value changes
+  const handleFontChange = (value: string) => {
+    setFont(value);
+    onStyleChange({ font: value, fontSize, theme: currentTheme });
+  };
+
+  const handleFontSizeChange = (value: number) => {
+    setFontSize(value);
+    onStyleChange({ font, fontSize: value, theme: currentTheme });
+  };
+
+  const handleThemeChange = (value: string) => {
+    const theme = cvThemes.modern.find(t => t.id === value);
+    if (theme) {
+      setSelectedTheme(theme);
+      onStyleChange({ font, fontSize, theme });
+    }
   };
 
   return (
@@ -68,11 +95,8 @@ const ModernToolbox = ({ initialStyles, onStyleChange }: ModernToolboxProps) => 
               Tema de Color
             </label>
             <Select 
-              value={selectedTheme.id} 
-              onValueChange={(value) => {
-                const theme = cvThemes.modern.find(t => t.id === value);
-                if (theme) setSelectedTheme(theme);
-              }}
+              value={currentTheme.id}
+              onValueChange={handleThemeChange}
             >
               <SelectTrigger>
                 <SelectValue placeholder="Seleccionar tema" />
@@ -98,7 +122,10 @@ const ModernToolbox = ({ initialStyles, onStyleChange }: ModernToolboxProps) => 
             <label className="text-sm text-muted-foreground">
               Tipografía
             </label>
-            <Select value={font} onValueChange={setFont}>
+            <Select 
+              value={font} 
+              onValueChange={handleFontChange}
+            >
               <SelectTrigger>
                 <SelectValue placeholder="Seleccionar fuente" />
               </SelectTrigger>
@@ -123,7 +150,7 @@ const ModernToolbox = ({ initialStyles, onStyleChange }: ModernToolboxProps) => 
             </div>
             <Slider
               value={[fontSize]}
-              onValueChange={([value]) => setFontSize(value)}
+              onValueChange={([value]) => handleFontSizeChange(value)}
               min={14}
               max={24}
               step={1}
