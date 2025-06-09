@@ -21,5 +21,28 @@ export const cvThemes = {
       secondary: "#52525b",
       accent: "#0891b2",
     }
+  ],
+  modern: [
+    {
+      id: "default",
+      label: "Contemporáneo",
+      primary: "#020617",    // slate-950
+      secondary: "#ffffff",  // white
+      accent: "#2563eb",    // blue-600
+    },
+    {
+      id: "nordic",
+      label: "Nórdico",
+      primary: "#1e293b",   // slate-800
+      secondary: "#f8fafc",  // slate-50
+      accent: "#0891b2",    // cyan-600
+    },
+    {
+      id: "midnight",
+      label: "Medianoche",
+      primary: "#030712",    // gray-950
+      secondary: "#e2e8f0",  // slate-200
+      accent: "#6d28d9",    // violet-700
+    }
   ]
 };
