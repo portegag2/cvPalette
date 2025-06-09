@@ -6,19 +6,24 @@ interface CVClassicProps {
 
 const CVClassic = ({ data }: CVClassicProps) => {
   return (
-    <div className="bg-white text-black p-8 shadow-lg w-[210mm] min-h-[297mm] mx-auto print:shadow-none print:m-0" style={{ lineHeight: '1.4' }}>
+    <div className="bg-white p-8 shadow-lg w-[210mm] min-h-[297mm] mx-auto print:shadow-none print:m-0" 
+      style={{ 
+        lineHeight: '1.4',
+        color: 'var(--cv-primary, #1a1a1a)'
+      }}
+    >
       {/* Header con datos personales */}
-      <header className="border-b-2 border-gray-300 pb-6 mb-6">
+      <header className="border-b-2 pb-6 mb-6" style={{ borderColor: 'var(--cv-accent, #2563eb)' }}>
         <div className="flex justify-between items-start">
           <div className="flex-1">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            <h1 className="text-3xl font-bold mb-2" style={{ color: 'var(--cv-primary, #1a1a1a)' }}>
               {data.datos_personales.nombre}
             </h1>
-            <p className="text-xl text-gray-700 mb-4 font-medium">
+            <p className="text-xl mb-4 font-medium" style={{ color: 'var(--cv-secondary, #666666)' }}>
               {data.datos_personales.rol_profesional}
             </p>
             
-            <div className="grid grid-cols-2 gap-4 text-sm text-gray-600">
+            <div className="grid grid-cols-2 gap-4 text-sm" style={{ color: 'var(--cv-secondary, #666666)' }}>
               <div className="flex items-center gap-2">
                 <Mail className="w-4 h-4" />
                 <span>{data.datos_personales.email}</span>
@@ -49,17 +54,27 @@ const CVClassic = ({ data }: CVClassicProps) => {
 
       {/* Perfil Profesional */}
       <section className="mb-6">
-        <h2 className="text-lg font-bold text-gray-900 border-b border-gray-400 pb-1 mb-3 uppercase">
+        <h2 className="text-lg font-bold border-b pb-1 mb-3 uppercase"
+          style={{ 
+            color: 'var(--cv-primary, #1a1a1a)',
+            borderColor: 'var(--cv-accent, #2563eb)'
+          }}
+        >
           Perfil Profesional
         </h2>
-        <p className="text-gray-700 text-justify leading-relaxed">
+        <p style={{ color: 'var(--cv-secondary, #666666)' }} className="text-justify leading-relaxed">
           {data.perfil_profesional}
         </p>
       </section>
 
       {/* Experiencia Laboral */}
       <section className="mb-6">
-        <h2 className="text-lg font-bold text-gray-900 border-b border-gray-400 pb-1 mb-3 uppercase">
+        <h2 className="text-lg font-bold border-b pb-1 mb-3 uppercase"
+          style={{ 
+            color: 'var(--cv-primary, #1a1a1a)',
+            borderColor: 'var(--cv-accent, #2563eb)'
+          }}
+        >
           Experiencia Laboral
         </h2>
         <div className="space-y-4">
@@ -78,7 +93,12 @@ const CVClassic = ({ data }: CVClassicProps) => {
 
       {/* Formación */}
       <section className="mb-6">
-        <h2 className="text-lg font-bold text-gray-900 border-b border-gray-400 pb-1 mb-3 uppercase">
+        <h2 className="text-lg font-bold border-b pb-1 mb-3 uppercase"
+          style={{ 
+            color: 'var(--cv-primary, #1a1a1a)',
+            borderColor: 'var(--cv-accent, #2563eb)'
+          }}
+        >
           Formación
         </h2>
         <div className="space-y-3">
@@ -97,7 +117,12 @@ const CVClassic = ({ data }: CVClassicProps) => {
 
       {/* Habilidades Técnicas */}
       <section className="mb-4">
-        <h2 className="text-lg font-bold text-gray-900 border-b border-gray-400 pb-1 mb-3 uppercase">
+        <h2 className="text-lg font-bold border-b pb-1 mb-3 uppercase"
+          style={{ 
+            color: 'var(--cv-primary, #1a1a1a)',
+            borderColor: 'var(--cv-accent, #2563eb)'
+          }}
+        >
           Habilidades Técnicas
         </h2>
         <div className="space-y-2">
@@ -118,7 +143,12 @@ const CVClassic = ({ data }: CVClassicProps) => {
 
       {/* Idiomas */}
       <section>
-        <h2 className="text-lg font-bold text-gray-900 border-b border-gray-400 pb-1 mb-3 uppercase">
+        <h2 className="text-lg font-bold border-b pb-1 mb-3 uppercase"
+          style={{ 
+            color: 'var(--cv-primary, #1a1a1a)',
+            borderColor: 'var(--cv-accent, #2563eb)'
+          }}
+        >
           Idiomas
         </h2>
         <div className="space-y-2">

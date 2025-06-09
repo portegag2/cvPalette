@@ -8,11 +8,13 @@ import CVModern from "./CVModern";
 import { pedroData } from "../data/sampleData";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
+import { cvThemes } from "@/constants/themes";
 
 const CVShowcase = () => {
   const [selectedDesign, setSelectedDesign] = useState<"classic" | "modern">("classic");
   const [font, setFont] = useState<string>("default");
   const [fontSize, setFontSize] = useState<number>(16);
+  const [selectedTheme, setSelectedTheme] = useState(cvThemes.classic[0]);
 
   const handleExportPDF = () => {
     window.print();
@@ -82,7 +84,10 @@ const CVShowcase = () => {
               style={{ 
                 fontFamily: font === "default" ? "inherit" : font,
                 fontSize: selectedDesign === "classic" ? `${fontSize}px` : "inherit",
-              }}
+                '--cv-primary': selectedTheme.primary,
+                '--cv-secondary': selectedTheme.secondary,
+                '--cv-accent': selectedTheme.accent,
+              } as React.CSSProperties}
             >
               {selectedDesign === "classic" ? (
                 <div style={{ fontSize: `${fontSize}px` }}>
@@ -101,6 +106,38 @@ const CVShowcase = () => {
             <CardContent className="p-4">
               <h3 className="text-sm font-medium mb-2">Personalización</h3>
               <div className="space-y-4">
+                {/* Theme Selection */}
+                <div className="space-y-2">
+                  <label className="text-sm text-muted-foreground">
+                    Tema de Color
+                  </label>
+                  <Select 
+                    value={selectedTheme.id} 
+                    onValueChange={(value) => {
+                      const theme = cvThemes.classic.find(t => t.id === value);
+                      if (theme) setSelectedTheme(theme);
+                    }}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Seleccionar tema" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {cvThemes.classic.map(theme => (
+                        <SelectItem key={theme.id} value={theme.id}>
+                          <div className="flex items-center gap-2">
+                            <div className="flex gap-1">
+                              <div className="w-3 h-3 rounded-full" style={{ backgroundColor: theme.primary }} />
+                              <div className="w-3 h-3 rounded-full" style={{ backgroundColor: theme.secondary }} />
+                              <div className="w-3 h-3 rounded-full" style={{ backgroundColor: theme.accent }} />
+                            </div>
+                            {theme.label}
+                          </div>
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
                 <div className="space-y-2">
                   <label className="text-sm text-muted-foreground">
                     Tipografía
