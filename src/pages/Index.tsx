@@ -1,10 +1,10 @@
 
-import CVEditor from "../components/CVEditor";
+import CVShowcase from "../components/CVShowcase";
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
-      <CVEditor />
+      <CVShowcase />
     </div>
   );
 };
