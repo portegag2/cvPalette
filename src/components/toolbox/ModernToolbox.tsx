@@ -70,7 +70,11 @@ const ModernToolbox = ({ initialStyles, onStyleChange }: ModernToolboxProps) => 
     const theme = cvThemes.modern.find(t => t.id === value);
     if (theme) {
       setSelectedTheme(theme);
-      onStyleChange({ font, fontSize, theme });
+      onStyleChange({ 
+        font, 
+        fontSize, 
+        theme 
+      });
     }
   };
 

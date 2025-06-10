@@ -9,15 +9,16 @@ const CVModern = ({ data }: CVModernProps) => {
     <div 
       className="bg-white text-black p-8 shadow-lg w-[210mm] min-h-[297mm] mx-auto print:shadow-none print:m-0" 
       style={{ 
-        color: 'var(--cv-primary)',
         fontSize: 'inherit',
-        lineHeight: '1.4'
-      }}
+        lineHeight: '1.4',
+        '--sidebar-bg': 'var(--cv-primary)',
+        '--accent-color': 'var(--cv-accent)',
+        '--text-color': 'var(--cv-secondary)',
+      } as React.CSSProperties}
     >
-      {/* Use relative font sizes throughout the component to scale with the parent */}
       <div className="flex">
         {/* Sidebar izquierda */}
-        <div className="w-1/3 bg-gray-800 text-white p-6">
+        <div className="w-1/3 p-6" style={{ backgroundColor: 'var(--sidebar-bg)', color: '#fff' }}>
           {/* Foto y datos básicos */}
           <div className="text-center mb-6">
             <div className="w-32 h-40 bg-gray-600 mx-auto mb-4 rounded-lg flex items-center justify-center text-gray-300 text-[0.75em]">
@@ -29,7 +30,7 @@ const CVModern = ({ data }: CVModernProps) => {
 
           {/* Contacto */}
           <div className="mb-6">
-            <h2 className="text-[0.875em] font-bold mb-3 text-blue-300 uppercase tracking-wide flex items-center gap-2">
+            <h2 className="text-[0.875em] font-bold mb-3 uppercase tracking-wide flex items-center gap-2" style={{ color: 'var(--accent-color)' }}>
               <User className="w-4 h-4" />
               Contacto
             </h2>
@@ -107,7 +108,7 @@ const CVModern = ({ data }: CVModernProps) => {
           {/* Perfil Profesional */}
           <section className="mb-6">
             <h2 className="text-[1.125em] font-bold text-gray-800 mb-3 flex items-center gap-2">
-              <div className="w-1 h-6 bg-blue-600"></div>
+              <div className="w-1 h-6" style={{ backgroundColor: 'var(--accent-color)' }}></div>
               Perfil Profesional
             </h2>
             <p className="text-[0.875em] text-gray-700 text-justify leading-relaxed">
@@ -118,7 +119,7 @@ const CVModern = ({ data }: CVModernProps) => {
           {/* Experiencia Laboral */}
           <section className="mb-6">
             <h2 className="text-[1.125em] font-bold text-gray-800 mb-4 flex items-center gap-2">
-              <div className="w-1 h-6 bg-blue-600"></div>
+              <div className="w-1 h-6" style={{ backgroundColor: 'var(--accent-color)' }}></div>
               <Briefcase className="w-5 h-5" />
               Experiencia Laboral
             </h2>
@@ -131,7 +132,11 @@ const CVModern = ({ data }: CVModernProps) => {
                   <div className="bg-gray-50 p-4 rounded-lg">
                     <div className="flex justify-between items-start mb-2">
                       <h3 className="text-[1em] font-bold text-gray-900">{exp.titulo}</h3>
-                      <span className="text-[0.75em] text-blue-600 bg-blue-100 px-2 py-1 rounded">
+                      <span className="text-[0.75em] px-2 py-1 rounded" 
+                        style={{ 
+                          backgroundColor: 'var(--accent-color)',
+                          color: '#fff' 
+                        }}>
                         {exp.fecha}
                       </span>
                     </div>
@@ -146,7 +151,7 @@ const CVModern = ({ data }: CVModernProps) => {
           {/* Formación */}
           <section>
             <h2 className="text-[1.125em] font-bold text-gray-800 mb-4 flex items-center gap-2">
-              <div className="w-1 h-6 bg-blue-600"></div>
+              <div className="w-1 h-6" style={{ backgroundColor: 'var(--accent-color)' }}></div>
               <GraduationCap className="w-5 h-5" />
               Formación
             </h2>
