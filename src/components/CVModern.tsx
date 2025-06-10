@@ -18,7 +18,8 @@ const CVModern = ({ data }: CVModernProps) => {
     >
       <div className="flex">
         {/* Sidebar izquierda */}
-        <div id='sidebar' className="w-1/3 p-6 print:bg-[var(--sidebar-bg)] text-[var(--cv-secondary)]" style={{ backgroundColor: 'var(--sidebar-bg)' }}>
+        <div id='sidebar' className="w-1/3 p-6 rounded-2xl print:bg-[var(--sidebar-bg)] text-[var(--cv-secondary)]" 
+          style={{ backgroundColor: 'var(--sidebar-bg)' }}>
           {/* Foto y datos básicos */}
           <div className="text-center mb-6">
             <div className="w-32 h-40 bg-gray-600 mx-auto mb-4 rounded-lg flex items-center justify-center text-[var(--cv-secondary)] text-[0.75em]">
