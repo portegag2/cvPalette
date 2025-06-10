@@ -86,9 +86,9 @@ const CVShowcase = () => {
               style={{ 
                 fontFamily: selectedDesign === "classic" ? classicStyles.font : modernStyles.font,
                 fontSize: `${selectedDesign === "classic" ? classicStyles.fontSize : modernStyles.fontSize}px`,
-                '--cv-primary': selectedDesign === "modern" ? modernStyles.theme.primary : selectedTheme.primary,
-                '--cv-secondary': selectedDesign === "modern" ? modernStyles.theme.secondary : selectedTheme.secondary,
-                '--cv-accent': selectedDesign === "modern" ? modernStyles.theme.accent : selectedTheme.accent,
+                '--cv-primary': selectedDesign === "modern" ? modernStyles.theme.primary : classicStyles.theme.primary,
+                '--cv-secondary': selectedDesign === "modern" ? modernStyles.theme.secondary : classicStyles.theme.secondary,
+                '--cv-accent': selectedDesign === "modern" ? modernStyles.theme.accent : classicStyles.theme.accent,
               } as React.CSSProperties}
             >
               {selectedDesign === "classic" ? (
