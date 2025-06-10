@@ -112,12 +112,13 @@
     visibility: hidden;
   }
 
-  #CvClassic,
-  #CvClassic * {
+  /* Handle both CV types */
+  #CvClassic, #CvModern,
+  #CvClassic *, #CvModern * {
     visibility: visible;
   }
 
-  #CvClassic {
+  #CvClassic, #CvModern {
     position: absolute;
     left: 0;
     top: 0;
@@ -128,10 +129,15 @@
     box-shadow: none !important;
   }
 
-  /* Let content flow naturally */
-  #CvClassic section,
-  #CvClassic header {
-    page-break-inside: auto;
-    break-inside: auto;
+  #CvModern {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+    background-color-adjust: exact !important;
+  }
+
+  #CvModern * {
+    print-color-adjust: exact !important;
+    -webkit-print-color-adjust: exact !important;
   }
 }

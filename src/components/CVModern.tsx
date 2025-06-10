@@ -7,18 +7,18 @@ interface CVModernProps {
 const CVModern = ({ data }: CVModernProps) => {
   return (
     <div 
-      className="bg-white text-black p-8 shadow-lg w-[210mm] min-h-[297mm] mx-auto print:shadow-none print:m-0" 
+      id="CvModern"
+      className="bg-white p-8 w-[210mm] mx-auto shadow-lg" 
       style={{ 
-        fontSize: 'inherit',
         lineHeight: '1.4',
+        color: 'var(--cv-primary)',
         '--sidebar-bg': 'var(--cv-primary)',
         '--accent-color': 'var(--cv-accent)',
-        '--text-color': 'var(--cv-secondary)',
       } as React.CSSProperties}
     >
       <div className="flex">
         {/* Sidebar izquierda */}
-        <div className="w-1/3 p-6" style={{ backgroundColor: 'var(--sidebar-bg)', color: '#fff' }}>
+        <div className="w-1/3 p-6 print:bg-[var(--sidebar-bg)]" style={{ backgroundColor: 'var(--sidebar-bg)' }}>
           {/* Foto y datos básicos */}
           <div className="text-center mb-6">
             <div className="w-32 h-40 bg-gray-600 mx-auto mb-4 rounded-lg flex items-center justify-center text-gray-300 text-[0.75em]">
