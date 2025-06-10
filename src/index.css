@@ -108,22 +108,30 @@
     margin: 0;
   }
 
-  /* Hide everything except CV content */
   body * {
-    visibility: hidden !important;
+    visibility: hidden;
   }
 
   #CvClassic,
   #CvClassic * {
-    visibility: visible !important;
+    visibility: visible;
   }
 
-  /* Position CV for print */
   #CvClassic {
-    position: fixed;
+    position: absolute;
     left: 0;
     top: 0;
-    margin: 0;
-    padding: 20mm;
+    width: 210mm !important;
+    padding: 20mm !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    box-shadow: none !important;
+  }
+
+  /* Let content flow naturally */
+  #CvClassic section,
+  #CvClassic header {
+    page-break-inside: auto;
+    break-inside: auto;
   }
 }

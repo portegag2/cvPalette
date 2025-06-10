@@ -8,7 +8,7 @@ const CVClassic = ({ data }: CVClassicProps) => {
   return (
     <div 
       id="CvClassic"
-      className="bg-white p-8 w-[210mm] min-h-[297mm] mx-auto shadow-lg" 
+      className="bg-white p-8 w-[210mm] mx-auto shadow-lg" 
       style={{ 
         lineHeight: '1.4',
         color: 'var(--cv-primary, #1a1a1a)'
