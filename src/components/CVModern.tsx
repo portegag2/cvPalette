@@ -18,14 +18,14 @@ const CVModern = ({ data }: CVModernProps) => {
     >
       <div className="flex">
         {/* Sidebar izquierda */}
-        <div className="w-1/3 p-6 print:bg-[var(--sidebar-bg)]" style={{ backgroundColor: 'var(--sidebar-bg)' }}>
+        <div id='sidebar' className="w-1/3 p-6 print:bg-[var(--sidebar-bg)] text-[var(--cv-secondary)]" style={{ backgroundColor: 'var(--sidebar-bg)' }}>
           {/* Foto y datos básicos */}
           <div className="text-center mb-6">
-            <div className="w-32 h-40 bg-gray-600 mx-auto mb-4 rounded-lg flex items-center justify-center text-gray-300 text-[0.75em]">
+            <div className="w-32 h-40 bg-gray-600 mx-auto mb-4 rounded-lg flex items-center justify-center text-[var(--cv-secondary)] text-[0.75em]">
               FOTO
             </div>
-            <h1 className="text-[1.25em] font-bold mb-1">{data.datos_personales.nombre}</h1>
-            <p className="text-[0.875em] text-gray-300">{data.datos_personales.rol_profesional}</p>
+            <h1 className="text-[1.25em] font-bold mb-1 text-[var(--cv-secondary)]">{data.datos_personales.nombre}</h1>
+            <p className="text-[0.875em] text-[var(--cv-secondary)]">{data.datos_personales.rol_profesional}</p>
           </div>
 
           {/* Contacto */}
@@ -34,7 +34,7 @@ const CVModern = ({ data }: CVModernProps) => {
               <User className="w-4 h-4" />
               Contacto
             </h2>
-            <div className="space-y-2 text-[0.75em]">
+            <div className="space-y-2 text-[0.75em] text-[var(--cv-secondary)]">
               <div className="flex items-center gap-2">
                 <Mail className="w-3 h-3 text-blue-300" />
                 <span className="break-all">{data.datos_personales.email}</span>
