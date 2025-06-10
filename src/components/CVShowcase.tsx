@@ -5,12 +5,14 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Download, FileText, Palette } from "lucide-react";
 import CVClassic from "./CVClassic";
 import CVModern from "./CVModern";
+import CVAts from "./CVAts";
 import { pedroData } from "../data/sampleData";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
 import { cvThemes } from "@/constants/themes";
 import ClassicToolbox from "./toolbox/ClassicToolbox";
 import ModernToolbox from "./toolbox/ModernToolbox";
+import AtsToolbox from "./toolbox/AtsToolbox";
 
 type StyleConfig = {
   font: string;
@@ -19,7 +21,7 @@ type StyleConfig = {
 };
 
 const CVShowcase = () => {
-  const [selectedDesign, setSelectedDesign] = useState<"classic" | "modern">("classic");
+  const [selectedDesign, setSelectedDesign] = useState<"classic" | "modern" | "ats">("classic");
   const [classicStyles, setClassicStyles] = useState<StyleConfig>({
     font: "default",
     fontSize: 16,
@@ -30,6 +32,11 @@ const CVShowcase = () => {
     fontSize: 16,
     theme: cvThemes.modern[0]
   });
+  const [atsStyles, setAtsStyles] = useState({
+    font: "arial",
+    fontSize: 11,
+    headingSize: 14.6
+  });
 
   const handleExportPDF = () => {
     const originalTitle = document.title;
@@ -39,6 +46,12 @@ const CVShowcase = () => {
   };
 
   const currentStyles = selectedDesign === "classic" ? classicStyles : modernStyles;
+
+  const designs = [
+    { value: "classic", label: "Clásico" },
+    { value: "modern", label: "Moderno" },
+    { value: "ats", label: "ATS" }
+  ];
 
   return (
     <div className="container mx-auto py-6 px-4">
@@ -72,6 +85,14 @@ const CVShowcase = () => {
                 <Palette className="w-4 h-4 mr-2" />
                 Diseño Moderno
               </Button>
+              <Button
+                variant={selectedDesign === "ats" ? "default" : "outline"}
+                className="flex-1 sm:flex-initial justify-start"
+                onClick={() => setSelectedDesign("ats")}
+              >
+                <FileText className="w-4 h-4 mr-2" />
+                Diseño ATS
+              </Button>
             </div>
             <Button onClick={handleExportPDF} className="w-full sm:w-auto flex items-center gap-2">
               <Download className="w-4 h-4" />
@@ -94,10 +115,12 @@ const CVShowcase = () => {
                 '--cv-accent': selectedDesign === "modern" ? modernStyles.theme.accent : classicStyles.theme.accent,
               } as React.CSSProperties}
             >
-              {selectedDesign === "classic" ? (
-                <CVClassic data={pedroData} />
-              ) : (
+              {selectedDesign === "ats" ? (
+                <CVAts data={pedroData} styles={atsStyles} />
+              ) : selectedDesign === "modern" ? (
                 <CVModern data={pedroData} />
+              ) : (
+                <CVClassic data={pedroData} />
               )}
             </div>
           </Card>
@@ -105,7 +128,12 @@ const CVShowcase = () => {
 
         {/* Toolbox section */}
         <div className="lg:col-span-1">
-          {selectedDesign === "classic" ? (
+          {selectedDesign === "ats" ? (
+            <AtsToolbox
+              initialStyles={atsStyles}
+              onStyleChange={setAtsStyles}
+            />
+          ) : selectedDesign === "classic" ? (
             <ClassicToolbox
               initialStyles={classicStyles}
               onStyleChange={setClassicStyles}
