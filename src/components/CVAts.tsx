@@ -13,7 +13,7 @@ const CVAts = ({ data, styles = { font: 'arial', fontSize: 11, headingSize: 14.6
   return (
     <div 
       id="CvAts"
-      className="bg-white p-8 w-[210mm] mx-auto" 
+      className="bg-white p-8 w-[210mm] mx-auto print:p-[20mm] print:w-auto print:m-0" 
       style={{ 
         lineHeight: '1.6',
         fontFamily: styles.font,

@@ -108,8 +108,10 @@ const CVShowcase = () => {
             <div 
               className="max-h-[800px] overflow-y-auto"
               style={{ 
-                fontFamily: selectedDesign === "classic" ? classicStyles.font : modernStyles.font,
-                fontSize: `${selectedDesign === "classic" ? classicStyles.fontSize : modernStyles.fontSize}px`,
+                fontFamily: selectedDesign === "ats" ? atsStyles.font : 
+                          selectedDesign === "classic" ? classicStyles.font : modernStyles.font,
+                fontSize: selectedDesign === "ats" ? `${atsStyles.fontSize}pt` :
+                         `${selectedDesign === "classic" ? classicStyles.fontSize : modernStyles.fontSize}px`,
                 '--cv-primary': selectedDesign === "modern" ? modernStyles.theme.primary : classicStyles.theme.primary,
                 '--cv-secondary': selectedDesign === "modern" ? modernStyles.theme.secondary : classicStyles.theme.secondary,
                 '--cv-accent': selectedDesign === "modern" ? modernStyles.theme.accent : classicStyles.theme.accent,
