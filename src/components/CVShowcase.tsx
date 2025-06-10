@@ -32,7 +32,10 @@ const CVShowcase = () => {
   });
 
   const handleExportPDF = () => {
+    const originalTitle = document.title;
+    document.title = `CV_${pedroData.datos_personales.nombre}.pdf`;
     window.print();
+    document.title = originalTitle;
   };
 
   const currentStyles = selectedDesign === "classic" ? classicStyles : modernStyles;
