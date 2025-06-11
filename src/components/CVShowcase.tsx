@@ -69,38 +69,43 @@ const CVShowcase = () => {
           </p>
         </div>
         
-        <Card className="w-full md:w-auto">
-          <CardContent className="py-3 flex flex-col sm:flex-row items-center gap-3">
-            <div className="flex gap-2 w-full sm:w-auto">
-              <Button
-                variant={selectedDesign === "classic" ? "default" : "outline"}
-                className="flex-1 sm:flex-initial justify-start"
-                onClick={() => setSelectedDesign("classic")}
+        <Card className="w-full">
+          <CardContent className="py-3 space-y-3 sm:space-y-0">
+            <div className="grid grid-cols-1 sm:grid-cols-4 gap-2">
+              <div className="col-span-3 grid grid-cols-1 xs:grid-cols-3 gap-2">
+                <Button
+                  variant={selectedDesign === "classic" ? "default" : "outline"}
+                  className="w-full justify-start"
+                  onClick={() => setSelectedDesign("classic")}
+                >
+                  <FileText className="w-4 h-4 mr-2" />
+                  Diseño Clásico
+                </Button>
+                <Button
+                  variant={selectedDesign === "modern" ? "default" : "outline"}
+                  className="w-full justify-start"
+                  onClick={() => setSelectedDesign("modern")}
+                >
+                  <Palette className="w-4 h-4 mr-2" />
+                  Diseño Moderno
+                </Button>
+                <Button
+                  variant={selectedDesign === "ats" ? "default" : "outline"}
+                  className="w-full justify-start"
+                  onClick={() => setSelectedDesign("ats")}
+                >
+                  <FileText className="w-4 h-4 mr-2" />
+                  Diseño ATS
+                </Button>
+              </div>
+              <Button 
+                onClick={handleExportPDF} 
+                className="w-full flex items-center justify-center gap-2"
               >
-                <FileText className="w-4 h-4 mr-2" />
-                Diseño Clásico
-              </Button>
-              <Button
-                variant={selectedDesign === "modern" ? "default" : "outline"}
-                className="flex-1 sm:flex-initial justify-start"
-                onClick={() => setSelectedDesign("modern")}
-              >
-                <Palette className="w-4 h-4 mr-2" />
-                Diseño Moderno
-              </Button>
-              <Button
-                variant={selectedDesign === "ats" ? "default" : "outline"}
-                className="flex-1 sm:flex-initial justify-start"
-                onClick={() => setSelectedDesign("ats")}
-              >
-                <FileText className="w-4 h-4 mr-2" />
-                Diseño ATS
+                <Download className="w-4 h-4" />
+                Exportar PDF
               </Button>
             </div>
-            <Button onClick={handleExportPDF} className="w-full sm:w-auto flex items-center gap-2">
-              <Download className="w-4 h-4" />
-              Exportar PDF
-            </Button>
           </CardContent>
         </Card>
       </div>
