@@ -1,0 +1,93 @@
+<svg viewBox="14 21 350 80" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Gradient definitions for each letter -->
+    <linearGradient id="pGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00D4AA;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0085A3;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="aGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF6B9D;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#E91E63;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="lGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#9C27B0;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#673AB7;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="lGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3F51B5;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2196F3;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="eGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00BCD4;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#009688;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="tGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4CAF50;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8BC34A;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="tGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#CDDC39;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FFC107;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="eGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF9800;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FF5722;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- P -->
+  <path d="M20 25 L20 85 L15 85 L15 20 L45 20 Q55 20 60 30 Q65 40 60 50 Q55 60 45 60 L20 60 Z M20 25 L45 25 Q50 25 52.5 32.5 Q55 40 52.5 47.5 Q50 55 45 55 L20 55 Z" 
+        fill="url(#pGrad)" 
+        transform="scale(1.2)"/>
+  
+  <!-- A -->
+  <path d="M75 85 L70 85 L75 65 L85 25 L90 25 L100 65 L105 85 L100 85 L97 75 L78 75 Z M80 70 L95 70 L87.5 45 Z" 
+        fill="url(#aGrad1)" 
+        transform="scale(1.2)"/>
+  
+  <!-- L -->
+  <path d="M115 20 L120 20 L120 80 L145 80 L145 85 L115 85 Z" 
+        fill="url(#lGrad1)" 
+        transform="scale(1.2)"/>
+  
+  <!-- E -->
+  <path d="M155 20 L155 85 L150 85 L150 20 L175 20 L175 25 L155 25 L155 50 L170 50 L170 55 L155 55 L155 80 L175 80 L175 85 L155 85" 
+        fill="url(#eGrad1)" 
+        transform="scale(1.2)"/>
+  
+  <!-- T -->
+  <path d="M185 20 L210 20 L210 25 L200 25 L200 85 L195 85 L195 25 L185 25 Z" 
+        fill="url(#tGrad)" 
+        transform="scale(1.2)"/>
+  
+  <!-- T -->
+  <path d="M220 20 L245 20 L245 25 L235 25 L235 85 L230 85 L230 25 L220 25 Z" 
+        fill="url(#tGrad2)" 
+        transform="scale(1.2)"/>
+  
+  <!-- E -->
+  <path d="M255 20 L255 85 L250 85 L250 20 L275 20 L275 25 L255 25 L255 50 L270 50 L270 55 L255 55 L255 80 L275 80 L275 85 L255 85" 
+        fill="url(#eGrad2)" 
+        transform="scale(1.2)"/>
+  
+  <!-- Flowing underline accent -->
+  <path d="M15 95 Q100 90 200 95 Q250 97 285 95" 
+        stroke="url(#aGrad1)" 
+        stroke-width="3" 
+        fill="none" 
+        opacity="0.7"/>
+  
+  <!-- Color dots accent -->
+  <circle cx="300" cy="35" r="4" fill="url(#pGrad)" opacity="0.8"/>
+  <circle cx="310" cy="45" r="3" fill="url(#aGrad1)" opacity="0.8"/>
+  <circle cx="320" cy="40" r="5" fill="url(#lGrad1)" opacity="0.8"/>
+  <circle cx="330" cy="50" r="3" fill="url(#eGrad1)" opacity="0.8"/>
+  <circle cx="340" cy="35" r="4" fill="url(#tGrad2)" opacity="0.8"/>
+</svg>

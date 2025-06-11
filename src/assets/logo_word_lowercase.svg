@@ -1,0 +1,93 @@
+<svg viewBox="0 0 400 120" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Gradient definitions for each letter -->
+    <linearGradient id="pGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00D4AA;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0085A3;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="aGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF6B9D;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#E91E63;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="lGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#9C27B0;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#673AB7;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="lGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3F51B5;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2196F3;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="eGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00BCD4;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#009688;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="tGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4CAF50;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8BC34A;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="tGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#CDDC39;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FFC107;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="eGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF9800;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FF5722;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- p -->
+  <path d="M20 35 L20 85 L15 85 L15 35 L15 30 Q15 28 17 28 L35 28 Q45 28 50 35 Q55 42 50 49 Q45 56 35 56 L20 56 Z M20 33 L35 33 Q42 33 45 38 Q48 43 45 48 Q42 53 35 53 L20 53 Z" 
+        fill="url(#pGrad)" 
+        transform="scale(1.2)"/>
+  
+  <!-- a -->
+  <path d="M70 56 Q65 56 62 53 Q59 50 62 47 Q65 44 70 44 L85 44 L85 47 Q85 50 82 53 Q79 56 75 56 Z M70 39 Q65 39 62 42 Q59 45 62 48 Q65 51 70 51 L85 51 L85 56 L90 56 L90 44 Q90 39 85 39 Z M85 49 L70 49 Q67 49 67 46.5 Q67 44 70 44 L85 44 Z" 
+        fill="url(#aGrad1)" 
+        transform="scale(1.2)"/>
+  
+  <!-- l -->
+  <path d="M110 25 L115 25 L115 85 L110 85 Z" 
+        fill="url(#lGrad1)" 
+        transform="scale(1.2)"/>
+  
+  <!-- e -->
+  <path d="M130 39 Q125 39 122 42 Q119 45 122 48 Q125 51 130 51 L145 51 L145 46 Q145 42 142 40.5 Q139 39 135 39 Z M130 56 Q125 56 122 53 Q119 50 122 47 Q125 44 130 44 L145 44 L145 39 Q145 36 142 34.5 Q139 33 135 33 Q130 33 127 36 Q124 39 127 42 L130 42 L130 39 L135 39 L135 44 L130 44 Q127 44 127 47.5 Q127 51 130 51 L145 51 L145 56 Z" 
+        fill="url(#eGrad1)" 
+        transform="scale(1.2)"/>
+  
+  <!-- t -->
+  <path d="M160 25 L165 25 L165 39 L175 39 L175 44 L165 44 L165 51 Q165 53 167 53 L175 53 L175 56 L167 56 Q162 56 160 53 Q158 50 160 47 L160 44 L155 44 L155 39 L160 39 Z" 
+        fill="url(#tGrad)" 
+        transform="scale(1.2)"/>
+  
+  <!-- t -->
+  <path d="M190 25 L195 25 L195 39 L205 39 L205 44 L195 44 L195 51 Q195 53 197 53 L205 53 L205 56 L197 56 Q192 56 190 53 Q188 50 190 47 L190 44 L185 44 L185 39 L190 39 Z" 
+        fill="url(#tGrad2)" 
+        transform="scale(1.2)"/>
+  
+  <!-- e -->
+  <path d="M220 39 Q215 39 212 42 Q209 45 212 48 Q215 51 220 51 L235 51 L235 46 Q235 42 232 40.5 Q229 39 225 39 Z M220 56 Q215 56 212 53 Q209 50 212 47 Q215 44 220 44 L235 44 L235 39 Q235 36 232 34.5 Q229 33 225 33 Q220 33 217 36 Q214 39 217 42 L220 42 L220 39 L225 39 L225 44 L220 44 Q217 44 217 47.5 Q217 51 220 51 L235 51 L235 56 Z" 
+        fill="url(#eGrad2)" 
+        transform="scale(1.2)"/>
+  
+  <!-- Flowing underline accent -->
+  <path d="M15 95 Q100 90 200 95 Q250 97 285 95" 
+        stroke="url(#aGrad1)" 
+        stroke-width="3" 
+        fill="none" 
+        opacity="0.7"/>
+  
+  <!-- Color dots accent -->
+  <circle cx="300" cy="35" r="4" fill="url(#pGrad)" opacity="0.8"/>
+  <circle cx="310" cy="45" r="3" fill="url(#aGrad1)" opacity="0.8"/>
+  <circle cx="320" cy="40" r="5" fill="url(#lGrad1)" opacity="0.8"/>
+  <circle cx="330" cy="50" r="3" fill="url(#eGrad1)" opacity="0.8"/>
+  <circle cx="340" cy="35" r="4" fill="url(#tGrad2)" opacity="0.8"/>
+</svg>

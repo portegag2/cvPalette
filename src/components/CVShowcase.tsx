@@ -13,6 +13,8 @@ import { cvThemes } from "@/constants/themes";
 import ClassicToolbox from "./toolbox/ClassicToolbox";
 import ModernToolbox from "./toolbox/ModernToolbox";
 import AtsToolbox from "./toolbox/AtsToolbox";
+import Logo from "@/assets/logo.png"; // Add this import at the top
+import LogoWord from "@/assets/logo_word_palette-2.svg";
 
 type StyleConfig = {
   font: string;
@@ -54,15 +56,16 @@ const CVShowcase = () => {
   ];
 
   return (
-    <div className="container mx-auto py-6 px-4">
+    <div className="container mx-auto pt-4 px-4">
       {/* Header section */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
         <div>
-          <h1 className="text-3xl font-bold text-foreground mb-2">
-            Propuesta de Diseños de CV
-          </h1>
+          <div className="flex items-center gap-3 mb-2">
+            <img src={Logo} alt="Logo CV Design Maker" className="h-8 w-auto" />
+            <img src={LogoWord} alt="CV Design Maker" className="h-[75px] w-auto" />
+          </div>
           <p className="text-muted-foreground">
-            Dos estilos diferentes para currículums del sector tecnológico
+            Estilos diferentes para ofertas diferentes.
           </p>
         </div>
         
