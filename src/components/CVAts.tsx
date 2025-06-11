@@ -44,8 +44,10 @@ const CVAts = ({ data, styles = { font: 'arial', fontSize: 11, headingSize: 14.6
 
       {/* Resumen Profesional */}
       <section className="mb-8">
-        <h2 className="text-xl font-bold mb-4 uppercase">Resumen Profesional</h2>
-        <p className="text-base">{data.perfil_profesional}</p>
+        <h2 style={{ fontSize: `${styles.headingSize}pt` }} className="font-bold mb-4 uppercase">Resumen Profesional</h2>
+        <p style={{ fontSize: `${styles.fontSize}pt` }}>
+          {data.perfil_profesional}
+        </p>
       </section>
 
       {/* Experiencia Laboral */}
