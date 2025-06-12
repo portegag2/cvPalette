@@ -149,10 +149,10 @@ const CVShowcase = () => {
         </Card>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        <div id='cv' className="lg:col-span-3">
-          <Card className="p-1">
-            <div className="flex flex-col gap-2">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 print:block print:m-0">
+        <div id='cv' className="lg:col-span-3 print:w-full">
+          <Card className="p-1 print:p-0 print:shadow-none print:border-0">
+            <div className="flex flex-col gap-2 print:hidden">
               <div className="flex items-center gap-2">
                 <span className="text-sm text-muted-foreground w-14">Zoom: {zoom}%</span>
                 <Slider
@@ -180,7 +180,7 @@ const CVShowcase = () => {
                   height: 'calc(100vh - 300px)',
                 }}
               >
-                <div
+                <div className="print:m-0 print:p-0 print:[transform:none]"
                   style={{ 
                     transform: `scale(${zoom / 100})`,
                     transformOrigin: 'top center',
@@ -205,11 +205,31 @@ const CVShowcase = () => {
                 </div>
               </div>
             </div>
+            <div className="hidden print:block">
+              <div
+                style={{
+                  fontFamily: selectedDesign === "ats" ? atsStyles.font : 
+                            selectedDesign === "classic" ? classicStyles.font : modernStyles.font,
+                  fontSize: selectedDesign === "ats" ? `${atsStyles.fontSize}pt` :
+                           `${selectedDesign === "classic" ? classicStyles.fontSize : modernStyles.fontSize}px`,
+                  '--cv-primary': selectedDesign === "modern" ? modernStyles.theme.primary : classicStyles.theme.primary,
+                  '--cv-secondary': selectedDesign === "modern" ? modernStyles.theme.secondary : classicStyles.theme.secondary,
+                  '--cv-accent': selectedDesign === "modern" ? modernStyles.theme.accent : classicStyles.theme.accent,
+                } as React.CSSProperties}
+              >
+                {selectedDesign === "ats" ? (
+                  <CVAts data={pedroData} styles={atsStyles} />
+                ) : selectedDesign === "modern" ? (
+                  <CVModern data={pedroData} />
+                ) : (
+                  <CVClassic data={pedroData} />
+                )}
+              </div>
+            </div>
           </Card>
         </div>
 
-        {/* Toolbox section */}
-        <div className="lg:col-span-1">
+        <div className="lg:col-span-1 print:hidden">
           {selectedDesign === "ats" ? (
             <AtsToolbox
               initialStyles={atsStyles}
