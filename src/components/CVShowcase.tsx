@@ -2,7 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Download, FileText, Palette } from "lucide-react";
+import { Download, FileText, Palette, LogIn, LogOut } from "lucide-react";
+import { useAuth0 } from "@auth0/auth0-react";
 import CVClassic from "./CVClassic";
 import CVModern from "./CVModern";
 import CVAts from "./CVAts";
@@ -23,6 +24,7 @@ type StyleConfig = {
 };
 
 const CVShowcase = () => {
+  const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
   const [selectedDesign, setSelectedDesign] = useState<"classic" | "modern" | "ats">("classic");
   const [classicStyles, setClassicStyles] = useState<StyleConfig>({
     font: "default",
@@ -103,12 +105,25 @@ const CVShowcase = () => {
             <img src={Logo} alt="Logo CV Design Maker" className="h-8 w-auto" />
             <img src={LogoWord} alt="CV Design Maker" className="h-[75px] w-auto" />
           </div>
-          <p className="text-muted-foreground">
-            Estilos diferentes para ofertas diferentes.
-          </p>
+          <div className="flex items-center gap-5">
+            <p className="text-muted-foreground">
+              Estilos diferentes para ofertas diferentes.
+            </p>
+            <Button
+              onClick={() => isAuthenticated ? logout() : loginWithRedirect()}
+              variant="outline"
+              size="sm"
+              className="h-6 min-h-0 px-2 ml-[26px]"
+            >
+              {isAuthenticated ? 
+                <LogOut className="h-3 w-3" /> : 
+                <LogIn className="h-3 w-3" />
+              }
+            </Button>
+          </div>
         </div>
         
-        <Card className="w-full lg:w-auto">
+        <Card className="w-full lg:w-auto self-start">
           <CardContent className="py-3">
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-2">
               <div className="col-span-3 flex flex-col lg:flex-row gap-2">
