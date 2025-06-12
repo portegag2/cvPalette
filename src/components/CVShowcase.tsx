@@ -17,6 +17,8 @@ import ModernToolbox from "./toolbox/ModernToolbox";
 import AtsToolbox from "./toolbox/AtsToolbox";
 import Logo from "@/assets/logo.svg"; // Add this import at the top
 import LogoWord from "@/assets/logo_word_palette.svg";
+import FormModal from "./forms/Satisfaccion/FormModal";
+import OriginalFormModal from "./forms/Satisfaccion/OriginalFormModal";
 
 type StyleConfig = {
   font: string;
@@ -26,6 +28,8 @@ type StyleConfig = {
 
 const CVShowcase = () => {
   const { isAuthenticated, loginWithRedirect, logout, user } = useAuth0();
+  const [isFormModalOpen, setIsFormModalOpen] = useState(false);
+  const [isOriginalFormModalOpen, setIsOriginalFormModalOpen] = useState(false);
   
   const handleLogout = () => {
     logout({ 
@@ -108,12 +112,36 @@ const CVShowcase = () => {
 
   return (
     <div className="container mx-auto pt-4 px-4">
+      <FormModal 
+        isOpen={isFormModalOpen} 
+        onClose={() => setIsFormModalOpen(false)} 
+      />
+      <OriginalFormModal 
+        isOpen={isOriginalFormModalOpen} 
+        onClose={() => setIsOriginalFormModalOpen(false)} 
+      />
       {/* Header section */}
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-6">
         <div>
           <div className="flex items-center gap-3 mb-2">
             <img src={Logo} alt="Logo CV Design Maker" className="h-8 w-auto" />
             <img src={LogoWord} alt="CV Design Maker" className="h-[75px] w-auto" />
+            <div className="flex gap-4 ml-4">
+              <Button 
+                variant="link"
+                className="text-blue-500 hover:text-blue-700 text-sm p-0 h-auto"
+                onClick={() => setIsFormModalOpen(true)}
+              >
+                Customer Survey
+              </Button>
+              <Button 
+                variant="link"
+                className="text-blue-500 hover:text-blue-700 text-sm p-0 h-auto"
+                onClick={() => setIsOriginalFormModalOpen(true)}
+              >
+                Original: Satisfaccion
+              </Button>
+            </div>
           </div>
           <div className="flex items-center gap-5">
             <p className="text-muted-foreground">

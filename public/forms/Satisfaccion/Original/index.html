@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encuesta de Satisfacción del Cliente</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Encuesta de Satisfacción del Cliente</h1>
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <div class="page-indicator">
+                <span id="currentPage">1</span> de <span id="totalPages">4</span>
+            </div>
+        </header>
+
+        <form id="surveyForm" action="https://httpbin.org/post" method="post" enctype="multipart/form-data">
+            <!-- Sección 1: Información Personal -->
+            <!-- <section id="section1" class="form-section active">
+                <h2 class="info">Sección 1: Información Personal</h2>
+                
+                <div class="form-group">
+                    <label for="name">Nombre:</label>
+                    <input type="text" id="name" name="name">
+                    <span class="error-message" id="nameError"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Correo Electrónico:</label>
+                    <input type="email" id="email" name="email">
+                    <span class="error-message" id="emailError"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Teléfono:</label>
+                    <input type="tel" id="phone" name="phone" pattern="[0-9]{9}">
+                    <span class="error-message" id="phoneError"></span>
+                    <small>Formato: 9 dígitos sin espacios</small>
+                </div>
+                
+                <div class="button-group">
+                    <button type="button" class="next-btn" data-section="1">Siguiente</button>
+                </div>
+            </section> -->
+
+            <!-- Sección 2: Experiencia de Compra -->
+            <section id="section2" class="form-section">
+                <h2>Sección 2: Experiencia de Compra</h2>
+                
+                <!-- <div class="form-group">
+                    <label for="product">Producto Comprado:</label>
+                    <input type="text" id="product" name="product">
+                    <span class="error-message" id="productError"></span>
+                </div> -->
+                
+                <div class="form-group">
+                    <label for="rating">Calificación de la Experiencia (1-10):</label>
+                    <div class="rating-container">
+                        <input type="range" id="rating" name="rating" min="1" max="10" value="10">
+                        <span id="ratingValue">10</span>
+                    </div>
+                    <div class="rating-labels">
+                        <span>Muy Malo</span>
+                        <span>Excelente</span>
+                    </div>
+                    <span class="error-message" id="ratingError"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="comments">Comentarios:</label>
+                    <textarea id="comments" name="comments" rows="4"></textarea>
+                    <span class="error-message" id="commentsError"></span>
+                </div>
+                
+                <!-- <div class="form-group">
+                    <label for="purchaseDate">Fecha de Compra:</label>
+                    <input type="datetime-local" id="purchaseDate" name="purchaseDate">
+                    <span class="error-message" id="purchaseDateError"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="receipt">Archivo de Recibo:</label>
+                    <input type="file" id="receipt" name="receipt">
+                    <span class="error-message" id="receiptError"></span>
+                </div> -->
+                
+                <div class="button-group">
+                    <button type="button" class="prev-btn" data-section="2">Anterior</button>
+                    <button type="button" class="next-btn" data-section="2">Siguiente</button>
+                </div>
+            </section>
+
+            <!-- Sección 3: Satisfacción General -->
+            <section id="section3" class="form-section">
+                <h2>Sección 3: Satisfacción General</h2>
+                
+                <!-- <div class="form-group">
+                    <label for="birthDate">Fecha de Nacimiento:</label>
+                    <input type="date" id="birthDate" name="birthDate">
+                    <span class="error-message" id="birthDateError"></span>
+                </div> -->
+                
+                <!-- <div class="form-group">
+                    <label for="zodiac">Zodiaco:</label>
+                    <select id="zodiac" name="zodiac">
+                        <option value="">Seleccione una opción</option>
+                        <option value="aries">Aries</option>
+                        <option value="tauro">Tauro</option>
+                        <option value="geminis">Géminis</option>
+                        <option value="cancer">Cáncer</option>
+                        <option value="leo">Leo</option>
+                        <option value="virgo">Virgo</option>
+                        <option value="libra">Libra</option>
+                        <option value="escorpio">Escorpio</option>
+                        <option value="sagitario">Sagitario</option>
+                        <option value="capricornio">Capricornio</option>
+                        <option value="acuario">Acuario</option>
+                        <option value="piscis">Piscis</option>
+                    </select>
+                    <span class="error-message" id="zodiacError"></span>
+                </div> -->
+                
+                <!-- <div class="form-group">
+                    <label for="favoriteColor">Color Favorito:</label>
+                    <input type="color" id="favoriteColor" name="favoriteColor" value="#0066cc">
+                    <span class="error-message" id="favoriteColorError"></span>
+                </div> -->
+                
+                <div class="form-group">
+                    <label>¿Recomendarías esta aplicación?</label>
+                    <div class="radio-group">
+                        <input type="radio" id="recommendYes" name="recommend" value="si">
+                        <label for="recommendYes">Sí</label>
+                        
+                        <input type="radio" id="recommendNo" name="recommend" value="no">
+                        <label for="recommendNo">No</label>
+                    </div>
+                    <span class="error-message" id="recommendError"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label>¿Cómo calificarías la experiencia de manejo de la aplicación?</label>
+                    <div class="radio-group">
+                        <input type="radio" id="serviceExcellent" name="service" value="excelente">
+                        <label for="serviceExcellent">Excelente</label>
+                        
+                        <input type="radio" id="serviceGood" name="service" value="bueno">
+                        <label for="serviceGood">Bueno</label>
+                        
+                        <input type="radio" id="serviceRegular" name="service" value="regular">
+                        <label for="serviceRegular">Regular</label>
+                        
+                        <input type="radio" id="serviceBad" name="service" value="malo">
+                        <label for="serviceBad">Malo</label>
+                    </div>
+                    <span class="error-message" id="serviceError"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="improvements">¿Qué mejorarías en el servicio? (nos ayudará a mejorar)</label>
+                    <textarea id="improvements" name="improvements" rows="4"></textarea>
+                    <span class="error-message" id="improvementsError"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label>¿Qué características valoras más?</label>
+                    <div class="checkbox-group">
+                        <div>
+                            <input type="checkbox" id="featureQuality" name="features" value="personalizacion">
+                            <label for="featureQuality">Personalización</label>
+                        </div>
+                        
+                        <!-- <div>
+                            <input type="checkbox" id="featurePrice" name="features" value="precio">
+                            <label for="featurePrice">Precio</label>
+                        </div> -->
+                        
+                        <div>
+                            <input type="checkbox" id="featureDesign" name="features" value="diseño">
+                            <label for="featureDesign">Diseño</label>
+                        </div>
+                        
+                        <div>
+                            <input type="checkbox" id="featureFunctionality" name="features" value="funcionalidad">
+                            <label for="featureFunctionality">Funcionalidad</label>
+                        </div>
+                        
+                        <!-- <div>
+                            <input type="checkbox" id="featureBrand" name="features" value="marca">
+                            <label for="featureBrand">Marca</label>
+                        </div> -->
+                    </div>
+                    <span class="error-message" id="featuresError"></span>
+                </div>
+                
+                <div class="button-group">
+                    <button type="button" class="prev-btn" data-section="3">Anterior</button>
+                    <button type="button" class="next-btn" data-section="3">Siguiente</button>
+                </div>
+            </section>
+
+            <!-- Sección 4: Preferencias -->
+            <section id="section4" class="form-section">
+                <h2>Sección 4: Preferencias</h2>
+                
+                <!-- <div class="form-group">
+                    <label>¿Qué rango horario prefieres que te contactemos?</label>
+                    <div class="time-range">
+                        <input type="time" id="timeRangeStart" name="timeRangeStart">
+                        <span>a</span>
+                        <input type="time" id="timeRangeEnd" name="timeRangeEnd">
+                    </div>
+                    <span class="error-message" id="timeRangeError"></span>
+                </div> -->
+                
+                <!-- <div class="form-group">
+                    <label>¿Qué métodos de pago prefieres?</label>
+                    <div class="checkbox-group">
+                        <div>
+                            <input type="checkbox" id="paymentCreditCard" name="paymentMethods" value="tarjeta">
+                            <label for="paymentCreditCard">Tarjeta de crédito</label>
+                        </div>
+                        
+                        <div>
+                            <input type="checkbox" id="paymentPaypal" name="paymentMethods" value="paypal">
+                            <label for="paymentPaypal">PayPal</label>
+                        </div>
+                        
+                        <div>
+                            <input type="checkbox" id="paymentBankTransfer" name="paymentMethods" value="transferencia">
+                            <label for="paymentBankTransfer">Transferencia bancaria</label>
+                        </div>
+                        
+                        <div>
+                            <input type="checkbox" id="paymentCash" name="paymentMethods" value="efectivo">
+                            <label for="paymentCash">Efectivo</label>
+                        </div>
+                    </div>
+                    <span class="error-message" id="paymentMethodsError"></span>
+                </div> -->
+                
+                <!-- <div class="form-group">
+                    <label>¿Con qué frecuencia compras en nuestra tienda?</label>
+                    <div class="radio-group">
+                        <input type="radio" id="frequencyDaily" name="frequency" value="diariamente">
+                        <label for="frequencyDaily">Diariamente</label>
+                        
+                        <input type="radio" id="frequencyWeekly" name="frequency" value="semanalmente">
+                        <label for="frequencyWeekly">Semanalmente</label>
+                        
+                        <input type="radio" id="frequencyMonthly" name="frequency" value="mensualmente">
+                        <label for="frequencyMonthly">Mensualmente</label>
+                        
+                        <input type="radio" id="frequencyRarely" name="frequency" value="rara vez">
+                        <label for="frequencyRarely">Rara vez</label>
+                    </div>
+                    <span class="error-message" id="frequencyError"></span>
+                </div> -->
+                
+                <div class="button-group">
+                    <button type="button" class="prev-btn" data-section="4">Anterior</button>
+                    <button type="submit" class="submit-btn">Enviar Encuesta</button>
+                </div>
+            </section>
+        </form>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

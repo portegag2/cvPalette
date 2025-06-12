@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Satisfaction Survey</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Customer Satisfaction Survey</h1>
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <div class="page-indicator">
+                <span id="currentPage">1</span> of <span id="totalPages">2</span>
+            </div>
+        </header>
+
+        <form id="surveyForm" action="https://httpbin.org/post" method="post">
+            <!-- Section 1: Product Rating -->
+            <section id="section1" class="form-section active">
+                <h2>Product Rating</h2>
+                <div class="form-group">
+                    <label for="product">Product Purchased:</label>
+                    <input type="text" id="product" name="product">
+                    <span class="error-message" id="productError"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="rating">Satisfaction Rating (1-10):</label>
+                    <div class="rating-container">
+                        <input type="range" id="rating" name="rating" min="1" max="10" value="5">
+                        <span id="ratingValue">5</span>
+                    </div>
+                    <span class="error-message" id="ratingError"></span>
+                </div>
+
+                <div class="button-group">
+                    <button type="button" class="next-btn" data-section="1">Next</button>
+                </div>
+            </section>
+
+            <!-- Section 2: Feedback -->
+            <section id="section2" class="form-section">
+                <h2>Additional Feedback</h2>
+                
+                <div class="form-group">
+                    <label>Would you recommend our product? <span class="required">*</span></label>
+                    <div class="radio-group">
+                        <input type="radio" id="recommendYes" name="recommend" value="yes" required>
+                        <label for="recommendYes">Yes</label>
+                        
+                        <input type="radio" id="recommendNo" name="recommend" value="no">
+                        <label for="recommendNo">No</label>
+                    </div>
+                    <span class="error-message" id="recommendError"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="comments">Comments:</label>
+                    <textarea id="comments" name="comments" rows="4"></textarea>
+                </div>
+
+                <div class="button-group">
+                    <button type="button" class="prev-btn" data-section="2">Previous</button>
+                    <button type="submit" class="submit-btn">Submit Survey</button>
+                </div>
+            </section>
+        </form>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
