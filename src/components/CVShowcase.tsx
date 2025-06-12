@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Download, FileText, Palette, LogIn, LogOut } from "lucide-react";
 import { useAuth0 } from "@auth0/auth0-react";
+import { Link } from "react-router-dom";
 import CVClassic from "./CVClassic";
 import CVModern from "./CVModern";
 import CVAts from "./CVAts";
@@ -24,7 +25,16 @@ type StyleConfig = {
 };
 
 const CVShowcase = () => {
-  const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
+  const { isAuthenticated, loginWithRedirect, logout, user } = useAuth0();
+  
+  const handleLogout = () => {
+    logout({ 
+      logoutParams: {
+        returnTo: window.location.origin
+      }
+    });
+  };
+
   const [selectedDesign, setSelectedDesign] = useState<"classic" | "modern" | "ats">("classic");
   const [classicStyles, setClassicStyles] = useState<StyleConfig>({
     font: "default",
@@ -109,17 +119,29 @@ const CVShowcase = () => {
             <p className="text-muted-foreground">
               Estilos diferentes para ofertas diferentes.
             </p>
-            <Button
-              onClick={() => isAuthenticated ? logout() : loginWithRedirect()}
-              variant="outline"
-              size="sm"
-              className="h-6 min-h-0 px-2 ml-[26px]"
-            >
-              {isAuthenticated ? 
-                <LogOut className="h-3 w-3" /> : 
-                <LogIn className="h-3 w-3" />
-              }
-            </Button>
+            <div className={`flex items-center gap-2 ${!isAuthenticated ? 'ml-[26px]' : 'ml-2'}`}>
+              {isAuthenticated && user && (
+                <Link to="/myprofile">
+                  <img 
+                    src={user.picture} 
+                    alt={user.name + ' perfil'}
+                    title={user.name + ' perfil'}
+                    className="w-6 h-6 rounded-full"
+                  />
+                </Link>
+              )}
+              <Button
+                onClick={() => isAuthenticated ? handleLogout() : loginWithRedirect()}
+                variant="outline"
+                size="sm"
+                className="h-6 min-h-0 px-2"
+              >
+                {isAuthenticated ? 
+                  <LogOut className="h-3 w-3" /> : 
+                  <LogIn className="h-3 w-3" />
+                }
+              </Button>
+            </div>
           </div>
         </div>
         
