@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -39,6 +39,45 @@ const CVShowcase = () => {
     fontSize: 11,
     headingSize: 14.6
   });
+  const [zoom, setZoom] = useState(100);
+  const cvContainerRef = useRef<HTMLDivElement>(null);
+
+  const calculateOptimalZoom = () => {
+    if (!cvContainerRef.current) return 100;
+    
+    const containerWidth = cvContainerRef.current.offsetWidth - 40;
+    const cvWidth = 210 * 3.7795275591; // A4 width in pixels
+    
+    // Calculate zoom based primarily on width
+    const widthZoom = (containerWidth / cvWidth) * 100;
+    
+    // Clamp between 25 and 100
+    return Math.min(Math.max(Math.floor(widthZoom), 25), 100);
+  };
+
+  useEffect(() => {
+    // Initial zoom calculation with delay to ensure proper rendering
+    const timer = setTimeout(() => {
+      setZoom(calculateOptimalZoom());
+    }, 100);
+
+    // Debounced resize handler
+    let resizeTimer: NodeJS.Timeout;
+    const handleResize = () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        const newZoom = calculateOptimalZoom();
+        setZoom(newZoom);
+      }, 100);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      clearTimeout(timer);
+      clearTimeout(resizeTimer);
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   const handleExportPDF = () => {
     const originalTitle = document.title;
@@ -111,27 +150,60 @@ const CVShowcase = () => {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        <div className="lg:col-span-3">
+        <div id='cv' className="lg:col-span-3">
           <Card className="p-1">
-            <div 
-              className="max-h-[800px] overflow-y-auto"
-              style={{ 
-                fontFamily: selectedDesign === "ats" ? atsStyles.font : 
-                          selectedDesign === "classic" ? classicStyles.font : modernStyles.font,
-                fontSize: selectedDesign === "ats" ? `${atsStyles.fontSize}pt` :
-                         `${selectedDesign === "classic" ? classicStyles.fontSize : modernStyles.fontSize}px`,
-                '--cv-primary': selectedDesign === "modern" ? modernStyles.theme.primary : classicStyles.theme.primary,
-                '--cv-secondary': selectedDesign === "modern" ? modernStyles.theme.secondary : classicStyles.theme.secondary,
-                '--cv-accent': selectedDesign === "modern" ? modernStyles.theme.accent : classicStyles.theme.accent,
-              } as React.CSSProperties}
-            >
-              {selectedDesign === "ats" ? (
-                <CVAts data={pedroData} styles={atsStyles} />
-              ) : selectedDesign === "modern" ? (
-                <CVModern data={pedroData} />
-              ) : (
-                <CVClassic data={pedroData} />
-              )}
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-muted-foreground w-14">Zoom: {zoom}%</span>
+                <Slider
+                  value={[zoom]}
+                  onValueChange={([value]) => setZoom(value)}
+                  min={25}
+                  max={Math.max(calculateOptimalZoom(), 100)}
+                  step={1}
+                  className="w-48"
+                />
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setZoom(calculateOptimalZoom())}
+                  className="ml-2 text-xs"
+                  title="Adjust zoom to fit the CV in the viewport"
+                >
+                  Fit
+                </Button>
+              </div>
+              <div 
+                ref={cvContainerRef}
+                className="overflow-auto flex justify-center"
+                style={{
+                  height: 'calc(100vh - 300px)',
+                }}
+              >
+                <div
+                  style={{ 
+                    transform: `scale(${zoom / 100})`,
+                    transformOrigin: 'top center',
+                    width: 'fit-content',
+                    padding: '20px',
+                    fontFamily: selectedDesign === "ats" ? atsStyles.font : 
+                              selectedDesign === "classic" ? classicStyles.font : modernStyles.font,
+                    fontSize: selectedDesign === "ats" ? `${atsStyles.fontSize}pt` :
+                             `${selectedDesign === "classic" ? classicStyles.fontSize : modernStyles.fontSize}px`,
+                    '--cv-primary': selectedDesign === "modern" ? modernStyles.theme.primary : classicStyles.theme.primary,
+                    '--cv-secondary': selectedDesign === "modern" ? modernStyles.theme.secondary : classicStyles.theme.secondary,
+                    '--cv-accent': selectedDesign === "modern" ? modernStyles.theme.accent : classicStyles.theme.accent,
+                  } as React.CSSProperties}
+                >
+                  {selectedDesign === "ats" ? (
+                    <CVAts data={pedroData} styles={atsStyles} />
+                  ) : selectedDesign === "modern" ? (
+                    <CVModern data={pedroData} />
+                  ) : (
+                    <CVClassic data={pedroData} />
+                  )}
+                </div>
+              </div>
             </div>
           </Card>
         </div>
