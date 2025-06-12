@@ -13,7 +13,7 @@ import { cvThemes } from "@/constants/themes";
 import ClassicToolbox from "./toolbox/ClassicToolbox";
 import ModernToolbox from "./toolbox/ModernToolbox";
 import AtsToolbox from "./toolbox/AtsToolbox";
-import Logo from "@/assets/logo.png"; // Add this import at the top
+import Logo from "@/assets/logo.svg"; // Add this import at the top
 import LogoWord from "@/assets/logo_word_palette.svg";
 
 type StyleConfig = {
