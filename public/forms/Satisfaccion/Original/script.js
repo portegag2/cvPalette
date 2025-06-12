@@ -9,8 +9,15 @@ document.addEventListener('DOMContentLoaded', function() {
     const ratingInput = document.getElementById('rating');
     const ratingValue = document.getElementById('ratingValue');
     
-    const totalSections = sections.length;
-    let currentSection = 1;
+    const totalSections = 2;
+    let currentSection = 2; // Start with section2
+    
+    // Ensure section2 is active initially
+    sections.forEach(section => section.classList.remove('active'));
+    document.getElementById('section2').classList.add('active');
+    
+    // Update initial progress
+    updateProgress();
     
     // Actualizar el valor del rating cuando cambia
     ratingInput.addEventListener('input', function() {
@@ -42,24 +49,12 @@ document.addEventListener('DOMContentLoaded', function() {
     nextButtons.forEach(button => {
         button.addEventListener('click', function() {
             const sectionNumber = parseInt(this.getAttribute('data-section'));
-            
-            if (validateSection(sectionNumber)) {
-                // Ocultar sección actual
-                document.getElementById(`section${sectionNumber}`).classList.remove('active');
-                
-                // Mostrar siguiente sección
-                currentSection = sectionNumber + 1;
-                document.getElementById(`section${currentSection}`).classList.add('active');
-                
-                // Actualizar barra de progreso y contador de página
-                updateProgress();
-                
-                // Desplazar hacia arriba
-                window.scrollTo(0, 0);
-            } else {
-                // Mostrar alerta si no pasa la validación
-                alert('Por favor, completa todos los campos obligatorios correctamente antes de continuar.');
-            }
+            // Simplemente pasar a la siguiente sección, no se necesita validación
+            document.getElementById(`section${sectionNumber}`).classList.remove('active');
+            currentSection = sectionNumber + 1;
+            document.getElementById(`section${currentSection}`).classList.add('active');
+            updateProgress();
+            window.scrollTo(0, 0);
         });
     });
     
@@ -86,53 +81,33 @@ document.addEventListener('DOMContentLoaded', function() {
     // Manejar el envío del formulario
     form.addEventListener('submit', function(e) {
         e.preventDefault();
+        const formData = new FormData(form);
         
-        // Validar la última sección antes de enviar
-        if (validateSection(4)) {
-            // Recopilar y preparar los datos del formulario
-            const formData = new FormData(form);
-            
-            // Mostrar un indicador de carga o deshabilitar el botón de envío aquí
-            document.querySelector('.submit-btn').disabled = true;
-            document.querySelector('.submit-btn').textContent = 'Enviando...';
-            
-            // Enviar los datos a través de fetch
-            fetch('https://httpbin.org/post', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Error en la respuesta del servidor');
-                }
-                return response.json();
-            })
-            .then(data => {
-                // Éxito: Mostrar un mensaje y tal vez resetear el formulario
-                alert('¡Gracias! Tu encuesta ha sido enviada correctamente.');
-                console.log('Respuesta del servidor:', data);
-                form.reset();
-                
-                // Volver a la primera sección
-                sections.forEach(section => section.classList.remove('active'));
-                document.getElementById('section1').classList.add('active');
-                currentSection = 1;
-                updateProgress();
-            })
-            .catch(error => {
-                // Error: Mostrar un mensaje de error
-                alert('Lo sentimos, ha ocurrido un error al enviar la encuesta. Por favor, inténtalo de nuevo.');
-                console.error('Error:', error);
-            })
-            .finally(() => {
-                // Restablecer el botón de envío
-                document.querySelector('.submit-btn').disabled = false;
-                document.querySelector('.submit-btn').textContent = 'Enviar Encuesta';
-            });
-        } else {
-            // Mostrar alerta si no pasa la validación
-            alert('Por favor, completa todos los campos obligatorios correctamente antes de enviar.');
-        }
+        document.querySelector('.submit-btn').disabled = true;
+        document.querySelector('.submit-btn').textContent = 'Enviando...';
+        
+        fetch('https://httpbin.org/post', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert('¡Gracias! Tu encuesta ha sido enviada correctamente.');
+            console.log('Respuesta del servidor:', data);
+            form.reset();
+            sections.forEach(section => section.classList.remove('active'));
+            document.getElementById('section1').classList.add('active');
+            currentSection = 1;
+            updateProgress();
+        })
+        .catch(error => {
+            alert('Lo sentimos, ha ocurrido un error al enviar la encuesta. Por favor, inténtalo de nuevo.');
+            console.error('Error:', error);
+        })
+        .finally(() => {
+            document.querySelector('.submit-btn').disabled = false;
+            document.querySelector('.submit-btn').textContent = 'Enviar Encuesta';
+        });
     });
     
     // Función para actualizar la barra de progreso

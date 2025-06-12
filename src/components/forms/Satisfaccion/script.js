@@ -56,36 +56,33 @@ document.addEventListener('DOMContentLoaded', function() {
     // Handle form submission
     form.addEventListener('submit', function(e) {
         e.preventDefault();
+        const formData = new FormData(form);
         
-        if (validateSection(3)) {
-            const formData = new FormData(form);
-            
-            document.querySelector('.submit-btn').disabled = true;
-            document.querySelector('.submit-btn').textContent = 'Sending...';
-            
-            fetch('https://httpbin.org/post', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                alert('Thank you! Your survey has been submitted.');
-                console.log('Server response:', data);
-                form.reset();
-                sections.forEach(section => section.classList.remove('active'));
-                document.getElementById('section1').classList.add('active');
-                currentSection = 1;
-                updateProgress();
-            })
-            .catch(error => {
-                alert('Sorry, there was an error submitting the survey. Please try again.');
-                console.error('Error:', error);
-            })
-            .finally(() => {
-                document.querySelector('.submit-btn').disabled = false;
-                document.querySelector('.submit-btn').textContent = 'Submit Survey';
-            });
-        }
+        document.querySelector('.submit-btn').disabled = true;
+        document.querySelector('.submit-btn').textContent = 'Sending...';
+        
+        fetch('https://httpbin.org/post', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert('Thank you! Your survey has been submitted.');
+            console.log('Server response:', data);
+            form.reset();
+            sections.forEach(section => section.classList.remove('active'));
+            document.getElementById('section1').classList.add('active');
+            currentSection = 1;
+            updateProgress();
+        })
+        .catch(error => {
+            alert('Sorry, there was an error submitting the survey. Please try again.');
+            console.error('Error:', error);
+        })
+        .finally(() => {
+            document.querySelector('.submit-btn').disabled = false;
+            document.querySelector('.submit-btn').textContent = 'Submit Survey';
+        });
     });
     
     // Validate section fields
