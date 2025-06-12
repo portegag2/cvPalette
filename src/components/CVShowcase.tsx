@@ -58,7 +58,7 @@ const CVShowcase = () => {
   return (
     <div className="container mx-auto pt-4 px-4">
       {/* Header section */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-6">
         <div>
           <div className="flex items-center gap-3 mb-2">
             <img src={Logo} alt="Logo CV Design Maker" className="h-8 w-auto" />
@@ -69,33 +69,33 @@ const CVShowcase = () => {
           </p>
         </div>
         
-        <Card className="w-full">
-          <CardContent className="py-3 space-y-3 sm:space-y-0">
-            <div className="grid grid-cols-1 sm:grid-cols-4 gap-2">
-              <div className="col-span-3 grid grid-cols-1 xs:grid-cols-3 gap-2">
+        <Card className="w-full lg:w-auto">
+          <CardContent className="py-3">
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-2">
+              <div className="col-span-3 flex flex-col lg:flex-row gap-2">
                 <Button
                   variant={selectedDesign === "classic" ? "default" : "outline"}
-                  className="w-full justify-start"
+                  className="w-full lg:flex-1 justify-start"
                   onClick={() => setSelectedDesign("classic")}
                 >
                   <FileText className="w-4 h-4 mr-2" />
-                  Diseño Clásico
+                  Clásico
                 </Button>
                 <Button
                   variant={selectedDesign === "modern" ? "default" : "outline"}
-                  className="w-full justify-start"
+                  className="w-full lg:flex-1 justify-start"
                   onClick={() => setSelectedDesign("modern")}
                 >
                   <Palette className="w-4 h-4 mr-2" />
-                  Diseño Moderno
+                  Moderno
                 </Button>
                 <Button
                   variant={selectedDesign === "ats" ? "default" : "outline"}
-                  className="w-full justify-start"
+                  className="w-full lg:flex-1 justify-start"
                   onClick={() => setSelectedDesign("ats")}
                 >
                   <FileText className="w-4 h-4 mr-2" />
-                  Diseño ATS
+                  ATS
                 </Button>
               </div>
               <Button 
@@ -103,7 +103,7 @@ const CVShowcase = () => {
                 className="w-full flex items-center justify-center gap-2"
               >
                 <Download className="w-4 h-4" />
-                Exportar PDF
+                PDF
               </Button>
             </div>
           </CardContent>
