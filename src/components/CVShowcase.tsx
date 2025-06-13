@@ -126,14 +126,7 @@ const CVShowcase = () => {
           <div className="flex items-center gap-3 mb-2">
             <img src={Logo} alt="Logo CV Design Maker" className="h-8 w-auto" />
             <img src={LogoWord} alt="CV Design Maker" className="h-[75px] w-auto" />
-            <div className="flex gap-4 ml-4">
-              <Button 
-                variant="link"
-                className="text-blue-500 hover:text-blue-700 text-sm p-0 h-auto"
-                onClick={() => setIsFormModalOpen(true)}
-              >
-                Customer Survey
-              </Button>
+            <div className="flex gap-4 ml-4">             
               <Button 
                 variant="link"
                 className="text-blue-500 hover:text-blue-700 text-sm p-0 h-auto"
