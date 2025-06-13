@@ -218,7 +218,7 @@ const CVShowcase = () => {
         <div id='cv' className="lg:col-span-3 print:w-full">
           <Card className="p-1 print:p-0 print:shadow-none print:border-0">
             <div className="flex flex-col gap-2 print:hidden">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 lg:hidden">
                 <span className="text-sm text-muted-foreground w-14">Zoom: {zoom}%</span>
                 <Slider
                   value={[zoom]}
