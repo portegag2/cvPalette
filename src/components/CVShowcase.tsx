@@ -19,6 +19,7 @@ import Logo from "@/assets/logo.svg"; // Add this import at the top
 import LogoWord from "@/assets/logo_word_palette.svg";
 import FormModal from "./forms/Satisfaccion/FormModal";
 import OriginalFormModal from "./forms/Satisfaccion/OriginalFormModal";
+import CustomerSurveyModal from "./forms/CustomerSurveyModal";
 
 type StyleConfig = {
   font: string;
@@ -134,6 +135,7 @@ const CVShowcase = () => {
               >
                 Original: Satisfaccion
               </Button>
+              <CustomerSurveyModal />
             </div>
           </div>
           <div className="flex items-center gap-5">
