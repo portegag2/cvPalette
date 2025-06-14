@@ -234,9 +234,9 @@ const CVShowcase = () => {
               <div 
                 ref={cvContainerRef}
                 className="overflow-auto flex justify-center"
-                style={{
-                  height: 'calc(100vh - 300px)',
-                }}
+                // style={{
+                //   height: 'calc(100vh - 300px)',
+                // }}
               >
                 <div className="print:m-0 print:p-0 print:[transform:none]"
                   style={{ 
