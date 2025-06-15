@@ -154,3 +154,46 @@
     top: 0;
   }
 }
+
+@media screen {
+  #CvClassic, #CvModern, #CvAts {
+    position: relative;
+  }
+
+  #CvClassic::after, #CvModern::after, #CvAts::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 277mm;
+    height: 2rem;
+    background: 
+      rgba(249, 250, 251, 0.8);
+    border-top: 1px dashed rgba(100, 116, 139, 0.3);
+    border-bottom: 1px dashed rgba(100, 116, 139, 0.3);
+    pointer-events: none;
+  }
+
+  #CvClassic::before, #CvModern::before, #CvAts::before {
+    content: "Salto de página";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 277mm;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 0 1em;
+    font-size: 0.75rem;
+    color: rgb(100, 116, 139);
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    z-index: 1;
+    pointer-events: none;
+  }
+}
+
+@media print {
+  #CvClassic::after, #CvModern::after, #CvAts::after {
+    display: none;
+  }
+}
