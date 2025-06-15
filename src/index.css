@@ -197,3 +197,24 @@
     display: none;
   }
 }
+
+@media (max-width: 420px) {
+  [data-sidebar="sidebar"] h1 {
+    font-size: 1em !important;
+  }
+  [data-sidebar="sidebar"] p {
+    font-size: 0.75em !important;
+  }
+}
+
+@media (max-width: 370px) {
+  .header-description {
+    font-size: 0.7rem !important;
+    white-space: nowrap !important;
+  }
+  
+  .header-auth {
+    transform: scale(0.8);
+    transform-origin: right;
+  }
+}

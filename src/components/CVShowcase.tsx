@@ -124,32 +124,23 @@ const CVShowcase = () => {
       {/* Header section */}
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-6">
         <div>
-          <div className="flex items-center gap-3 mb-2">
-            <img src={Logo} alt="Logo CV Design Maker" className="h-8 w-auto" />
-            <img src={LogoWord} alt="CV Design Maker" className="h-[75px] w-auto" />
-            <div className="flex gap-4 ml-4">             
-              <Button 
-                variant="link"
-                className="text-blue-500 hover:text-blue-700 text-sm p-0 h-auto"
-                onClick={() => setIsOriginalFormModalOpen(true)}
-              >
-                Original: Satisfaccion
-              </Button>
-              <CustomerSurveyModal />
-            </div>
+          <div className="flex items-center gap-3 mb-2 overflow-hidden">
+            <img src={Logo} alt="Logo CV Design Maker" className="h-8 w-auto flex-shrink-0" />
+            <img src={LogoWord} alt="CV Design Maker" className="h-[75px] w-auto min-w-0" />
           </div>
-          <div className="flex items-center gap-5">
-            <p className="text-muted-foreground">
+          <div className="flex items-center gap-2 min-w-0">
+            <p className="text-muted-foreground header-description truncate">
               Estilos diferentes para ofertas diferentes.
             </p>
-            <div className={`flex items-center gap-2 ${!isAuthenticated ? 'ml-[26px]' : 'ml-2'}`}>
+            <div className={`flex items-center gap-2 header-auth flex-shrink-0`}>
               {isAuthenticated && user && (
                 <Link to="/myprofile">
                   <img 
                     src={user.picture} 
                     alt={user.name + ' perfil'}
                     title={user.name + ' perfil'}
-                    className="w-6 h-6 rounded-full"
+                    className="w-[length:var(--icon-size,1.5rem)] h-[length:var(--icon-size,1.5rem)] rounded-full"
+                    style={{ '--icon-size': window.innerWidth < 400 ? '1.25rem' : '1.5rem' }}
                   />
                 </Link>
               )}
@@ -157,11 +148,15 @@ const CVShowcase = () => {
                 onClick={() => isAuthenticated ? handleLogout() : loginWithRedirect()}
                 variant="outline"
                 size="sm"
-                className="h-6 min-h-0 px-2"
+                className="h-[length:var(--btn-size,1.5rem)] min-h-0 px-[length:var(--btn-padding,0.5rem)]"
+                style={{ 
+                  '--btn-size': window.innerWidth < 400 ? '1.25rem' : '1.5rem',
+                  '--btn-padding': window.innerWidth < 400 ? '0.25rem' : '0.5rem'
+                }}
               >
                 {isAuthenticated ? 
-                  <LogOut className="h-3 w-3" /> : 
-                  <LogIn className="h-3 w-3" />
+                  <LogOut className="w-[length:var(--icon-size,0.75rem)] h-[length:var(--icon-size,0.75rem)]" style={{'--icon-size': window.innerWidth < 370 ? '0.6rem' : '0.75rem'}} /> : 
+                  <LogIn className="w-[length:var(--icon-size,0.75rem)] h-[length:var(--icon-size,0.75rem)]" style={{'--icon-size': window.innerWidth < 370 ? '0.6rem' : '0.75rem'}} />
                 }
               </Button>
             </div>
