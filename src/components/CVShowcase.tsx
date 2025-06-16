@@ -2,7 +2,9 @@ import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Download, FileText, Palette } from "lucide-react";
+import { Download, FileText, Palette, LogIn, LogOut } from "lucide-react";
+import { useAuth0 } from "@auth0/auth0-react";
+import { Link } from "react-router-dom";
 import CVClassic from "./CVClassic";
 import CVModern from "./CVModern";
 import CVAts from "./CVAts";
@@ -25,8 +27,18 @@ type StyleConfig = {
 };
 
 const CVShowcase = () => {
+  const { isAuthenticated, loginWithRedirect, logout, user } = useAuth0();
   const [isFormModalOpen, setIsFormModalOpen] = useState(false);
   const [isOriginalFormModalOpen, setIsOriginalFormModalOpen] = useState(false);
+  
+  const handleLogout = () => {
+    logout({ 
+      logoutParams: {
+        returnTo: window.location.origin
+      }
+    });
+  };
+
   const [selectedDesign, setSelectedDesign] = useState<"classic" | "modern" | "ats">("classic");
   const [classicStyles, setClassicStyles] = useState<StyleConfig>({
     font: "default",
@@ -122,6 +134,34 @@ const CVShowcase = () => {
             <p className="text-muted-foreground header-description truncate">
               Estilos diferentes para ofertas diferentes.
             </p>
+            <div className={`flex items-center gap-2 header-auth flex-shrink-0`}>
+              {isAuthenticated && user && (
+                <Link to="/myprofile">
+                  <img 
+                    src={user.picture} 
+                    alt={user.name + ' perfil'}
+                    title={user.name + ' perfil'}
+                    className="w-[length:var(--icon-size,1.5rem)] h-[length:var(--icon-size,1.5rem)] rounded-full"
+                    style={{ ['--icon-size' as string]: window.innerWidth < 400 ? '1.25rem' : '1.5rem' }}
+                  />
+                </Link>
+              )}
+              <Button
+                onClick={() => isAuthenticated ? handleLogout() : loginWithRedirect()}
+                variant="outline"
+                size="sm"
+                className="h-[length:var(--btn-size,1.5rem)] min-h-0 px-[length:var(--btn-padding,0.5rem)]"
+                style={{ 
+                  ['--btn-size' as string]: window.innerWidth < 400 ? '1.25rem' : '1.5rem',
+                  ['--btn-padding' as string]: window.innerWidth < 400 ? '0.25rem' : '0.5rem'
+                }}
+              >
+                {isAuthenticated ? 
+                  <LogOut className="w-[length:var(--icon-size,0.75rem)] h-[length:var(--icon-size,0.75rem)]" style={{['--icon-size' as string]: window.innerWidth < 370 ? '0.6rem' : '0.75rem'}} /> : 
+                  <LogIn className="w-[length:var(--icon-size,0.75rem)] h-[length:var(--icon-size,0.75rem)]" style={{['--icon-size' as string]: window.innerWidth < 370 ? '0.6rem' : '0.75rem'}} />
+                }
+              </Button>
+            </div>
           </div>
         </div>
         
