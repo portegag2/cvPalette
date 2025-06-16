@@ -12,6 +12,7 @@ export default function UserProfileModal({
   open,
   setOpen,
 }: UserProfileModalProps) {
+  const [step, setStep] = useState(1);
   const [rating, setRating] = useState(5);
   const [comments, setComments] = useState("");
   const [wouldRecommend, setWouldRecommend] = useState<boolean | null>(null);
@@ -20,6 +21,36 @@ export default function UserProfileModal({
   );
   const [improvements, setImprovements] = useState("");
   const [valuedFeatures, setValuedFeatures] = useState<Feature[]>([]);
+
+  const handleSubmit = () => {
+    const formData = {
+      rating,
+      comments,
+      wouldRecommend: wouldRecommend ? "Sí" : "No",
+      usabilityRating,
+      improvements,
+      valuedFeatures: valuedFeatures.join(", "),
+    };
+
+    // Crear el contenido del email
+    const emailBody = `
+Resultados del Formulario de Satisfacción:
+
+Calificación de la Experiencia: ${formData.rating}/10
+Comentarios: ${formData.comments}
+¿Recomendaría la aplicación?: ${formData.wouldRecommend}
+Experiencia de manejo: ${formData.usabilityRating}
+Sugerencias de mejora: ${formData.improvements}
+Características más valoradas: ${formData.valuedFeatures}
+    `.trim();
+
+    // Crear el enlace mailto
+    const mailtoLink = `mailto:portegag2@gmail.com?subject=Resultados Formulario de Satisfacción&body=${encodeURIComponent(emailBody)}`;
+    
+    // Abrir el cliente de correo
+    window.location.href = mailtoLink;
+    setOpen(false);
+  };
 
   if (!open) return null;
 
@@ -33,160 +64,177 @@ export default function UserProfileModal({
         >
           ×
         </button>
-        <h2 className="text-xl font-bold mb-6">Formulario de satisfacción</h2>
+        <h2 className="text-xl font-bold mb-6">
+          Formulario de satisfacción {step}/2
+        </h2>
         <div className="space-y-6">
-          {/* Rating */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Calificación de la Experiencia (1-10)
-            </label>
-            <div className="flex items-center gap-4">
-              <input
-                type="range"
-                min="1"
-                max="10"
-                step="1"
-                value={rating}
-                onChange={(e) => setRating(parseInt(e.target.value))}
-                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-500"
-              />
-              <span className="text-lg font-semibold min-w-[2ch] text-center">
-                {rating}
-              </span>
-            </div>
-          </div>
-
-          {/* Comments */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Comentarios
-            </label>
-            <textarea
-              value={comments}
-              onChange={(e) => setComments(e.target.value)}
-              className="w-full p-2 border rounded-md min-h-[100px] text-sm"
-              placeholder="Cuéntanos tu experiencia..."
-            />
-          </div>
-
-          {/* Would Recommend */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              ¿Recomendarías esta aplicación?
-            </label>
-            <div className="flex gap-4">
-              <button
-                type="button"
-                onClick={() => setWouldRecommend(true)}
-                className={`flex-1 py-2 px-4 rounded-md border transition-all ${
-                  wouldRecommend === true
-                    ? "bg-green-500 text-white border-green-600"
-                    : "border-gray-300 hover:border-green-300 hover:bg-green-50"
-                }`}
-              >
-                Sí
-              </button>
-              <button
-                type="button"
-                onClick={() => setWouldRecommend(false)}
-                className={`flex-1 py-2 px-4 rounded-md border transition-all ${
-                  wouldRecommend === false
-                    ? "bg-red-500 text-white border-red-600"
-                    : "border-gray-300 hover:border-red-300 hover:bg-red-50"
-                }`}
-              >
-                No
-              </button>
-            </div>
-          </div>
-
-          {/* Usability Rating */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              ¿Cómo calificarías la experiencia de manejo de la aplicación?
-            </label>
-            <div className="grid grid-cols-2 gap-2">
-              {(["excelente", "bueno", "regular", "malo"] as const).map(
-                (rating) => (
-                  <button
-                    key={rating}
-                    type="button"
-                    onClick={() => setUsabilityRating(rating)}
-                    className={`py-2 px-4 rounded-md border capitalize transition-all ${
-                      usabilityRating === rating
-                        ? "bg-blue-500 text-white border-blue-600"
-                        : "border-gray-300 hover:border-blue-300 hover:bg-blue-50"
-                    }`}
-                  >
+          {step === 1 ? (
+            <>
+              {/* Rating */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Calificación de la Experiencia (1-10)
+                </label>
+                <div className="flex items-center gap-4">
+                  <input
+                    type="range"
+                    min="1"
+                    max="10"
+                    step="1"
+                    value={rating}
+                    onChange={(e) => setRating(parseInt(e.target.value))}
+                    className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-500"
+                  />
+                  <span className="text-lg font-semibold min-w-[2ch] text-center">
                     {rating}
-                  </button>
-                )
-              )}
-            </div>
-          </div>
+                  </span>
+                </div>
+              </div>
 
-          {/* Improvements */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              ¿Qué mejorarías en el servicio?
-            </label>
-            <textarea
-              value={improvements}
-              onChange={(e) => setImprovements(e.target.value)}
-              className="w-full p-2 border rounded-md min-h-[100px] text-sm"
-              placeholder="Tus sugerencias son importantes..."
-            />
-          </div>
+              {/* Comments */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Comentarios
+                </label>
+                <textarea
+                  value={comments}
+                  onChange={(e) => setComments(e.target.value)}
+                  className="w-full p-2 border rounded-md min-h-[100px] text-sm"
+                  placeholder="Cuéntanos tu experiencia..."
+                />
+              </div>
 
-          {/* Valued Features */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              ¿Qué características valoras más?
-            </label>
-            <div className="flex flex-wrap gap-2">
-              {(["personalizacion", "diseño", "funcionalidad"] as const).map(
-                (feature) => (
+              {/* Would Recommend */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  ¿Recomendarías esta aplicación?
+                </label>
+                <div className="flex gap-4">
                   <button
-                    key={feature}
                     type="button"
-                    onClick={() => {
-                      setValuedFeatures((prev) =>
-                        prev.includes(feature)
-                          ? prev.filter((f) => f !== feature)
-                          : [...prev, feature]
-                      );
-                    }}
-                    className={`py-2 px-4 rounded-md border capitalize transition-all ${
-                      valuedFeatures.includes(feature)
-                        ? "bg-purple-500 text-white border-purple-600"
-                        : "border-gray-300 hover:border-purple-300 hover:bg-purple-50"
+                    onClick={() => setWouldRecommend(true)}
+                    className={`flex-1 py-2 px-4 rounded-md border transition-all ${
+                      wouldRecommend === true
+                        ? "bg-green-500 text-white border-green-600"
+                        : "border-gray-300 hover:border-green-300 hover:bg-green-50"
                     }`}
                   >
-                    {feature}
+                    Sí
                   </button>
-                )
-              )}
-            </div>
-          </div>
+                  <button
+                    type="button"
+                    onClick={() => setWouldRecommend(false)}
+                    className={`flex-1 py-2 px-4 rounded-md border transition-all ${
+                      wouldRecommend === false
+                        ? "bg-red-500 text-white border-red-600"
+                        : "border-gray-300 hover:border-red-300 hover:bg-red-50"
+                    }`}
+                  >
+                    No
+                  </button>
+                </div>
+              </div>
+            </>
+          ) : (
+            <>
+              {/* Usability Rating */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  ¿Cómo calificarías la experiencia de manejo de la aplicación?
+                </label>
+                <div className="grid grid-cols-2 gap-2">
+                  {(["excelente", "bueno", "regular", "malo"] as const).map(
+                    (rating) => (
+                      <button
+                        key={rating}
+                        type="button"
+                        onClick={() => setUsabilityRating(rating)}
+                        className={`py-2 px-4 rounded-md border capitalize transition-all ${
+                          usabilityRating === rating
+                            ? "bg-blue-500 text-white border-blue-600"
+                            : "border-gray-300 hover:border-blue-300 hover:bg-blue-50"
+                        }`}
+                      >
+                        {rating}
+                      </button>
+                    )
+                  )}
+                </div>
+              </div>
 
-          {/* Submit Button */}
-          <button
-            onClick={() => {
-              // Here you would handle the form submission
-              console.log({
-                rating,
-                comments,
-                wouldRecommend,
-                usabilityRating,
-                improvements,
-                valuedFeatures,
-              });
-              setOpen(false);
-            }}
-            className="w-full py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors mt-4"
-          >
-            Enviar
-          </button>
+              {/* Improvements */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  ¿Qué mejorarías en el servicio?
+                </label>
+                <textarea
+                  value={improvements}
+                  onChange={(e) => setImprovements(e.target.value)}
+                  className="w-full p-2 border rounded-md min-h-[100px] text-sm"
+                  placeholder="Tus sugerencias son importantes..."
+                />
+              </div>
+
+              {/* Valued Features */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  ¿Qué características valoras más?
+                </label>
+                <div className="flex flex-wrap gap-2">
+                  {(["personalizacion", "diseño", "funcionalidad"] as const).map(
+                    (feature) => (
+                      <button
+                        key={feature}
+                        type="button"
+                        onClick={() => {
+                          setValuedFeatures((prev) =>
+                            prev.includes(feature)
+                              ? prev.filter((f) => f !== feature)
+                              : [...prev, feature]
+                          );
+                        }}
+                        className={`py-2 px-4 rounded-md border capitalize transition-all ${
+                          valuedFeatures.includes(feature)
+                            ? "bg-purple-500 text-white border-purple-600"
+                            : "border-gray-300 hover:border-purple-300 hover:bg-purple-50"
+                        }`}
+                      >
+                        {feature}
+                      </button>
+                    )
+                  )}
+                </div>
+              </div>
+            </>
+          )}
+
+          {/* Navigation Buttons */}
+          <div className="flex gap-3 pt-4">
+            {step === 2 && (
+              <button
+                onClick={() => setStep(1)}
+                className="flex-1 py-2 px-4 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors"
+              >
+                Anterior
+              </button>
+            )}
+            {step === 1 && (
+              <button
+                onClick={() => setStep(2)}
+                className="flex-1 py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
+              >
+                Siguiente
+              </button>
+            )}
+            {step === 2 && (
+              <button
+                onClick={handleSubmit}
+                className="flex-1 py-2 px-4 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors"
+              >
+                Enviar
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </div>
