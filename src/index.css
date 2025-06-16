@@ -175,7 +175,7 @@
   }
 
   #CvClassic::before, #CvModern::before, #CvAts::before {
-    content: "Salto de página";
+    content: "Fin de página";
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
