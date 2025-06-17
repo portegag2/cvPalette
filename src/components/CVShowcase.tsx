@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Download, FileText, Palette, LogIn, LogOut } from "lucide-react";
+import { Download, FileText, Palette, LogIn, LogOut, Edit2 } from "lucide-react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Link } from "react-router-dom";
 import CVClassic from "./CVClassic";
@@ -57,6 +57,7 @@ const CVShowcase = () => {
   });
   const [zoom, setZoom] = useState(100);
   const cvContainerRef = useRef<HTMLDivElement>(null);
+  const [cvData, setCvData] = useState(pedroData);
 
   const calculateOptimalZoom = () => {
     if (!cvContainerRef.current) return 100;
@@ -109,6 +110,21 @@ const CVShowcase = () => {
     { value: "modern", label: "Moderno" },
     { value: "ats", label: "ATS" }
   ];
+
+  const handleCVUpdate = (field: string, value: string) => {
+    const newData = { ...cvData };
+    if (field.includes('[')) {
+      // Handle array updates (e.g., experiencia_laboral[0].descripcion)
+      const [arrayName, index, prop] = field.match(/(\w+)\[(\d+)\]\.(\w+)/)?.slice(1) || [];
+      if (arrayName && index && prop) {
+        newData[arrayName][parseInt(index)][prop] = value;
+      }
+    } else {
+      // Handle direct property updates (e.g., perfil_profesional)
+      newData[field] = value;
+    }
+    setCvData(newData);
+  };
 
   return (
     <div className="container mx-auto pt-4 px-4">
@@ -210,25 +226,27 @@ const CVShowcase = () => {
         <div id='cv' className="lg:col-span-3 print:w-full">
           <Card className="p-1 print:p-0 print:shadow-none print:border-0">
             <div className="flex flex-col gap-2 print:hidden">
-              <div className="flex items-center gap-2 lg:hidden">
-                <span className="text-sm text-muted-foreground w-14">Zoom: {zoom}%</span>
-                <Slider
-                  value={[zoom]}
-                  onValueChange={([value]) => setZoom(value)}
-                  min={25}
-                  max={Math.max(calculateOptimalZoom(), 100)}
-                  step={1}
-                  className="w-48"
-                />
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setZoom(calculateOptimalZoom())}
-                  className="ml-2 text-xs"
-                  title="Adjust zoom to fit the CV in the viewport"
-                >
-                  Fit
-                </Button>
+              <div className="flex items-center justify-end mb-2">
+                <div className="flex items-center gap-2">
+                  <span className="text-sm text-muted-foreground w-14">Zoom: {zoom}%</span>
+                  <Slider
+                    value={[zoom]}
+                    onValueChange={([value]) => setZoom(value)}
+                    min={25}
+                    max={Math.max(calculateOptimalZoom(), 100)}
+                    step={1}
+                    className="w-48"
+                  />
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setZoom(calculateOptimalZoom())}
+                    className="ml-2 text-xs"
+                    title="Adjust zoom to fit the CV in the viewport"
+                  >
+                    Fit
+                  </Button>
+                </div>
               </div>
               <div 
                 ref={cvContainerRef}
@@ -251,17 +269,30 @@ const CVShowcase = () => {
                     '--cv-secondary': selectedDesign === "modern" ? modernStyles.theme.secondary : classicStyles.theme.secondary,
                     '--cv-accent': selectedDesign === "modern" ? modernStyles.theme.accent : classicStyles.theme.accent,
                   } as React.CSSProperties}
-                >
-                  {selectedDesign === "ats" ? (
-                    <CVAts data={pedroData} styles={atsStyles} />
-                  ) : selectedDesign === "modern" ? (
-                    <CVModern data={pedroData} />
-                  ) : (
-                    <CVClassic data={pedroData} />
-                  )}
+                >                {selectedDesign === "ats" ? (
+                  <CVAts 
+                    data={cvData} 
+                    styles={atsStyles}
+                    onUpdate={handleCVUpdate} 
+                    editable={true}
+                  />
+                ) : selectedDesign === "modern" ? (
+                  <CVModern 
+                    data={cvData}
+                    onUpdate={handleCVUpdate} 
+                    editable={true}
+                  />
+                ) : (
+                  <CVClassic 
+                    data={cvData} 
+                    onUpdate={handleCVUpdate} 
+                    editable={true}
+                  />
+                )}
                 </div>
               </div>
             </div>
+            {/* Versión para imprimir - se ocultará en pantalla pero será visible al imprimir */}
             <div className="hidden print:block">
               <div
                 style={{
@@ -275,11 +306,21 @@ const CVShowcase = () => {
                 } as React.CSSProperties}
               >
                 {selectedDesign === "ats" ? (
-                  <CVAts data={pedroData} styles={atsStyles} />
+                  <CVAts 
+                    data={cvData} 
+                    styles={atsStyles}
+                    editable={false}
+                  />
                 ) : selectedDesign === "modern" ? (
-                  <CVModern data={pedroData} />
+                  <CVModern 
+                    data={cvData}
+                    editable={false}
+                  />
                 ) : (
-                  <CVClassic data={pedroData} />
+                  <CVClassic 
+                    data={cvData}
+                    editable={false}
+                  />
                 )}
               </div>
             </div>

@@ -1,10 +1,13 @@
-import { Mail, Phone, MapPin, User } from "lucide-react";
+import { Mail, Phone, MapPin, User, Edit } from "lucide-react";
+import InlineEdit from "@/components/ui/inline-edit";
 
 interface CVClassicProps {
   data: any;
+  onUpdate?: (field: string, value: string) => void;
+  editable?: boolean;
 }
 
-const CVClassic = ({ data }: CVClassicProps) => {
+const CVClassic = ({ data, onUpdate, editable }: CVClassicProps) => {
   return (
     <div 
       id="CvClassic"
@@ -64,9 +67,19 @@ const CVClassic = ({ data }: CVClassicProps) => {
         >
           Perfil Profesional
         </h2>
-        <p style={{ color: 'var(--cv-secondary, #666666)' }} className="text-justify leading-relaxed">
-          {data.perfil_profesional}
-        </p>
+        {editable ? (
+          <InlineEdit
+            value={data.perfil_profesional}
+            onSave={(value) => onUpdate?.('perfil_profesional', value)}
+            className="relative"
+            textClassName="text-justify leading-relaxed"
+            multiline={true}
+          />
+        ) : (
+          <p style={{ color: 'var(--cv-secondary, #666666)' }} className="text-justify leading-relaxed">
+            {data.perfil_profesional}
+          </p>
+        )}
       </section>
 
       {/* Experiencia Laboral */}
@@ -81,13 +94,24 @@ const CVClassic = ({ data }: CVClassicProps) => {
         </h2>
         <div className="space-y-4">
           {data.experiencia_laboral.map((exp: any, index: number) => (
-            <div key={index} className="border-l-2 border-gray-300 pl-4">
+            <div key={index} className="group relative border-l-2 border-gray-300 pl-4">
+              
               <div className="flex justify-between items-start mb-1">
                 <h3 className="font-bold text-gray-900">{exp.titulo}</h3>
                 <span className="text-sm text-gray-600 font-medium">{exp.fecha}</span>
               </div>
               <p className="text-gray-700 font-semibold mb-2">{exp.entidad}</p>
-              <p className="text-gray-700 text-justify">{exp.descripcion}</p>
+              {editable ? (
+                <InlineEdit
+                  value={exp.descripcion}
+                  onSave={(value) => onUpdate?.(`experiencia_laboral[${index}].descripcion`, value)}
+                  className="relative"
+                  textClassName="text-gray-700 text-justify"
+                  multiline={true}
+                />
+              ) : (
+                <p className="text-gray-700 text-justify">{exp.descripcion}</p>
+              )}
             </div>
           ))}
         </div>
@@ -111,7 +135,16 @@ const CVClassic = ({ data }: CVClassicProps) => {
                 <span className="text-sm text-gray-600 font-medium">{edu.fecha}</span>
               </div>
               <p className="text-gray-700 font-semibold mb-1">{edu.entidad}</p>
-              <p className="text-gray-700">{edu.descripcion}</p>
+              {editable ? (
+                <InlineEdit
+                  value={edu.descripcion}
+                  onSave={(value) => onUpdate?.(`formacion[${index}].descripcion`, value)}
+                  className="relative"
+                  textClassName="text-gray-700"
+                />
+              ) : (
+                <p className="text-gray-700">{edu.descripcion}</p>
+              )}
             </div>
           ))}
         </div>

@@ -2,6 +2,8 @@ import { Mail, Phone, MapPin, User } from "lucide-react";
 
 interface CVAtsProps {
   data: any;
+  onUpdate?: (field: string, value: string) => void;
+  editable?: boolean;
   styles?: {
     font: string;
     fontSize: number;
@@ -9,7 +11,7 @@ interface CVAtsProps {
   };
 }
 
-const CVAts = ({ data, styles = { font: 'arial', fontSize: 11, headingSize: 14.6 } }: CVAtsProps) => {
+const CVAts = ({ data, onUpdate, editable, styles = { font: 'arial', fontSize: 11, headingSize: 14.6 } }: CVAtsProps) => {
   return (
     <div 
       id="CvAts"

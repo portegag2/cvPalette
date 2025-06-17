@@ -2,9 +2,11 @@ import { Mail, Phone, MapPin, User, Code, Briefcase, GraduationCap, Languages } 
 
 interface CVModernProps {
   data: any;
+  onUpdate?: (field: string, value: string) => void;
+  editable?: boolean;
 }
 
-const CVModern = ({ data }: CVModernProps) => {
+const CVModern = ({ data, onUpdate, editable }: CVModernProps) => {
   return (
     <div 
       id="CvModern"
