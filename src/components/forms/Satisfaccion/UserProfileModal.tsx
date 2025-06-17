@@ -24,6 +24,20 @@ export default function UserProfileModal({
 
   const handleSubmit = async () => {
     try {
+      // Validación en el cliente
+      if (!rating) {
+        alert('Por favor, indica una calificación');
+        return;
+      }
+      if (wouldRecommend === null) {
+        alert('Por favor, indica si recomendarías la aplicación');
+        return;
+      }
+      if (!usabilityRating) {
+        alert('Por favor, califica la experiencia de manejo');
+        return;
+      }
+
       const formData = {
         rating,
         comments,
@@ -42,7 +56,8 @@ export default function UserProfileModal({
       });
 
       if (!response.ok) {
-        throw new Error('Error al enviar el formulario');
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Error al enviar el formulario');
       }
 
       alert('¡Gracias por tu feedback!');

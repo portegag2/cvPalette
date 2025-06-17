@@ -24,11 +24,19 @@ export default async function handler(req, res) {
   }
 
   try {
+    console.log('Request body:', req.body);
+    
     const { rating, comments, wouldRecommend, usabilityRating, improvements, valuedFeatures } = req.body;
 
-    // Validación básica
-    if (!rating || !wouldRecommend || !usabilityRating) {
-      return res.status(400).json({ error: 'Faltan campos requeridos' });
+    // Validación básica con mensajes más específicos
+    if (!rating) {
+      return res.status(400).json({ error: 'Falta el campo rating' });
+    }
+    if (wouldRecommend === null || wouldRecommend === undefined) {
+      return res.status(400).json({ error: 'Falta el campo wouldRecommend' });
+    }
+    if (!usabilityRating) {
+      return res.status(400).json({ error: 'Falta el campo usabilityRating' });
     }
 
     // Enviar email
