@@ -28,15 +28,15 @@ const CVAts = ({ data, styles = { font: 'arial', fontSize: 11, headingSize: 14.6
         <p className="text-lg mb-4">{data.datos_personales.rol_profesional}</p>
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <Mail className="w-4 h-4" />
+            {/* <Mail className="w-4 h-4" /> */}
             <span>{data.datos_personales.email}</span>
           </div>
           <div className="flex items-center gap-2">
-            <Phone className="w-4 h-4" />
+            {/* <Phone className="w-4 h-4" /> */}
             <span>{data.datos_personales.telefono}</span>
           </div>
           <div className="flex items-center gap-2">
-            <MapPin className="w-4 h-4" />
+            {/* <MapPin className="w-4 h-4" /> */}
             <span>{data.datos_personales.ciudad}</span>
           </div>
         </div>
