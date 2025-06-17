@@ -22,34 +22,35 @@ export default function UserProfileModal({
   const [improvements, setImprovements] = useState("");
   const [valuedFeatures, setValuedFeatures] = useState<Feature[]>([]);
 
-  const handleSubmit = () => {
-    const formData = {
-      rating,
-      comments,
-      wouldRecommend: wouldRecommend ? "Sí" : "No",
-      usabilityRating,
-      improvements,
-      valuedFeatures: valuedFeatures.join(", "),
-    };
+  const handleSubmit = async () => {
+    try {
+      const formData = {
+        rating,
+        comments,
+        wouldRecommend,
+        usabilityRating,
+        improvements,
+        valuedFeatures,
+      };
 
-    // Crear el contenido del email
-    const emailBody = `
-Resultados del Formulario de Satisfacción:
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
 
-Calificación de la Experiencia: ${formData.rating}/10
-Comentarios: ${formData.comments}
-¿Recomendaría la aplicación?: ${formData.wouldRecommend}
-Experiencia de manejo: ${formData.usabilityRating}
-Sugerencias de mejora: ${formData.improvements}
-Características más valoradas: ${formData.valuedFeatures}
-    `.trim();
+      if (!response.ok) {
+        throw new Error('Error al enviar el formulario');
+      }
 
-    // Crear el enlace mailto
-    const mailtoLink = `mailto:portegag2@gmail.com?subject=Resultados Formulario de Satisfacción&body=${encodeURIComponent(emailBody)}`;
-    
-    // Abrir el cliente de correo
-    window.location.href = mailtoLink;
-    setOpen(false);
+      alert('¡Gracias por tu feedback!');
+      setOpen(false);
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo.');
+    }
   };
 
   if (!open) return null;
