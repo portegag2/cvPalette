@@ -1,10 +1,11 @@
-import { Mail, Phone, MapPin, User, Trash2 } from "lucide-react";
+import { Mail, Phone, MapPin, User, Trash2, RotateCcw } from "lucide-react";
 import InlineEdit from "@/components/ui/inline-edit";
 
 interface CVAtsProps {
   data: any;
   onUpdate?: (field: string, value: string) => void;
   onDeleteExperience?: (index: number) => void;
+  onRestoreExperiences?: () => void;
   editable?: boolean;
   styles?: {
     font: string;
@@ -14,26 +15,38 @@ interface CVAtsProps {
   };
 }
 
-const CVAts = ({ data, onUpdate, onDeleteExperience, editable, styles = { font: 'arial', fontSize: 11, headingSize: 14.6, sectionOrder: "experience-first" } }: CVAtsProps) => {
+const CVAts = ({ data, onUpdate, onDeleteExperience, onRestoreExperiences, editable, styles = { font: 'arial', fontSize: 11, headingSize: 14.6, sectionOrder: "experience-first" } }: CVAtsProps) => {
   const renderExperienceSection = () => (
     <section className="mb-8">
-      <h2 style={{ fontSize: `${styles.headingSize}pt` }} className="font-bold mb-4 uppercase">Experiencia Laboral</h2>
+      <div className="flex justify-between items-center mb-4">
+        <h2 style={{ fontSize: `${styles.headingSize}pt` }} className="font-bold uppercase">Experiencia Laboral</h2>
+        {editable && onRestoreExperiences && (
+          <button
+            onClick={onRestoreExperiences}
+            className="text-blue-500 hover:text-blue-700 transition-colors flex items-center gap-1 text-sm"
+            title="Restaurar experiencias"
+          >
+            <RotateCcw className="w-4 h-4" />
+            Restaurar experiencias
+          </button>
+        )}
+      </div>
       <div className="space-y-6">
         {data.experiencia_laboral.map((exp: any, index: number) => (
           <div key={index}>
             <div className="flex justify-between items-start mb-1">
               <h3 className="font-bold">{exp.titulo}</h3>
               <div className="flex items-center gap-2">
+                <p className="text-sm">{exp.fecha}</p>
                 {editable && onDeleteExperience && (
                   <button
                     onClick={() => onDeleteExperience(index)}
-                    className="text-red-500 hover:text-red-700 transition-colors"
+                    className="text-red-500 hover:text-red-700 transition-colors -mt-1"
                     title="Eliminar experiencia"
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>
                 )}
-                <p className="text-sm">{exp.fecha}</p>
               </div>
             </div>
             <p className="font-semibold mb-2">{exp.entidad}</p>

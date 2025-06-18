@@ -1,43 +1,56 @@
-import { Mail, Phone, MapPin, User, Edit, Trash2 } from "lucide-react";
+import { Mail, Phone, MapPin, User, Edit, Trash2, RotateCcw } from "lucide-react";
 import InlineEdit from "@/components/ui/inline-edit";
 
 interface CVClassicProps {
   data: any;
   onUpdate?: (field: string, value: string) => void;
   onDeleteExperience?: (index: number) => void;
+  onRestoreExperiences?: () => void;
   editable?: boolean;
   styles?: {
     sectionOrder: "experience-first" | "education-first";
   };
 }
 
-const CVClassic = ({ data, onUpdate, onDeleteExperience, editable, styles = { sectionOrder: "experience-first" } }: CVClassicProps) => {
+const CVClassic = ({ data, onUpdate, onDeleteExperience, onRestoreExperiences, editable, styles = { sectionOrder: "experience-first" } }: CVClassicProps) => {
   const renderExperienceSection = () => (
     <section className="mb-6">
-      <h2 className="text-lg font-bold border-b pb-1 mb-3 uppercase"
-        style={{ 
-          color: 'var(--cv-primary, #1a1a1a)',
-          borderColor: 'var(--cv-accent, #2563eb)'
-        }}
-      >
-        Experiencia Laboral
-      </h2>
+      <div className="flex justify-between items-center border-b pb-1 mb-3">
+        <h2 className="text-lg font-bold uppercase"
+          style={{ 
+            color: 'var(--cv-primary, #1a1a1a)',
+            borderColor: 'var(--cv-accent, #2563eb)'
+          }}
+        >
+          Experiencia Laboral
+        </h2>
+        {editable && onRestoreExperiences && (
+          <button
+            onClick={onRestoreExperiences}
+            className="text-blue-500 hover:text-blue-700 transition-colors flex items-center gap-1 text-sm"
+            title="Restaurar experiencias"
+          >
+            <RotateCcw className="w-4 h-4" />
+            Restaurar experiencias
+          </button>
+        )}
+      </div>
       <div className="space-y-4">
         {data.experiencia_laboral.map((exp: any, index: number) => (
           <div key={index} className="border-l-2 border-gray-300 pl-4">
             <div className="flex justify-between items-start mb-1">
               <h3 className="font-bold text-gray-900">{exp.titulo}</h3>
               <div className="flex items-center gap-2">
+                <span className="text-sm text-gray-600 font-medium">{exp.fecha}</span>
                 {editable && onDeleteExperience && (
                   <button
                     onClick={() => onDeleteExperience(index)}
-                    className="text-red-500 hover:text-red-700 transition-colors"
+                    className="text-red-500 hover:text-red-700 transition-colors -mt-1"
                     title="Eliminar experiencia"
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>
                 )}
-                <span className="text-sm text-gray-600 font-medium">{exp.fecha}</span>
               </div>
             </div>
             <p className="text-gray-700 font-semibold mb-1">{exp.entidad}</p>

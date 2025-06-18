@@ -238,6 +238,10 @@ const CVShowcase = () => {
     setCvData(newData);
   };
 
+  const handleRestoreExperiences = () => {
+    setCvData(pedroData);
+  };
+
   return (
     <div className="container mx-auto pt-4 px-4">
       <FormModal 
@@ -424,6 +428,7 @@ const CVShowcase = () => {
                     styles={atsStyles}
                     onUpdate={handleCVUpdate} 
                     onDeleteExperience={handleDeleteExperience}
+                    onRestoreExperiences={handleRestoreExperiences}
                     editable={true}
                   />
                 ) : selectedDesign === "modern" ? (
@@ -431,6 +436,7 @@ const CVShowcase = () => {
                     data={cvData}
                     onUpdate={handleCVUpdate} 
                     onDeleteExperience={handleDeleteExperience}
+                    onRestoreExperiences={handleRestoreExperiences}
                     editable={true}
                     styles={{ sectionOrder: modernStyles.sectionOrder }}
                   />
@@ -439,6 +445,7 @@ const CVShowcase = () => {
                     data={cvData} 
                     onUpdate={handleCVUpdate} 
                     onDeleteExperience={handleDeleteExperience}
+                    onRestoreExperiences={handleRestoreExperiences}
                     editable={true}
                     styles={{ sectionOrder: classicStyles.sectionOrder }}
                   />

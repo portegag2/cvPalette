@@ -1,24 +1,37 @@
-import { Mail, Phone, MapPin, User, Code, Briefcase, GraduationCap, Languages, Trash2 } from "lucide-react";
+import { Mail, Phone, MapPin, User, Code, Briefcase, GraduationCap, Languages, Trash2, RotateCcw } from "lucide-react";
 import InlineEdit from "@/components/ui/inline-edit";
 
 interface CVModernProps {
   data: any;
   onUpdate?: (field: string, value: string) => void;
   onDeleteExperience?: (index: number) => void;
+  onRestoreExperiences?: () => void;
   editable?: boolean;
   styles?: {
     sectionOrder: "experience-first" | "education-first";
   };
 }
 
-const CVModern = ({ data, onUpdate, onDeleteExperience, editable, styles = { sectionOrder: "experience-first" } }: CVModernProps) => {
+const CVModern = ({ data, onUpdate, onDeleteExperience, onRestoreExperiences, editable, styles = { sectionOrder: "experience-first" } }: CVModernProps) => {
   const renderExperienceSection = () => (
     <section className="mb-6">
-      <h2 className="text-[1.125em] font-bold text-gray-800 mb-4 flex items-center gap-2">
-        <div className="w-1 h-6" style={{ backgroundColor: 'var(--accent-color)' }}></div>
-        <Briefcase className="w-5 h-5" />
-        Experiencia Laboral
-      </h2>
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-[1.125em] font-bold text-gray-800 flex items-center gap-2">
+          <div className="w-1 h-6" style={{ backgroundColor: 'var(--accent-color)' }}></div>
+          <Briefcase className="w-5 h-5" />
+          Experiencia Laboral
+        </h2>
+        {editable && onRestoreExperiences && (
+          <button
+            onClick={onRestoreExperiences}
+            className="text-blue-500 hover:text-blue-700 transition-colors flex items-center gap-1 text-sm"
+            title="Restaurar experiencias"
+          >
+            <RotateCcw className="w-4 h-4" />
+            Restaurar experiencias
+          </button>
+        )}
+      </div>
       <div className="space-y-4">
         {data.experiencia_laboral.map((exp: any, index: number) => (
           <div key={index} className="relative pl-6">
@@ -29,15 +42,6 @@ const CVModern = ({ data, onUpdate, onDeleteExperience, editable, styles = { sec
               <div className="flex justify-between items-start mb-2">
                 <h3 className="text-[1em] font-bold text-gray-900">{exp.titulo}</h3>
                 <div className="flex items-center gap-2">
-                  {editable && onDeleteExperience && (
-                    <button
-                      onClick={() => onDeleteExperience(index)}
-                      className="text-red-500 hover:text-red-700 transition-colors"
-                      title="Eliminar experiencia"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </button>
-                  )}
                   <span className="text-[0.75em] px-2 py-1 rounded" 
                     style={{ 
                       backgroundColor: 'var(--accent-color)',
@@ -45,6 +49,15 @@ const CVModern = ({ data, onUpdate, onDeleteExperience, editable, styles = { sec
                     }}>
                     {exp.fecha}
                   </span>
+                  {editable && onDeleteExperience && (
+                    <button
+                      onClick={() => onDeleteExperience(index)}
+                      className="text-red-500 hover:text-red-700 transition-colors -mt-1"
+                      title="Eliminar experiencia"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  )}
                 </div>
               </div>
               <p className="text-[0.875em] text-gray-700 font-semibold mb-2">{exp.entidad}</p>
