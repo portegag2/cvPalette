@@ -1,16 +1,17 @@
-import { Mail, Phone, MapPin, User, Edit } from "lucide-react";
+import { Mail, Phone, MapPin, User, Edit, Trash2 } from "lucide-react";
 import InlineEdit from "@/components/ui/inline-edit";
 
 interface CVClassicProps {
   data: any;
   onUpdate?: (field: string, value: string) => void;
+  onDeleteExperience?: (index: number) => void;
   editable?: boolean;
   styles?: {
     sectionOrder: "experience-first" | "education-first";
   };
 }
 
-const CVClassic = ({ data, onUpdate, editable, styles = { sectionOrder: "experience-first" } }: CVClassicProps) => {
+const CVClassic = ({ data, onUpdate, onDeleteExperience, editable, styles = { sectionOrder: "experience-first" } }: CVClassicProps) => {
   const renderExperienceSection = () => (
     <section className="mb-6">
       <h2 className="text-lg font-bold border-b pb-1 mb-3 uppercase"
@@ -26,7 +27,18 @@ const CVClassic = ({ data, onUpdate, editable, styles = { sectionOrder: "experie
           <div key={index} className="border-l-2 border-gray-300 pl-4">
             <div className="flex justify-between items-start mb-1">
               <h3 className="font-bold text-gray-900">{exp.titulo}</h3>
-              <span className="text-sm text-gray-600 font-medium">{exp.fecha}</span>
+              <div className="flex items-center gap-2">
+                {editable && onDeleteExperience && (
+                  <button
+                    onClick={() => onDeleteExperience(index)}
+                    className="text-red-500 hover:text-red-700 transition-colors"
+                    title="Eliminar experiencia"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                )}
+                <span className="text-sm text-gray-600 font-medium">{exp.fecha}</span>
+              </div>
             </div>
             <p className="text-gray-700 font-semibold mb-1">{exp.entidad}</p>
             {editable ? (

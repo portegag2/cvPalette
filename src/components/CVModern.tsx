@@ -1,16 +1,17 @@
-import { Mail, Phone, MapPin, User, Code, Briefcase, GraduationCap, Languages } from "lucide-react";
+import { Mail, Phone, MapPin, User, Code, Briefcase, GraduationCap, Languages, Trash2 } from "lucide-react";
 import InlineEdit from "@/components/ui/inline-edit";
 
 interface CVModernProps {
   data: any;
   onUpdate?: (field: string, value: string) => void;
+  onDeleteExperience?: (index: number) => void;
   editable?: boolean;
   styles?: {
     sectionOrder: "experience-first" | "education-first";
   };
 }
 
-const CVModern = ({ data, onUpdate, editable, styles = { sectionOrder: "experience-first" } }: CVModernProps) => {
+const CVModern = ({ data, onUpdate, onDeleteExperience, editable, styles = { sectionOrder: "experience-first" } }: CVModernProps) => {
   const renderExperienceSection = () => (
     <section className="mb-6">
       <h2 className="text-[1.125em] font-bold text-gray-800 mb-4 flex items-center gap-2">
@@ -27,13 +28,24 @@ const CVModern = ({ data, onUpdate, editable, styles = { sectionOrder: "experien
             <div className="bg-gray-50 p-4 rounded-lg">
               <div className="flex justify-between items-start mb-2">
                 <h3 className="text-[1em] font-bold text-gray-900">{exp.titulo}</h3>
-                <span className="text-[0.75em] px-2 py-1 rounded" 
-                  style={{ 
-                    backgroundColor: 'var(--accent-color)',
-                    color: '#fff' 
-                  }}>
-                  {exp.fecha}
-                </span>
+                <div className="flex items-center gap-2">
+                  {editable && onDeleteExperience && (
+                    <button
+                      onClick={() => onDeleteExperience(index)}
+                      className="text-red-500 hover:text-red-700 transition-colors"
+                      title="Eliminar experiencia"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  )}
+                  <span className="text-[0.75em] px-2 py-1 rounded" 
+                    style={{ 
+                      backgroundColor: 'var(--accent-color)',
+                      color: '#fff' 
+                    }}>
+                    {exp.fecha}
+                  </span>
+                </div>
               </div>
               <p className="text-[0.875em] text-gray-700 font-semibold mb-2">{exp.entidad}</p>
               {editable ? (

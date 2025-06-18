@@ -232,6 +232,12 @@ const CVShowcase = () => {
     setCvData(newData);
   };
 
+  const handleDeleteExperience = (index: number) => {
+    const newData = { ...cvData };
+    newData.experiencia_laboral = newData.experiencia_laboral.filter((_, i) => i !== index);
+    setCvData(newData);
+  };
+
   return (
     <div className="container mx-auto pt-4 px-4">
       <FormModal 
@@ -417,12 +423,14 @@ const CVShowcase = () => {
                     data={cvData} 
                     styles={atsStyles}
                     onUpdate={handleCVUpdate} 
+                    onDeleteExperience={handleDeleteExperience}
                     editable={true}
                   />
                 ) : selectedDesign === "modern" ? (
                   <CVModern 
                     data={cvData}
                     onUpdate={handleCVUpdate} 
+                    onDeleteExperience={handleDeleteExperience}
                     editable={true}
                     styles={{ sectionOrder: modernStyles.sectionOrder }}
                   />
@@ -430,6 +438,7 @@ const CVShowcase = () => {
                   <CVClassic 
                     data={cvData} 
                     onUpdate={handleCVUpdate} 
+                    onDeleteExperience={handleDeleteExperience}
                     editable={true}
                     styles={{ sectionOrder: classicStyles.sectionOrder }}
                   />
