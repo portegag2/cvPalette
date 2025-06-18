@@ -235,50 +235,49 @@ const CVShowcase = () => {
       />
       {/* Header section */}
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-6">
-        <div>
-          <div className="flex items-center gap-3 mb-2 overflow-hidden">
-            <img src={Logo} alt="Logo CV Design Maker" className="h-8 w-auto flex-shrink-0" />
-            <div className="flex items-center justify-between w-full">
-              <img src={LogoWord} alt="CV Design Maker" className="h-[75px] w-auto min-w-0" />
-              <div className="flex items-center gap-2">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => {
-                    setActiveTheme("classic");
-                    applyTheme(classicTheme, true);
-                  }}
-                  className={`h-[length:var(--btn-size,1.5rem)] min-h-0 px-[length:var(--btn-padding,0.5rem)] ${
-                    activeTheme === "classic" ? "text-[#00D4AA]" : ""
-                  }`}
-                  style={{
-                    ['--btn-size' as string]: window.innerWidth < 400 ? '1.25rem' : '1.5rem',
-                    ['--btn-padding' as string]: window.innerWidth < 400 ? '0.25rem' : '0.5rem'
-                  }}
-                >
-                  <Palette className="w-[length:var(--icon-size,0.75rem)] h-[length:var(--icon-size,0.75rem)]" style={{['--icon-size' as string]: window.innerWidth < 370 ? '0.6rem' : '0.75rem'}} />
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => {
-                    setActiveTheme("cvpalette");
-                    applyTheme(cvPaletteTheme, false);
-                  }}
-                  className={`h-[length:var(--btn-size,1.5rem)] min-h-0 px-[length:var(--btn-padding,0.5rem)] ${
-                    activeTheme === "cvpalette" ? "text-[#673AB7]" : ""
-                  }`}
-                  style={{
-                    ['--btn-size' as string]: window.innerWidth < 400 ? '1.25rem' : '1.5rem',
-                    ['--btn-padding' as string]: window.innerWidth < 400 ? '0.25rem' : '0.5rem'
-                  }}
-                >
-                  <Palette className="w-[length:var(--icon-size,0.75rem)] h-[length:var(--icon-size,0.75rem)]" style={{['--icon-size' as string]: window.innerWidth < 370 ? '0.6rem' : '0.75rem'}} />
-                </Button>
-                <UserButton />
+        <div>            <div className="flex items-center gap-3 mb-2 overflow-hidden">
+              <img src={Logo} alt="Logo CV Design Maker" className="h-8 w-auto flex-shrink-0" />
+              <div className="flex items-center justify-between w-full">
+                <img src={LogoWord} alt="CV Design Maker" className="h-[75px] w-auto min-w-0" />
+                <div className="flex flex-col justify-center h-[75px] gap-1 items-start">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => {
+                      setActiveTheme("classic");
+                      applyTheme(classicTheme, true);
+                    }}
+                    className={`h-[length:var(--btn-size,1.5rem)] min-h-0 px-[length:var(--btn-padding,0.5rem)] ${
+                      activeTheme === "classic" ? "text-[#00D4AA]" : ""
+                    }`}
+                    style={{
+                      ['--btn-size' as string]: window.innerWidth < 400 ? '1.25rem' : '1.5rem',
+                      ['--btn-padding' as string]: window.innerWidth < 400 ? '0.25rem' : '0.5rem'
+                    }}
+                  >
+                    <Palette className="w-[length:var(--icon-size,0.75rem)] h-[length:var(--icon-size,0.75rem)]" style={{['--icon-size' as string]: window.innerWidth < 370 ? '0.6rem' : '0.75rem'}} />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => {
+                      setActiveTheme("cvpalette");
+                      applyTheme(cvPaletteTheme, false);
+                    }}
+                    className={`h-[length:var(--btn-size,1.5rem)] min-h-0 px-[length:var(--btn-padding,0.5rem)] ${
+                      activeTheme === "cvpalette" ? "text-[#673AB7]" : ""
+                    }`}
+                    style={{
+                      ['--btn-size' as string]: window.innerWidth < 400 ? '1.25rem' : '1.5rem',
+                      ['--btn-padding' as string]: window.innerWidth < 400 ? '0.25rem' : '0.5rem'
+                    }}
+                  >
+                    <Palette className="w-[length:var(--icon-size,0.75rem)] h-[length:var(--icon-size,0.75rem)]" style={{['--icon-size' as string]: window.innerWidth < 370 ? '0.6rem' : '0.75rem'}} />
+                  </Button>
+                  <UserButton />
+                </div>
               </div>
             </div>
-          </div>
           <div className="flex items-center gap-2 min-w-0">
             <p className="text-muted-foreground header-description truncate">
               Estilos diferentes para ofertas diferentes.
