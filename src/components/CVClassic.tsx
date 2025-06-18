@@ -27,7 +27,8 @@ const CVClassic = ({ data, onUpdate, onDeleteExperience, onRestoreExperiences, e
         {editable && onRestoreExperiences && (
           <button
             onClick={onRestoreExperiences}
-            className="text-blue-500 hover:text-blue-700 transition-colors flex items-center gap-1 text-sm"
+            className="flex items-center gap-1 text-sm transition-colors hover:text-[var(--cv-primary)]"
+            style={{ color: 'var(--cv-accent, #2563eb)' }}
             title="Restaurar experiencias"
           >
             <RotateCcw className="w-4 h-4" />
@@ -37,21 +38,19 @@ const CVClassic = ({ data, onUpdate, onDeleteExperience, onRestoreExperiences, e
       </div>
       <div className="space-y-4">
         {data.experiencia_laboral.map((exp: any, index: number) => (
-          <div key={index} className="border-l-2 border-gray-300 pl-4">
+          <div key={index} className="border-l-2 border-gray-300 pl-4 relative">
+            {editable && onDeleteExperience && (
+              <button
+                onClick={() => onDeleteExperience(index)}
+                className="absolute -right-8 top-0 text-red-500 hover:text-red-700 transition-colors"
+                title="Eliminar experiencia"
+              >
+                <Trash2 className="w-4 h-4" />
+              </button>
+            )}
             <div className="flex justify-between items-start mb-1">
               <h3 className="font-bold text-gray-900">{exp.titulo}</h3>
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-gray-600 font-medium">{exp.fecha}</span>
-                {editable && onDeleteExperience && (
-                  <button
-                    onClick={() => onDeleteExperience(index)}
-                    className="text-red-500 hover:text-red-700 transition-colors -mt-1"
-                    title="Eliminar experiencia"
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </button>
-                )}
-              </div>
+              <span className="text-sm text-gray-600 font-medium">{exp.fecha}</span>
             </div>
             <p className="text-gray-700 font-semibold mb-1">{exp.entidad}</p>
             {editable ? (

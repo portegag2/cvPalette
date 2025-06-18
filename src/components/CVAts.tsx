@@ -23,7 +23,8 @@ const CVAts = ({ data, onUpdate, onDeleteExperience, onRestoreExperiences, edita
         {editable && onRestoreExperiences && (
           <button
             onClick={onRestoreExperiences}
-            className="text-blue-500 hover:text-blue-700 transition-colors flex items-center gap-1 text-sm"
+            className="flex items-center gap-1 text-sm transition-colors hover:text-[var(--cv-primary)]"
+            style={{ color: 'var(--cv-accent, #2563eb)' }}
             title="Restaurar experiencias"
           >
             <RotateCcw className="w-4 h-4" />
@@ -33,21 +34,19 @@ const CVAts = ({ data, onUpdate, onDeleteExperience, onRestoreExperiences, edita
       </div>
       <div className="space-y-6">
         {data.experiencia_laboral.map((exp: any, index: number) => (
-          <div key={index}>
+          <div key={index} className="relative">
+            {editable && onDeleteExperience && (
+              <button
+                onClick={() => onDeleteExperience(index)}
+                className="absolute -right-8 top-0 text-red-500 hover:text-red-700 transition-colors"
+                title="Eliminar experiencia"
+              >
+                <Trash2 className="w-4 h-4" />
+              </button>
+            )}
             <div className="flex justify-between items-start mb-1">
               <h3 className="font-bold">{exp.titulo}</h3>
-              <div className="flex items-center gap-2">
-                <p className="text-sm">{exp.fecha}</p>
-                {editable && onDeleteExperience && (
-                  <button
-                    onClick={() => onDeleteExperience(index)}
-                    className="text-red-500 hover:text-red-700 transition-colors -mt-1"
-                    title="Eliminar experiencia"
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </button>
-                )}
-              </div>
+              <p className="text-sm">{exp.fecha}</p>
             </div>
             <p className="font-semibold mb-2">{exp.entidad}</p>
             {editable ? (
