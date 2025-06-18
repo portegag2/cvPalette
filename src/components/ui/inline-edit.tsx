@@ -56,28 +56,28 @@ const InlineEdit = ({
           variant="ghost"
           onClick={() => setIsEditing(true)}
           disabled={isEditing}
-          className="p-0.5 h-auto rounded-full hover:bg-gray-100"
+          className="p-0.5 h-auto rounded-full hover:bg-accent hover:text-accent-foreground"
           style={{ marginTop: '-9px' }}
         >
-          <Edit2 className="w-3 h-3 text-gray-600" />
+          <Edit2 className="w-3 h-3" />
         </Button>
         <Button
           size="sm"
           variant="ghost"
           onClick={handleSave}
           disabled={!isEditing}
-          className="p-0.5 h-auto rounded-full hover:bg-gray-100 disabled:opacity-30"
+          className="p-0.5 h-auto rounded-full hover:bg-accent hover:text-accent-foreground disabled:opacity-30"
         >
-          <Save className="w-3 h-3 text-gray-600" />
+          <Save className="w-3 h-3" />
         </Button>
         <Button
           size="sm"
           variant="ghost"
           onClick={handleCancel}
           disabled={!isEditing}
-          className="p-0.5 h-auto rounded-full hover:bg-gray-100 disabled:opacity-30"
+          className="p-0.5 h-auto rounded-full hover:bg-accent hover:text-accent-foreground disabled:opacity-30"
         >
-          <X className="w-3 h-3 text-gray-600" />
+          <X className="w-3 h-3" />
         </Button>
       </div>
 
