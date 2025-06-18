@@ -359,28 +359,30 @@ const CVShowcase = () => {
         <div id='cv' className="lg:col-span-3 print:w-full">
           <Card className="p-1 print:p-0 print:shadow-none print:border-0">
             <div className="flex flex-col gap-2 print:hidden">
-              <div className="flex items-center justify-end mb-2">
-                <div className="flex items-center gap-2">
-                  <span className="text-sm text-muted-foreground w-14">Zoom: {zoom}%</span>
-                  <Slider
-                    value={[zoom]}
-                    onValueChange={([value]) => setZoom(value)}
-                    min={25}
-                    max={Math.max(calculateOptimalZoom(), 100)}
-                    step={1}
-                    className="w-48"
-                  />
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setZoom(calculateOptimalZoom())}
-                    className="ml-2 text-xs"
-                    title="Adjust zoom to fit the CV in the viewport"
-                  >
-                    Fit
-                  </Button>
+              {calculateOptimalZoom() < 100 && (
+                <div className="flex items-center mb-2">
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm text-muted-foreground w-14">Zoom: {zoom}%</span>
+                    <Slider
+                      value={[zoom]}
+                      onValueChange={([value]) => setZoom(value)}
+                      min={25}
+                      max={Math.max(calculateOptimalZoom(), 100)}
+                      step={1}
+                      className="w-48"
+                    />
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setZoom(calculateOptimalZoom())}
+                      className="ml-2 text-xs"
+                      title="Adjust zoom to fit the CV in the viewport"
+                    >
+                      Fit
+                    </Button>
+                  </div>
                 </div>
-              </div>
+              )}
               <div 
                 ref={cvContainerRef}
                 className="overflow-auto flex justify-center"
