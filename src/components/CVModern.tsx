@@ -1,4 +1,5 @@
 import { Mail, Phone, MapPin, User, Code, Briefcase, GraduationCap, Languages } from "lucide-react";
+import InlineEdit from "@/components/ui/inline-edit";
 
 interface CVModernProps {
   data: any;
@@ -114,9 +115,19 @@ const CVModern = ({ data, onUpdate, editable }: CVModernProps) => {
               <div className="w-1 h-6" style={{ backgroundColor: 'var(--accent-color)' }}></div>
               Perfil Profesional
             </h2>
-            <p className="text-[0.875em] text-gray-700 text-justify leading-relaxed">
-              {data.perfil_profesional}
-            </p>
+            {editable ? (
+              <InlineEdit
+                value={data.perfil_profesional}
+                onSave={(value) => onUpdate?.('perfil_profesional', value)}
+                className="relative"
+                textClassName="text-[0.875em] text-gray-700 text-justify leading-relaxed"
+                multiline={true}
+              />
+            ) : (
+              <p className="text-[0.875em] text-gray-700 text-justify leading-relaxed">
+                {data.perfil_profesional}
+              </p>
+            )}
           </section>
 
           {/* Experiencia Laboral */}
@@ -144,7 +155,17 @@ const CVModern = ({ data, onUpdate, editable }: CVModernProps) => {
                       </span>
                     </div>
                     <p className="text-[0.875em] text-gray-700 font-semibold mb-2">{exp.entidad}</p>
-                    <p className="text-[0.875em] text-gray-700 text-justify">{exp.descripcion}</p>
+                    {editable ? (
+                      <InlineEdit
+                        value={exp.descripcion}
+                        onSave={(value) => onUpdate?.(`experiencia_laboral[${index}].descripcion`, value)}
+                        className="relative"
+                        textClassName="text-[0.875em] text-gray-700 text-justify"
+                        multiline={true}
+                      />
+                    ) : (
+                      <p className="text-[0.875em] text-gray-700 text-justify">{exp.descripcion}</p>
+                    )}
                   </div>
                 </div>
               ))}

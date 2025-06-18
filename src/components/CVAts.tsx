@@ -1,4 +1,5 @@
 import { Mail, Phone, MapPin, User } from "lucide-react";
+import InlineEdit from "@/components/ui/inline-edit";
 
 interface CVAtsProps {
   data: any;
@@ -47,9 +48,19 @@ const CVAts = ({ data, onUpdate, editable, styles = { font: 'arial', fontSize: 1
       {/* Resumen Profesional */}
       <section className="mb-8">
         <h2 style={{ fontSize: `${styles.headingSize}pt` }} className="font-bold mb-4 uppercase">Resumen Profesional</h2>
-        <p style={{ fontSize: `${styles.fontSize}pt` }}>
-          {data.perfil_profesional}
-        </p>
+        {editable ? (
+          <InlineEdit
+            value={data.perfil_profesional}
+            onSave={(value) => onUpdate?.('perfil_profesional', value)}
+            className="relative"
+            textClassName="text-gray-700"
+            multiline={true}
+          />
+        ) : (
+          <p style={{ fontSize: `${styles.fontSize}pt` }}>
+            {data.perfil_profesional}
+          </p>
+        )}
       </section>
 
       {/* Experiencia Laboral */}
@@ -61,7 +72,17 @@ const CVAts = ({ data, onUpdate, editable, styles = { font: 'arial', fontSize: 1
               <h3 className="font-bold">{exp.titulo}</h3>
               <p className="font-semibold">{exp.entidad}</p>
               <p className="text-sm mb-2">{exp.fecha}</p>
-              <p>{exp.descripcion}</p>
+              {editable ? (
+                <InlineEdit
+                  value={exp.descripcion}
+                  onSave={(value) => onUpdate?.(`experiencia_laboral[${index}].descripcion`, value)}
+                  className="relative"
+                  textClassName="text-gray-700"
+                  multiline={true}
+                />
+              ) : (
+                <p>{exp.descripcion}</p>
+              )}
             </div>
           ))}
         </div>
