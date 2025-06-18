@@ -26,10 +26,107 @@ type StyleConfig = {
   theme: typeof cvThemes.classic[0] | typeof cvThemes.modern[0];
 };
 
+const classicTheme = {
+  "--background": "hsl(0 0% 100%)",
+  "--foreground": "hsl(222.2 84% 4.9%)",
+  "--muted": "hsl(210 40% 96.1%)",
+  "--muted-foreground": "hsl(215.4 16.3% 46.9%)",
+  "--border": "hsl(214.3 31.8% 91.4%)",
+  "--input": "hsl(210 40% 98%)",
+  "--primary": "hsl(222.2 47.4% 11.2%)",
+  "--primary-foreground": "hsl(210 40% 98%)",
+  "--secondary": "hsl(210 40% 96.1%)",
+  "--secondary-foreground": "hsl(222.2 47.4% 11.2%)",
+  "--accent": "hsl(263.4 70% 50.4%)",
+  "--accent-foreground": "hsl(210 40% 98%)",
+  "--destructive": "hsl(0 84.2% 60.2%)",
+  "--destructive-foreground": "hsl(210 40% 98%)"
+};
+
+const cvPaletteTheme = {
+  "--background": "#F9F9FB",
+  "--foreground": "#2D2D2D",
+  "--muted": "#E0F7FA",
+  "--muted-foreground": "#607D8B",
+  "--border": "#B0BEC5",
+  "--input": "#F1F8FF",
+  "--primary": "#00D4AA",
+  "--primary-foreground": "#FFFFFF",
+  "--secondary": "#E91E63",
+  "--secondary-foreground": "#FFFFFF",
+  "--accent": "#673AB7",
+  "--accent-foreground": "#FFFFFF",
+  "--destructive": "#FF5722",
+  "--destructive-foreground": "#FFFFFF"
+};
+
+function hexToHSL(hex: string): string {
+  // Remove the # if present
+  hex = hex.replace("#", "");
+  
+  // Convert hex to RGB
+  const r = parseInt(hex.substring(0, 2), 16) / 255;
+  const g = parseInt(hex.substring(2, 4), 16) / 255;
+  const b = parseInt(hex.substring(4, 6), 16) / 255;
+  
+  // Find greatest and smallest channel values
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  
+  let h = 0;
+  let s = 0;
+  let l = (max + min) / 2;
+
+  if (max !== min) {
+    const d = max - min;
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+    
+    switch (max) {
+      case r:
+        h = (g - b) / d + (g < b ? 6 : 0);
+        break;
+      case g:
+        h = (b - r) / d + 2;
+        break;
+      case b:
+        h = (r - g) / d + 4;
+        break;
+    }
+    h /= 6;
+  }
+
+  // Convert to degrees and percentages
+  h = Math.round(h * 360 * 10) / 10;
+  s = Math.round(s * 1000) / 10;
+  l = Math.round(l * 1000) / 10;
+
+  return `${h} ${s}% ${l}%`;
+}
+
+function applyTheme(theme: Record<string, string>, isClassic = false) {
+  Object.entries(theme).forEach(([key, value]) => {
+    let valStr = String(value);
+    if (isClassic && valStr.startsWith("hsl")) {
+      // Si es el tema clásico y el valor es HSL, extrae solo los números
+      valStr = valStr.match(/hsl\(([^)]+)\)/)?.[1] || valStr;
+    } else if (!isClassic && valStr.startsWith("#")) {
+      // Si es el tema cvPalette y el valor es HEX, conviértelo a HSL
+      valStr = hexToHSL(valStr);
+    }
+    document.documentElement.style.setProperty(key, valStr);
+  });
+}
+
 const CVShowcase = () => {
   const { isAuthenticated, loginWithRedirect, logout, user } = useAuth0();
   const [isFormModalOpen, setIsFormModalOpen] = useState(false);
   const [isOriginalFormModalOpen, setIsOriginalFormModalOpen] = useState(false);
+  const [activeTheme, setActiveTheme] = useState<"classic" | "cvpalette">("classic");
+
+  // Aplicar tema por defecto al montar
+  useEffect(() => {
+    applyTheme(classicTheme, true);
+  }, []);
   
   const handleLogout = () => {
     logout({ 
@@ -143,7 +240,43 @@ const CVShowcase = () => {
             <img src={Logo} alt="Logo CV Design Maker" className="h-8 w-auto flex-shrink-0" />
             <div className="flex items-center justify-between w-full">
               <img src={LogoWord} alt="CV Design Maker" className="h-[75px] w-auto min-w-0" />
-              <UserButton />
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => {
+                    setActiveTheme("classic");
+                    applyTheme(classicTheme, true);
+                  }}
+                  className={`h-[length:var(--btn-size,1.5rem)] min-h-0 px-[length:var(--btn-padding,0.5rem)] ${
+                    activeTheme === "classic" ? "text-[#00D4AA]" : ""
+                  }`}
+                  style={{
+                    ['--btn-size' as string]: window.innerWidth < 400 ? '1.25rem' : '1.5rem',
+                    ['--btn-padding' as string]: window.innerWidth < 400 ? '0.25rem' : '0.5rem'
+                  }}
+                >
+                  <Palette className="w-[length:var(--icon-size,0.75rem)] h-[length:var(--icon-size,0.75rem)]" style={{['--icon-size' as string]: window.innerWidth < 370 ? '0.6rem' : '0.75rem'}} />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => {
+                    setActiveTheme("cvpalette");
+                    applyTheme(cvPaletteTheme, false);
+                  }}
+                  className={`h-[length:var(--btn-size,1.5rem)] min-h-0 px-[length:var(--btn-padding,0.5rem)] ${
+                    activeTheme === "cvpalette" ? "text-[#673AB7]" : ""
+                  }`}
+                  style={{
+                    ['--btn-size' as string]: window.innerWidth < 400 ? '1.25rem' : '1.5rem',
+                    ['--btn-padding' as string]: window.innerWidth < 400 ? '0.25rem' : '0.5rem'
+                  }}
+                >
+                  <Palette className="w-[length:var(--icon-size,0.75rem)] h-[length:var(--icon-size,0.75rem)]" style={{['--icon-size' as string]: window.innerWidth < 370 ? '0.6rem' : '0.75rem'}} />
+                </Button>
+                <UserButton />
+              </div>
             </div>
           </div>
           <div className="flex items-center gap-2 min-w-0">
