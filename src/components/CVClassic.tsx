@@ -58,11 +58,11 @@ const CVClassic = ({ data, onUpdate, onDeleteExperience, onRestoreExperiences, e
                 value={exp.descripcion}
                 onSave={(value) => onUpdate?.(`experiencia_laboral[${index}].descripcion`, value)}
                 className="relative"
-                textClassName="text-gray-700"
+                textClassName="text-gray-700 text-justify"
                 multiline={true}
               />
             ) : (
-              <p className="text-gray-700">{exp.descripcion}</p>
+              <p className="text-gray-700 text-justify">{exp.descripcion}</p>
             )}
           </div>
         ))}
@@ -168,11 +168,11 @@ const CVClassic = ({ data, onUpdate, onDeleteExperience, onRestoreExperiences, e
             value={data.perfil_profesional}
             onSave={(value) => onUpdate?.('perfil_profesional', value)}
             className="relative"
-            textClassName="text-gray-700"
+            textClassName="text-gray-700 text-justify"
             multiline={true}
           />
         ) : (
-          <p className="text-gray-700">{data.perfil_profesional}</p>
+          <p className="text-gray-700 text-justify">{data.perfil_profesional}</p>
         )}
       </section>
 
