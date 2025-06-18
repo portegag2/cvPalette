@@ -24,6 +24,7 @@ type StyleConfig = {
   font: string;
   fontSize: number;
   theme: typeof cvThemes.classic[0] | typeof cvThemes.modern[0];
+  sectionOrder: "experience-first" | "education-first";
 };
 
 const classicTheme = {
@@ -140,17 +141,25 @@ const CVShowcase = () => {
   const [classicStyles, setClassicStyles] = useState<StyleConfig>({
     font: "default",
     fontSize: 16,
-    theme: cvThemes.classic[0]
+    theme: cvThemes.classic[0],
+    sectionOrder: "experience-first" as const
   });
   const [modernStyles, setModernStyles] = useState<StyleConfig>({
     font: "default",
     fontSize: 16,
-    theme: cvThemes.modern[0]
+    theme: cvThemes.modern[0],
+    sectionOrder: "experience-first" as const
   });
-  const [atsStyles, setAtsStyles] = useState({
+  const [atsStyles, setAtsStyles] = useState<{
+    font: string;
+    fontSize: number;
+    headingSize: number;
+    sectionOrder: "experience-first" | "education-first";
+  }>({
     font: "arial",
     fontSize: 11,
-    headingSize: 14.6
+    headingSize: 14.6,
+    sectionOrder: "experience-first" as const
   });
   const [zoom, setZoom] = useState(100);
   const cvContainerRef = useRef<HTMLDivElement>(null);
@@ -415,12 +424,14 @@ const CVShowcase = () => {
                     data={cvData}
                     onUpdate={handleCVUpdate} 
                     editable={true}
+                    styles={{ sectionOrder: modernStyles.sectionOrder }}
                   />
                 ) : (
                   <CVClassic 
                     data={cvData} 
                     onUpdate={handleCVUpdate} 
                     editable={true}
+                    styles={{ sectionOrder: classicStyles.sectionOrder }}
                   />
                 )}
                 </div>
@@ -449,11 +460,13 @@ const CVShowcase = () => {
                   <CVModern 
                     data={cvData}
                     editable={false}
+                    styles={{ sectionOrder: modernStyles.sectionOrder }}
                   />
                 ) : (
                   <CVClassic 
                     data={cvData}
                     editable={false}
+                    styles={{ sectionOrder: classicStyles.sectionOrder }}
                   />
                 )}
               </div>

@@ -11,11 +11,13 @@ interface ClassicToolboxProps {
     font: string;
     fontSize: number;
     theme: typeof cvThemes.classic[0];
+    sectionOrder: "experience-first" | "education-first";
   };
   onStyleChange: (styles: {
     font: string;
     fontSize: number;
     theme: typeof cvThemes.classic[0];
+    sectionOrder: "experience-first" | "education-first";
   }) => void;
 }
 
@@ -23,20 +25,23 @@ const ClassicToolbox = ({ initialStyles, onStyleChange }: ClassicToolboxProps) =
   const [font, setFont] = useState(initialStyles.font);
   const [fontSize, setFontSize] = useState(initialStyles.fontSize);
   const [selectedTheme, setSelectedTheme] = useState(initialStyles.theme);
+  const [sectionOrder, setSectionOrder] = useState(initialStyles.sectionOrder);
 
   useEffect(() => {
-    onStyleChange({ font, fontSize, theme: selectedTheme });
-  }, [font, fontSize, selectedTheme]);
+    onStyleChange({ font, fontSize, theme: selectedTheme, sectionOrder });
+  }, [font, fontSize, selectedTheme, sectionOrder]);
 
   const handleReset = () => {
     const defaultStyles = {
       font: "default",
       fontSize: 16,
-      theme: cvThemes.classic[0]
+      theme: cvThemes.classic[0],
+      sectionOrder: "experience-first" as const
     };
     setFont(defaultStyles.font);
     setFontSize(defaultStyles.fontSize);
     setSelectedTheme(defaultStyles.theme);
+    setSectionOrder(defaultStyles.sectionOrder);
     onStyleChange(defaultStyles);
   };
 
@@ -131,6 +136,28 @@ const ClassicToolbox = ({ initialStyles, onStyleChange }: ClassicToolboxProps) =
               max={20}
               step={1}
             />
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-sm text-muted-foreground">
+              Orden de Secciones
+            </label>
+            <Select 
+              value={sectionOrder} 
+              onValueChange={(value: "experience-first" | "education-first") => setSectionOrder(value)}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Seleccionar orden" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="experience-first">
+                  Experiencia → Formación
+                </SelectItem>
+                <SelectItem value="education-first">
+                  Formación → Experiencia
+                </SelectItem>
+              </SelectContent>
+            </Select>
           </div>
         </div>
       </CardContent>

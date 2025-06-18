@@ -5,9 +5,79 @@ interface CVModernProps {
   data: any;
   onUpdate?: (field: string, value: string) => void;
   editable?: boolean;
+  styles?: {
+    sectionOrder: "experience-first" | "education-first";
+  };
 }
 
-const CVModern = ({ data, onUpdate, editable }: CVModernProps) => {
+const CVModern = ({ data, onUpdate, editable, styles = { sectionOrder: "experience-first" } }: CVModernProps) => {
+  const renderExperienceSection = () => (
+    <section className="mb-6">
+      <h2 className="text-[1.125em] font-bold text-gray-800 mb-4 flex items-center gap-2">
+        <div className="w-1 h-6" style={{ backgroundColor: 'var(--accent-color)' }}></div>
+        <Briefcase className="w-5 h-5" />
+        Experiencia Laboral
+      </h2>
+      <div className="space-y-4">
+        {data.experiencia_laboral.map((exp: any, index: number) => (
+          <div key={index} className="relative pl-6">
+            <div className="absolute left-0 top-2 w-3 h-3 bg-blue-600 rounded-full"></div>
+            <div className="absolute left-1.5 top-5 w-0.5 h-full bg-gray-300"></div>
+            
+            <div className="bg-gray-50 p-4 rounded-lg">
+              <div className="flex justify-between items-start mb-2">
+                <h3 className="text-[1em] font-bold text-gray-900">{exp.titulo}</h3>
+                <span className="text-[0.75em] px-2 py-1 rounded" 
+                  style={{ 
+                    backgroundColor: 'var(--accent-color)',
+                    color: '#fff' 
+                  }}>
+                  {exp.fecha}
+                </span>
+              </div>
+              <p className="text-[0.875em] text-gray-700 font-semibold mb-2">{exp.entidad}</p>
+              {editable ? (
+                <InlineEdit
+                  value={exp.descripcion}
+                  onSave={(value) => onUpdate?.(`experiencia_laboral[${index}].descripcion`, value)}
+                  className="relative"
+                  textClassName="text-[0.875em] text-gray-700 text-justify"
+                  multiline={true}
+                />
+              ) : (
+                <p className="text-[0.875em] text-gray-700 text-justify">{exp.descripcion}</p>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+
+  const renderEducationSection = () => (
+    <section>
+      <h2 className="text-[1.125em] font-bold text-gray-800 mb-4 flex items-center gap-2">
+        <div className="w-1 h-6" style={{ backgroundColor: 'var(--accent-color)' }}></div>
+        <GraduationCap className="w-5 h-5" />
+        Formación
+      </h2>
+      <div className="space-y-3">
+        {data.formacion.map((edu: any, index: number) => (
+          <div key={index} className="bg-gray-50 p-4 rounded-lg">
+            <div className="flex justify-between items-start mb-2">
+              <h3 className="text-[1em] font-bold text-gray-900">{edu.titulo}</h3>
+              <span className="text-[0.75em] text-blue-600 bg-blue-100 px-2 py-1 rounded">
+                {edu.fecha}
+              </span>
+            </div>
+            <p className="text-[0.875em] text-gray-700 font-semibold mb-1">{edu.entidad}</p>
+            <p className="text-[0.875em] text-gray-700">{edu.descripcion}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+
   return (
     <div 
       id="CvModern"
@@ -130,70 +200,18 @@ const CVModern = ({ data, onUpdate, editable }: CVModernProps) => {
             )}
           </section>
 
-          {/* Experiencia Laboral */}
-          <section className="mb-6">
-            <h2 className="text-[1.125em] font-bold text-gray-800 mb-4 flex items-center gap-2">
-              <div className="w-1 h-6" style={{ backgroundColor: 'var(--accent-color)' }}></div>
-              <Briefcase className="w-5 h-5" />
-              Experiencia Laboral
-            </h2>
-            <div className="space-y-4">
-              {data.experiencia_laboral.map((exp: any, index: number) => (
-                <div key={index} className="relative pl-6">
-                  <div className="absolute left-0 top-2 w-3 h-3 bg-blue-600 rounded-full"></div>
-                  <div className="absolute left-1.5 top-5 w-0.5 h-full bg-gray-300"></div>
-                  
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <div className="flex justify-between items-start mb-2">
-                      <h3 className="text-[1em] font-bold text-gray-900">{exp.titulo}</h3>
-                      <span className="text-[0.75em] px-2 py-1 rounded" 
-                        style={{ 
-                          backgroundColor: 'var(--accent-color)',
-                          color: '#fff' 
-                        }}>
-                        {exp.fecha}
-                      </span>
-                    </div>
-                    <p className="text-[0.875em] text-gray-700 font-semibold mb-2">{exp.entidad}</p>
-                    {editable ? (
-                      <InlineEdit
-                        value={exp.descripcion}
-                        onSave={(value) => onUpdate?.(`experiencia_laboral[${index}].descripcion`, value)}
-                        className="relative"
-                        textClassName="text-[0.875em] text-gray-700 text-justify"
-                        multiline={true}
-                      />
-                    ) : (
-                      <p className="text-[0.875em] text-gray-700 text-justify">{exp.descripcion}</p>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* Formación */}
-          <section>
-            <h2 className="text-[1.125em] font-bold text-gray-800 mb-4 flex items-center gap-2">
-              <div className="w-1 h-6" style={{ backgroundColor: 'var(--accent-color)' }}></div>
-              <GraduationCap className="w-5 h-5" />
-              Formación
-            </h2>
-            <div className="space-y-3">
-              {data.formacion.map((edu: any, index: number) => (
-                <div key={index} className="bg-gray-50 p-4 rounded-lg">
-                  <div className="flex justify-between items-start mb-2">
-                    <h3 className="text-[1em] font-bold text-gray-900">{edu.titulo}</h3>
-                    <span className="text-[0.75em] text-blue-600 bg-blue-100 px-2 py-1 rounded">
-                      {edu.fecha}
-                    </span>
-                  </div>
-                  <p className="text-[0.875em] text-gray-700 font-semibold mb-1">{edu.entidad}</p>
-                  <p className="text-[0.875em] text-gray-700">{edu.descripcion}</p>
-                </div>
-              ))}
-            </div>
-          </section>
+          {/* Experiencia y Formación en el orden especificado */}
+          {styles.sectionOrder === "experience-first" ? (
+            <>
+              {renderExperienceSection()}
+              {renderEducationSection()}
+            </>
+          ) : (
+            <>
+              {renderEducationSection()}
+              {renderExperienceSection()}
+            </>
+          )}
         </div>
       </div>
     </div>

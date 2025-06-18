@@ -18,11 +18,13 @@ interface ModernToolboxProps {
     font: string;
     fontSize: number;
     theme: typeof cvThemes.modern[0];
+    sectionOrder: "experience-first" | "education-first";
   };
   onStyleChange: (styles: {
     font: string;
     fontSize: number;
     theme: typeof cvThemes.modern[0];
+    sectionOrder: "experience-first" | "education-first";
   }) => void;
 }
 
@@ -30,6 +32,7 @@ const ModernToolbox = ({ initialStyles, onStyleChange }: ModernToolboxProps) => 
   const [font, setFont] = useState(initialStyles.font);
   const [fontSize, setFontSize] = useState(initialStyles.fontSize);
   const [selectedTheme, setSelectedTheme] = useState(initialStyles.theme);
+  const [sectionOrder, setSectionOrder] = useState<"experience-first" | "education-first">(initialStyles.sectionOrder);
 
   // Ensure we have a valid theme
   const currentTheme = selectedTheme || cvThemes.modern[0];
@@ -39,31 +42,34 @@ const ModernToolbox = ({ initialStyles, onStyleChange }: ModernToolboxProps) => 
     onStyleChange({
       font,
       fontSize,
-      theme: currentTheme
+      theme: currentTheme,
+      sectionOrder
     });
-  }, [font, fontSize, currentTheme, onStyleChange]);
+  }, [font, fontSize, currentTheme, sectionOrder, onStyleChange]);
 
   const handleReset = () => {
     const defaultStyles = {
       font: "default",
       fontSize: 16,
-      theme: cvThemes.modern[0]
+      theme: cvThemes.modern[0],
+      sectionOrder: "experience-first" as const
     };
     setFont(defaultStyles.font);
     setFontSize(defaultStyles.fontSize);
     setSelectedTheme(defaultStyles.theme);
-    onStyleChange(defaultStyles); // Directly call onStyleChange
+    setSectionOrder(defaultStyles.sectionOrder);
+    onStyleChange(defaultStyles);
   };
 
   // Update immediately when any value changes
   const handleFontChange = (value: string) => {
     setFont(value);
-    onStyleChange({ font: value, fontSize, theme: currentTheme });
+    onStyleChange({ font: value, fontSize, theme: currentTheme, sectionOrder });
   };
 
   const handleFontSizeChange = (value: number) => {
     setFontSize(value);
-    onStyleChange({ font, fontSize: value, theme: currentTheme });
+    onStyleChange({ font, fontSize: value, theme: currentTheme, sectionOrder });
   };
 
   const handleThemeChange = (value: string) => {
@@ -73,7 +79,8 @@ const ModernToolbox = ({ initialStyles, onStyleChange }: ModernToolboxProps) => 
       onStyleChange({ 
         font, 
         fontSize, 
-        theme 
+        theme,
+        sectionOrder
       });
     }
   };
@@ -159,6 +166,28 @@ const ModernToolbox = ({ initialStyles, onStyleChange }: ModernToolboxProps) => 
               max={24}
               step={1}
             />
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-sm text-muted-foreground">
+              Orden de Secciones
+            </label>
+            <Select 
+              value={sectionOrder} 
+              onValueChange={(value: "experience-first" | "education-first") => setSectionOrder(value)}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Seleccionar orden" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="experience-first">
+                  Experiencia → Formación
+                </SelectItem>
+                <SelectItem value="education-first">
+                  Formación → Experiencia
+                </SelectItem>
+              </SelectContent>
+            </Select>
           </div>
         </div>
       </CardContent>
