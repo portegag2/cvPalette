@@ -316,7 +316,7 @@ const CVShowcase = () => {
         <Card className="w-full lg:w-auto self-start">
           <CardContent className="py-3">
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-2">
-              <div className="col-span-3 flex flex-col lg:flex-row gap-2">
+              <div className="col-span-full lg:col-span-3 flex flex-col lg:flex-row gap-2">
                 <Button
                   variant={selectedDesign === "classic" ? "default" : "outline"}
                   className="w-full lg:flex-1 justify-start"
