@@ -19,6 +19,7 @@ import LogoWord from "@/assets/logo_word_palette.svg";
 import FormModal from "./forms/Satisfaccion/FormModal";
 import OriginalFormModal from "./forms/Satisfaccion/OriginalFormModal";
 import UserButton from "./forms/Satisfaccion/UserButton";
+import { getMockedCVData } from '../services/firebaseData';
 
 type StyleConfig = {
   font: string;
@@ -165,6 +166,19 @@ const CVShowcase = () => {
   const [zoom, setZoom] = useState(100);
   const cvContainerRef = useRef<HTMLDivElement>(null);
   const [cvData, setCvData] = useState(pedroData);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    setLoading(true);
+    getMockedCVData()
+      .then(data => setCvData(data))
+      .catch(err => {
+        setError('No se pudo cargar el CV desde Firestore. Se usará el ejemplo local.');
+        setCvData(pedroData);
+      })
+      .finally(() => setLoading(false));
+  }, []);
 
   const calculateOptimalZoom = () => {
     if (!cvContainerRef.current) return 100;
@@ -246,6 +260,9 @@ const CVShowcase = () => {
   const handleRestoreExperiences = () => {
     setCvData(pedroData);
   };
+
+  if (loading) return <div>Cargando CV...</div>;
+  if (error) return <div style={{color: 'red'}}>{error}</div>;
 
   return (
     <div className="container mx-auto pt-4 px-4">
