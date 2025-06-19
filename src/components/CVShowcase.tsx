@@ -20,6 +20,8 @@ import FormModal from "./forms/Satisfaccion/FormModal";
 import OriginalFormModal from "./forms/Satisfaccion/OriginalFormModal";
 import UserButton from "./forms/Satisfaccion/UserButton";
 import { getMockedCVData } from '../services/firebaseData';
+import { getFirestore, doc, setDoc, getDoc } from "firebase/firestore";
+import "../firebase";
 
 type StyleConfig = {
   font: string;
@@ -169,16 +171,33 @@ const CVShowcase = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  const db = getFirestore();
+
   useEffect(() => {
-    setLoading(true);
-    getMockedCVData()
-      .then(data => setCvData(data))
-      .catch(err => {
-        setError('No se pudo cargar el CV desde Firestore. Se usará el ejemplo local.');
+    const fetchUserCV = async () => {
+      if (isAuthenticated && user) {
+        try {
+          const docId = `cvPalette-${user.sub}`;
+          const docRef = doc(db, "cvPalette", docId);
+          const docSnap = await getDoc(docRef);
+          if (docSnap.exists()) {
+            setCvData(docSnap.data() as typeof pedroData);
+          } else {
+            setCvData(pedroData); // Si no hay doc, usar el mock
+          }
+        } catch (error) {
+          setCvData(pedroData);
+        } finally {
+          setLoading(false);
+        }
+      } else {
         setCvData(pedroData);
-      })
-      .finally(() => setLoading(false));
-  }, []);
+        setLoading(false);
+      }
+    };
+    fetchUserCV();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuthenticated, user]);
 
   const calculateOptimalZoom = () => {
     if (!cvContainerRef.current) return 100;
@@ -259,6 +278,20 @@ const CVShowcase = () => {
 
   const handleRestoreExperiences = () => {
     setCvData(pedroData);
+  };
+
+  const handleSaveCV = async () => {
+    if (!user) return;
+    try {
+      const docId = `cvPalette-${user.sub}`;
+      const docRef = doc(db, "cvPalette", docId);
+      await setDoc(docRef, cvData, { merge: true });
+      setEditMode(false);
+      // Puedes mostrar un toast de éxito aquí
+      alert("CV guardado correctamente en el servidor.");
+    } catch (error) {
+      alert("Error al guardar el CV: " + (error?.message || error));
+    }
   };
 
   if (loading) return <div>Cargando CV...</div>;
@@ -429,11 +462,11 @@ const CVShowcase = () => {
                     variant={editMode ? "secondary" : "outline"}
                     size="sm"
                     className="ml-4 text-xs"
-                    onClick={() => setEditMode((prev) => !prev)}
-                    title="Editar todos los datos del CV"
+                    onClick={editMode ? handleSaveCV : () => setEditMode(true)}
+                    title={editMode ? "Guardar los datos del CV" : "Editar todos los datos del CV"}
                   >
                     <Edit2 className="w-4 h-4 mr-1" />
-                    {editMode ? "Editando..." : "Actualiza tus datos"}
+                    {editMode ? "Guardar" : "Actualiza tus datos"}
                   </Button>
                 )}
               </div>
