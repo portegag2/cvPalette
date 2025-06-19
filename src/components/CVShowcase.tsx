@@ -123,6 +123,7 @@ const CVShowcase = () => {
   const [isFormModalOpen, setIsFormModalOpen] = useState(false);
   const [isOriginalFormModalOpen, setIsOriginalFormModalOpen] = useState(false);
   const [activeTheme, setActiveTheme] = useState<"classic" | "cvpalette">("classic");
+  const [editMode, setEditMode] = useState(false);
 
   // Aplicar tema por defecto al montar
   useEffect(() => {
@@ -219,7 +220,11 @@ const CVShowcase = () => {
 
   const handleCVUpdate = (field: string, value: string) => {
     const newData = { ...cvData };
-    if (field.includes('[')) {
+    if (field.startsWith('datos_personales.')) {
+      // Actualizar campos anidados de datos_personales
+      const prop = field.split('.')[1];
+      newData.datos_personales = { ...newData.datos_personales, [prop]: value };
+    } else if (field.includes('[')) {
       // Handle array updates (e.g., experiencia_laboral[0].descripcion)
       const [arrayName, index, prop] = field.match(/(\w+)\[(\d+)\]\.(\w+)/)?.slice(1) || [];
       if (arrayName && index && prop) {
@@ -377,30 +382,44 @@ const CVShowcase = () => {
         <div id='cv' className="lg:col-span-3 print:w-full">
           <Card className="p-1 print:p-0 print:shadow-none print:border-0">
             <div className="flex flex-col gap-2 print:hidden">
-              {calculateOptimalZoom() < 100 && (
-                <div className="flex items-center mb-2">
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm text-muted-foreground w-14">Zoom: {zoom}%</span>
-                    <Slider
-                      value={[zoom]}
-                      onValueChange={([value]) => setZoom(value)}
-                      min={25}
-                      max={Math.max(calculateOptimalZoom(), 100)}
-                      step={1}
-                      className="w-48"
-                    />
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => setZoom(calculateOptimalZoom())}
-                      className="ml-2 text-xs"
-                      title="Adjust zoom to fit the CV in the viewport"
-                    >
-                      Fit
-                    </Button>
-                  </div>
+              <div className="flex items-center mb-2 justify-between w-full">
+                <div className="flex items-center gap-2">
+                  {zoom < 100 && (
+                    <>
+                      <span className="text-sm text-muted-foreground w-14">Zoom: {zoom}%</span>
+                      <Slider
+                        value={[zoom]}
+                        onValueChange={([value]) => setZoom(value)}
+                        min={25}
+                        max={Math.max(calculateOptimalZoom(), 100)}
+                        step={1}
+                        className="w-48"
+                      />
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setZoom(calculateOptimalZoom())}
+                        className="ml-2 text-xs"
+                        title="Adjust zoom to fit the CV in the viewport"
+                      >
+                        Fit
+                      </Button>
+                    </>
+                  )}
                 </div>
-              )}
+                {isAuthenticated && selectedDesign === "ats" && (
+                  <Button
+                    variant={editMode ? "secondary" : "outline"}
+                    size="sm"
+                    className="ml-4 text-xs"
+                    onClick={() => setEditMode((prev) => !prev)}
+                    title="Editar todos los datos del CV"
+                  >
+                    <Edit2 className="w-4 h-4 mr-1" />
+                    {editMode ? "Editando..." : "Actualiza tus datos"}
+                  </Button>
+                )}
+              </div>
               <div 
                 ref={cvContainerRef}
                 className="overflow-auto flex justify-center"
@@ -422,34 +441,37 @@ const CVShowcase = () => {
                     '--cv-secondary': selectedDesign === "modern" ? modernStyles.theme.secondary : classicStyles.theme.secondary,
                     '--cv-accent': selectedDesign === "modern" ? modernStyles.theme.accent : classicStyles.theme.accent,
                   } as React.CSSProperties}
-                >                {selectedDesign === "ats" ? (
-                  <CVAts 
-                    data={cvData} 
-                    styles={atsStyles}
-                    onUpdate={handleCVUpdate} 
-                    onDeleteExperience={handleDeleteExperience}
-                    onRestoreExperiences={handleRestoreExperiences}
-                    editable={true}
-                  />
-                ) : selectedDesign === "modern" ? (
-                  <CVModern 
-                    data={cvData}
-                    onUpdate={handleCVUpdate} 
-                    onDeleteExperience={handleDeleteExperience}
-                    onRestoreExperiences={handleRestoreExperiences}
-                    editable={true}
-                    styles={{ sectionOrder: modernStyles.sectionOrder }}
-                  />
-                ) : (
-                  <CVClassic 
-                    data={cvData} 
-                    onUpdate={handleCVUpdate} 
-                    onDeleteExperience={handleDeleteExperience}
-                    onRestoreExperiences={handleRestoreExperiences}
-                    editable={true}
-                    styles={{ sectionOrder: classicStyles.sectionOrder }}
-                  />
-                )}
+                >
+                  {selectedDesign === "ats" && (
+                    <CVAts 
+                      data={cvData} 
+                      styles={atsStyles}
+                      onUpdate={handleCVUpdate} 
+                      onDeleteExperience={handleDeleteExperience}
+                      onRestoreExperiences={handleRestoreExperiences}
+                      editable={editMode}
+                    />
+                  )}
+                  {selectedDesign === "modern" && (
+                    <CVModern 
+                      data={cvData}
+                      onUpdate={handleCVUpdate} 
+                      onDeleteExperience={handleDeleteExperience}
+                      onRestoreExperiences={handleRestoreExperiences}
+                      editable={true}
+                      styles={{ sectionOrder: modernStyles.sectionOrder }}
+                    />
+                  )}
+                  {selectedDesign === "classic" && (
+                    <CVClassic 
+                      data={cvData} 
+                      onUpdate={handleCVUpdate} 
+                      onDeleteExperience={handleDeleteExperience}
+                      onRestoreExperiences={handleRestoreExperiences}
+                      editable={true}
+                      styles={{ sectionOrder: classicStyles.sectionOrder }}
+                    />
+                  )}
                 </div>
               </div>
             </div>
@@ -466,19 +488,21 @@ const CVShowcase = () => {
                   '--cv-accent': selectedDesign === "modern" ? modernStyles.theme.accent : classicStyles.theme.accent,
                 } as React.CSSProperties}
               >
-                {selectedDesign === "ats" ? (
+                {selectedDesign === "ats" && (
                   <CVAts 
                     data={cvData} 
                     styles={atsStyles}
                     editable={false}
                   />
-                ) : selectedDesign === "modern" ? (
+                )}
+                {selectedDesign === "modern" && (
                   <CVModern 
                     data={cvData}
                     editable={false}
                     styles={{ sectionOrder: modernStyles.sectionOrder }}
                   />
-                ) : (
+                )}
+                {selectedDesign === "classic" && (
                   <CVClassic 
                     data={cvData}
                     editable={false}
