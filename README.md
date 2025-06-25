@@ -44,4 +44,5 @@ Estas secciones se entiende deberían ser componentes y lo que cambiese para cad
 Enunciado proyecto: https://github.com/jercilla-at-penascal/front-act10-proyecto-personal
 Bocetos: /src/assets/bocetos
 TAIGA: https://tree.taiga.io/project/portegag2-cvitae-palette/timeline
-Publicación: https://a4-cv-design-maker.vercel.app/
+Publicación: https://cvpalette.vercel.app/
+GitHub: https://github.com/portegag2/cvPalette
