@@ -7,7 +7,7 @@ export const pedroData = {
     "ciudad": "Bilbao",
     "telefono": "620 345 698",
     "email": "iglesitas@gmail.com",
-    "foto": "fotoCvPedroOrtega.png"
+    "foto": "fotoDNIPedroOrtegaCV-Palette.png"
   },
   "perfil_profesional": "Con el espíritu de un artesano digital y la visión de un arquitecto, soy un desarrollador web **full stack** que no solo construye sitios y aplicaciones, sino que también esculpe experiencias interactivas y robustas desde los cimientos hasta el último píxel. Mi dominio se extiende por todo el espectro del desarrollo web, donde el **front-end** cobra vida con interfaces intuitivas y estéticamente impecables que deleitan al usuario, y el **back-end** se erige como una fortaleza de lógica empresarial sólida, bases de datos eficientes y APIs perfectamente orquestadas.",
   "experiencia_laboral": [

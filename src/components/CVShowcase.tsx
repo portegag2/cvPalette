@@ -241,7 +241,8 @@ const CVShowcase = () => {
 
   const handleExportPDF = () => {
     const originalTitle = document.title;
-    document.title = `CV_${pedroData.datos_personales.nombre}.pdf`;
+    const name = (cvData && cvData.datos_personales && cvData.datos_personales.nombre) ? cvData.datos_personales.nombre : 'CV';
+    document.title = `CV_${name}.pdf`;
     window.print();
     document.title = originalTitle;
   };
