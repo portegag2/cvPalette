@@ -1,5 +1,6 @@
 import { Mail, Phone, MapPin, User, Edit, Trash2, RotateCcw } from "lucide-react";
 import InlineEdit from "@/components/ui/inline-edit";
+import { useState } from "react";
 
 interface CVClassicProps {
   data: any;
@@ -62,7 +63,7 @@ const CVClassic = ({ data, onUpdate, onDeleteExperience, onRestoreExperiences, e
                 multiline={true}
               />
             ) : (
-              <p className="text-gray-700 text-justify">{exp.descripcion}</p>
+              <p className="text-gray-700 text-justify whitespace-pre-line">{exp.descripcion}</p>
             )}
           </div>
         ))}
@@ -96,7 +97,7 @@ const CVClassic = ({ data, onUpdate, onDeleteExperience, onRestoreExperiences, e
                 textClassName="text-gray-700"
               />
             ) : (
-              <p className="text-gray-700">{edu.descripcion}</p>
+              <p className="text-gray-700 whitespace-pre-line">{edu.descripcion}</p>
             )}
           </div>
         ))}
@@ -144,11 +145,22 @@ const CVClassic = ({ data, onUpdate, onDeleteExperience, onRestoreExperiences, e
             </div>
           </div>
           
-          {/* Espacio para foto */}
+          {/* Foto */}
           <div className="ml-6">
-            <div className="w-24 h-32 bg-gray-200 border-2 border-gray-300 flex items-center justify-center text-gray-500 text-xs">
-              FOTO
-            </div>
+            {data.datos_personales.foto ? (
+              <img 
+                src={`/src/assets/profile_photo/${data.datos_personales.foto}`}
+                alt={data.datos_personales.nombre}
+                onError={(e) => {
+                  (e.target as HTMLImageElement).style.display = 'none';
+                }}
+                className="w-24 h-32 object-cover border-2 border-gray-300 rounded"
+              />
+            ) : (
+              <div className="w-24 h-32 bg-gray-200 border-2 border-gray-300 flex items-center justify-center text-gray-500 text-xs rounded">
+                FOTO
+              </div>
+            )}
           </div>
         </div>
       </header>
@@ -172,7 +184,7 @@ const CVClassic = ({ data, onUpdate, onDeleteExperience, onRestoreExperiences, e
             multiline={true}
           />
         ) : (
-          <p className="text-gray-700 text-justify">{data.perfil_profesional}</p>
+          <p className="text-gray-700 text-justify whitespace-pre-line">{data.perfil_profesional}</p>
         )}
       </section>
 

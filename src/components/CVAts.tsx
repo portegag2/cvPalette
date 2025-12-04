@@ -72,7 +72,7 @@ const CVAts = ({ data, onUpdate, onDeleteExperience, onRestoreExperiences, edita
                 multiline={true}
               />
             ) : (
-              <p className="text-justify">{exp.descripcion}</p>
+              <p className="text-justify whitespace-pre-line">{exp.descripcion}</p>
             )}
           </div>
         ))}
@@ -114,7 +114,7 @@ const CVAts = ({ data, onUpdate, onDeleteExperience, onRestoreExperiences, edita
                 multiline={true}
               />
             ) : (
-              <p className="text-gray-700">{edu.descripcion}</p>
+              <p className="text-gray-700 whitespace-pre-line">{edu.descripcion}</p>
             )}
           </div>
         ))}
@@ -134,7 +134,23 @@ const CVAts = ({ data, onUpdate, onDeleteExperience, onRestoreExperiences, edita
     >
       {/* Información de contacto */}
       <header className="mb-8">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div className="flex-1">
+            {data.datos_personales.foto ? (
+              <img 
+                src={`/src/assets/profile_photo/${data.datos_personales.foto}`}
+                alt={data.datos_personales.nombre}
+                onError={(e) => {
+                  (e.target as HTMLImageElement).style.display = 'none';
+                }}
+                className="w-24 h-32 object-cover rounded border border-gray-300 mb-2"
+              />
+            ) : (
+              <div className="w-24 h-32 bg-gray-300 rounded border border-gray-300 mb-2 flex items-center justify-center text-gray-500 text-xs">
+                FOTO
+              </div>
+            )}
+          </div>
           <h1 style={{ fontSize: `${styles.headingSize}pt` }} className="font-bold mb-2">
             {editable ? (
               <InlineEdit
@@ -203,7 +219,7 @@ const CVAts = ({ data, onUpdate, onDeleteExperience, onRestoreExperiences, edita
             multiline={true}
           />
         ) : (
-          <p style={{ fontSize: `${styles.fontSize}pt` }} className="text-justify">
+          <p style={{ fontSize: `${styles.fontSize}pt` }} className="text-justify whitespace-pre-line">
             {data.perfil_profesional}
           </p>
         )}

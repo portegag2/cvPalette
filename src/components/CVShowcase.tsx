@@ -8,7 +8,8 @@ import { Link } from "react-router-dom";
 import CVClassic from "./CVClassic";
 import CVModern from "./CVModern";
 import CVAts from "./CVAts";
-import { pedroData } from "../data/sampleData";
+import { pedroData as samplePedroData } from "../data/sampleData";
+import { pedroData as ortegaPedroData } from "../data/dataPedroOrtega";
 import { Slider } from "@/components/ui/slider";
 import { cvThemes } from "@/constants/themes";
 import ClassicToolbox from "./toolbox/ClassicToolbox";
@@ -167,37 +168,39 @@ const CVShowcase = () => {
   });
   const [zoom, setZoom] = useState(100);
   const cvContainerRef = useRef<HTMLDivElement>(null);
-  const [cvData, setCvData] = useState(pedroData);
+  const [cvData, setCvData] = useState(samplePedroData);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
+  
   const db = getFirestore();
-
+  
   useEffect(() => {
     const fetchUserCV = async () => {
       if (isAuthenticated && user) {
-        try {
-          const docId = `cvPalette-${user.sub}`;
-          const docRef = doc(db, "cvPalette", docId);
-          const docSnap = await getDoc(docRef);
-          if (docSnap.exists()) {
-            setCvData(docSnap.data() as typeof pedroData);
-          } else {
-            setCvData(pedroData); // Si no hay doc, usar el mock
-          }
-        } catch (error) {
-          setCvData(pedroData);
-        } finally {
-          setLoading(false);
-        }
-      } else {
-        setCvData(pedroData);
-        setLoading(false);
-      }
-    };
-    fetchUserCV();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAuthenticated, user]);
+        const isPortegag2 = user?.email === "portegag2@gmail.com" || user?.nickname === "portegag2";
+         try {
+           const docId = `cvPalette-${user.sub}`;
+           const docRef = doc(db, "cvPalette", docId);
+           const docSnap = await getDoc(docRef);
+           if (docSnap.exists()) {
+            setCvData(docSnap.data() as typeof samplePedroData);
+           } else {
+            // Load ortega data when portegag2 is logged in, otherwise sample data
+            setCvData(isPortegag2 ? ortegaPedroData : samplePedroData);
+           }
+         } catch (error) {
+          setCvData(user && (user.email === "portegag2@gmail.com" || user.nickname === "portegag2") ? ortegaPedroData : samplePedroData);
+         } finally {
+           setLoading(false);
+         }
+       } else {
+        setCvData(samplePedroData); // Default to sample data when not authenticated
+         setLoading(false);
+       }
+     };
+     fetchUserCV();
+     // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [isAuthenticated, user]);
 
   const calculateOptimalZoom = () => {
     if (!cvContainerRef.current) return 100;
@@ -277,7 +280,7 @@ const CVShowcase = () => {
   };
 
   const handleRestoreExperiences = () => {
-    setCvData(pedroData);
+    setCvData(samplePedroData);
   };
 
   const handleSaveCV = async () => {
@@ -457,7 +460,7 @@ const CVShowcase = () => {
                     </>
                   )}
                 </div>
-                {isAuthenticated && selectedDesign === "ats" && (
+                {isAuthenticated && (
                   <Button
                     variant={editMode ? "secondary" : "outline"}
                     size="sm"
@@ -508,7 +511,7 @@ const CVShowcase = () => {
                       onUpdate={handleCVUpdate} 
                       onDeleteExperience={handleDeleteExperience}
                       onRestoreExperiences={handleRestoreExperiences}
-                      editable={true}
+                        editable={editMode}
                       styles={{ sectionOrder: modernStyles.sectionOrder }}
                     />
                   )}
@@ -518,7 +521,7 @@ const CVShowcase = () => {
                       onUpdate={handleCVUpdate} 
                       onDeleteExperience={handleDeleteExperience}
                       onRestoreExperiences={handleRestoreExperiences}
-                      editable={true}
+                        editable={editMode}
                       styles={{ sectionOrder: classicStyles.sectionOrder }}
                     />
                   )}

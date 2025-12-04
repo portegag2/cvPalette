@@ -2,44 +2,45 @@
 export const pedroData = {
   "datos_personales": {
     "nombre": "Pedro Ortega Goitia",
-    "rol_profesional": "Desarrollador Web Full Stack",
+    "rol_profesional": "Full Stack Web Developer",
     "fecha_nacimiento": "21/05/1971",
     "ciudad": "Bilbao",
     "telefono": "620 527 022",
     "email": "portegag2@gmail.com",
-    "foto": "fotoCvPedroOrtega.png"
+    "linkedin": "https://www.linkedin.com/in/pedro-ortega-fullstack-senior/",
+    "foto": "fotoDNIPedroOrtegaCV-Palette.png"
   },
-  "perfil_profesional": "Ingeniero informático, 25 años desarrollando software, haciendo análisis y reingeniería tanto en proyectos de grandes cuentas, como Iberdrola (SIC/DELTA), Banesto, Gobierno Vasco, con roles específicos de análisis/desarrollo o en start-ups de plataformas web con necesidades globales, Full Stack. Dando mucha importancia al cuidado del trabajo en equipo.",
+  "perfil_profesional": "Ingeniero informático, 25 años desarrollando software, haciendo análisis y reingeniería tanto en proyectos de grandes cuentas, como Iberdrola (SIC/DELTA), Banesto, Gobierno Vasco, con roles específicos de análisis/desarrollo o en start-ups de plataformas web con necesidades globales, Full Stack. Dando mucha importancia al cuidado del trabajo en equipo. \n Última formación relevante: Especialista Automatismos IA y superación de la piscina de 42 Urduliz.",
   "experiencia_laboral": [
     {
       "titulo": "Analista Programador",
       "entidad": "Iberdrola - Accenture",
       "fecha": "12/2019 – 11/2024",
-      "descripcion": "Trabajando para Accenture en el proyecto SIC/DELTA de Iberdrola en la parte de NATStar, FrontEnd, en funciones de analista programador."
+      "descripcion": "Desde el equipo NAT dar servicio a las necesidades Front (NatStar) de los departamentos aprendiendo el complejo ecosistema de Iberdrola/Accenture. Mis tareas eran analizar el impacto, organizar la entrega con ellos y el resto del equipo, priorizando sus necesidades. Responsable de test unitarios, test de integración y puesta en producción. Al principio coordinando con el equipo y finalmente de manera autónoma. En la migración de COBOL a JAVA, ayudaba a un departamento en la familiarización con la nueva plataforma."
     },
     {
-      "titulo": "Analista Programador Full Stack – PHP, MySQL",
+      "titulo": "Full Stack Developer – PHP, MySQL, HTML, CSS, JavaScript",
       "entidad": "PLANNAM – SEMITAM INVESTMENTS",
       "fecha": "07/2017 – 12/2019",
-      "descripcion": "Desarrollo Full Stack del aplicativo Plannam, análisis y desarrollo de reingeniería, así como optimizaciones de rendimiento y nuevas funcionalidades."
+      "descripcion": "En los inicios del aplicativo Plannam, el equipo de desarrollo teníamos que cumplir con el calendario de presentaciones comerciales. Aporté la mejora de los rendimientos en el algoritmo y accesos a los datos hasta en un 75% y fuí proactivo en refactorizaciones para estabilizar el código e incorporar mejoras respondiendo al calendario y necesidades del departamento comercial."
     },
     {
-      "titulo": "Analista Programador Full Stack – PHP, MySQL",
+      "titulo": "Full Stack Developer – PHP, MySQL, HTML, CSS, JavaScript, SEO, posicionamiento, BootStrap",
       "entidad": "Autónomo – B2B Automoción",
       "fecha": "07/2013 – 07/2017",
-      "descripcion": "Desarrollo Full-Stack en la creación y mantenimiento de los portales www.buscotaller.es y www.buscorecambios.es."
+      "descripcion": "Creación y mantenimiento de dos portales. Una aventura en la que fuí la parte técnica en esta start-up. Mis tareas eran diseñar, desarrollar, mantener y mejorar los productos."
     },
     {
-      "titulo": "Analista Programador Full Stack– PHP, MySQL",
+      "titulo": "Full Stack Developer – PHP, MySQL, HTML, CSS, JavaScript",
       "entidad": "uvedoblestudio",
       "fecha": "08/2008 – 05/2013",
-      "descripcion": "Reingeniería en las herramientas de la empresa y posterior desarrollo de nuevas utilidades. Una de ellas un foro de conocimiento para Osakidetza. Otra un SIP para mejorar los pasos en la obtención de sellos de calidad gestionados por Euskalit y Bikain. Y otra para realizar encuestas especializada en centros educativos."
+      "descripcion": "Refactorización en las herramientas de la empresa y posterior desarrollo de nuevas utilidades. Una de ellas un foro de conocimiento para Osakidetza. Otra un SIP para mejorar los pasos en la obtención de sellos de calidad gestionados por Euskalit y Bikain. Y otra para realizar encuestas especializada en centros educativos."
     },
     {
-      "titulo": "Analista Programador – PHP, JSP, MySQL",
+      "titulo": "Full Stack Developer – PHP, JSP, MySQL, HTML, CSS, JavaScript",
       "entidad": "Autónomo, Altia, Laboradomo, Irontec",
       "fecha": "06/2000 – 04/2001 y 02/2004 – 06/2008",
-      "descripcion": "Desarrollo Full-Stack y mantenimiento de un portal web para una federación deportiva y extrapolarlo a otro más genérico para competiciones, así como otro portal de búsquedas inmobiliarias. Adaptación de paquetes de software libre: ecommerce, CRM, Wordpress, Foro, Wiki. Creación de informes técnicos para cumplir la LOPD."
+      "descripcion": "Diseñar, desarrollar, mantener y mejorar un portal web para una federación deportiva y extrapolarlo a otro más genérico para competiciones, así como otro portal de búsquedas inmobiliarias. Adaptación de paquetes de software libre: ecommerce, CRM, Wordpress, Foro, Wiki. Creación de informes técnicos para cumplir la LOPD."
     },
     {
       "titulo": "Técnico de sistemas",
@@ -64,8 +65,10 @@ export const pedroData = {
   ],
   "habilidades_tecnicas": [
     {
-      "lenguaje_programacion": "PHP, MySQL, NATStar, HTML, JavaScript, Java, CSS",
-      "herramientas": "Eclipse, Visual Studio Code, Git"
+      "lenguaje_programacion": "PHP, MySQL, NATStar, HTML, JavaScript, React, TypeScript, Java, CSS",
+      "herramientas": "Eclipse, Visual Studio Code, Git, Visual Studio, Cursor, WindSurf, n8n, Postman, Docker, XAMPP, ",
+      "Herramientas IA": "Perplexity, Grok, chatGPT, Gemini, Copilot, Claude, NotebookLM, Figma, Lovable, CapCut, Trello, Notion...",
+      "Metodologías": "Agile, Scrum, Kanban"
     }
   ],
   "idiomas": [

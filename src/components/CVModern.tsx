@@ -69,7 +69,7 @@ const CVModern = ({ data, onUpdate, onDeleteExperience, onRestoreExperiences, ed
                   multiline={true}
                 />
               ) : (
-                <p className="text-[0.875em] text-gray-700 text-justify">{exp.descripcion}</p>
+                <p className="text-[0.875em] text-gray-700 text-justify whitespace-pre-line">{exp.descripcion}</p>
               )}
             </div>
           </div>
@@ -95,7 +95,7 @@ const CVModern = ({ data, onUpdate, onDeleteExperience, onRestoreExperiences, ed
               </span>
             </div>
             <p className="text-[0.875em] text-gray-700 font-semibold mb-1">{edu.entidad}</p>
-            <p className="text-[0.875em] text-gray-700">{edu.descripcion}</p>
+            <p className="text-[0.875em] text-gray-700 whitespace-pre-line">{edu.descripcion}</p>
           </div>
         ))}
       </div>
@@ -119,9 +119,20 @@ const CVModern = ({ data, onUpdate, onDeleteExperience, onRestoreExperiences, ed
           style={{ backgroundColor: 'var(--sidebar-bg)' }}>
           {/* Foto y datos básicos */}
           <div className="text-center mb-6">
-            <div className="w-32 h-40 bg-gray-600 mx-auto mb-4 rounded-lg flex items-center justify-center text-[var(--cv-secondary)] text-[0.75em]">
-              FOTO
-            </div>
+            {data.datos_personales.foto ? (
+              <img 
+                src={`/src/assets/profile_photo/${data.datos_personales.foto}`}
+                alt={data.datos_personales.nombre}
+                onError={(e) => {
+                  (e.target as HTMLImageElement).style.display = 'none';
+                }}
+                className="w-32 h-40 mx-auto mb-4 rounded-lg object-cover"
+              />
+            ) : (
+              <div className="w-32 h-40 bg-gray-600 mx-auto mb-4 rounded-lg flex items-center justify-center text-[var(--cv-secondary)] text-[0.75em]">
+                FOTO
+              </div>
+            )}
             <h1 className="text-[1.25em] font-bold mb-1 text-[var(--cv-secondary)]">{data.datos_personales.nombre}</h1>
             <p className="text-[0.875em] text-[var(--cv-secondary)]">{data.datos_personales.rol_profesional}</p>
           </div>
@@ -218,7 +229,7 @@ const CVModern = ({ data, onUpdate, onDeleteExperience, onRestoreExperiences, ed
                 multiline={true}
               />
             ) : (
-              <p className="text-[0.875em] text-gray-700 text-justify leading-relaxed">
+              <p className="text-[0.875em] text-gray-700 text-justify leading-relaxed whitespace-pre-line">
                 {data.perfil_profesional}
               </p>
             )}
