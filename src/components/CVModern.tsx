@@ -1,4 +1,4 @@
-import { Mail, Phone, MapPin, User, Code, Briefcase, GraduationCap, Languages, Trash2, RotateCcw } from "lucide-react";
+import { Mail, Phone, MapPin, User, Code, Briefcase, GraduationCap, Languages, EyeOff, RotateCcw } from "lucide-react";
 import InlineEdit from "@/components/ui/inline-edit";
 import { useAuth0 } from "@auth0/auth0-react";
 
@@ -48,9 +48,9 @@ const CVModern = ({ data, onUpdate, onDeleteExperience, onRestoreExperiences, ed
                   <button
                     onClick={() => onDeleteExperience(index)}
                     className="absolute -right-8 top-0 text-red-500 hover:text-red-700 transition-colors"
-                    title="Eliminar experiencia"
+                    title="Ocultar experiencia"
                   >
-                    <Trash2 className="w-4 h-4" />
+                    <EyeOff className="w-4 h-4" />
                   </button>
                 )}
                 <div className="flex justify-between items-start mb-2">
