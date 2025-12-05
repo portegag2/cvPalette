@@ -10,19 +10,19 @@ export const pedroData = {
     "linkedin": "https://www.linkedin.com/in/pedro-ortega-fullstack-senior/",
     "foto": "fotoDNIPedroOrtegaCV-Palette.png"
   },
-  "perfil_profesional": "Ingeniero informático, 25 años desarrollando software, haciendo análisis y reingeniería tanto en proyectos de grandes cuentas, como Iberdrola (SIC/DELTA), Banesto, Gobierno Vasco, con roles específicos de análisis/desarrollo o en start-ups de plataformas web con necesidades globales, Full Stack. Dando mucha importancia al cuidado del trabajo en equipo. \n Última formación relevante: Especialista Automatismos IA y superación de la piscina de 42 Urduliz.",
+  "perfil_profesional": "Ingeniero informático, 25 años con desarrollo, análisis y refactorización, tanto en proyectos de grandes cuentas, como Iberdrola (SIC/DELTA), Banesto, Gobierno Vasco, o en start-ups de plataformas web con necesidades globales, Full Stack. Dando mucha importancia al cuidado del trabajo en equipo, buscando generar confianza, personal y en el código, a través de la constancia, el compromiso y una comunicación efectiva. \n Última formación relevante: Especialista Automatismos y agentes IA y superación de la piscina de 42 Urduliz.",
   "experiencia_laboral": [
     {
       "titulo": "Analista Programador",
       "entidad": "Iberdrola - Accenture",
       "fecha": "12/2019 – 11/2024",
-      "descripcion": "Desde el equipo NAT dar servicio a las necesidades Front (NatStar) de los departamentos aprendiendo el complejo ecosistema de Iberdrola/Accenture. Mis tareas eran analizar el impacto, organizar la entrega con ellos y el resto del equipo, priorizando sus necesidades. Responsable de test unitarios, test de integración y puesta en producción. Al principio coordinando con el equipo y finalmente de manera autónoma. En la migración de COBOL a JAVA, ayudaba a un departamento en la familiarización con la nueva plataforma."
+      "descripcion": "Desde el equipo NAT dar servicio a las necesidades Front (NatStar) de los departamentos. Aprender el complejo ecosistema de Iberdrola/Accenture. Analizar el impacto, organizar la entrega con ellos y el resto del equipo, priorizando sus necesidades. Responsable de test unitarios, test de integración y puesta en producción. Al principio coordinando con el equipo y finalmente de manera autónoma. En la migración de COBOL a JAVA, ayudaba a un departamento en la familiarización con la nueva plataforma 'JABOL'.",
     },
     {
       "titulo": "Full Stack Developer – PHP, MySQL, HTML, CSS, JavaScript",
       "entidad": "PLANNAM – SEMITAM INVESTMENTS",
       "fecha": "07/2017 – 12/2019",
-      "descripcion": "En los inicios del aplicativo Plannam, el equipo de desarrollo teníamos que cumplir con el calendario de presentaciones comerciales. Aporté la mejora de los rendimientos en el algoritmo y accesos a los datos hasta en un 75% y fuí proactivo en refactorizaciones para estabilizar el código e incorporar mejoras respondiendo al calendario y necesidades del departamento comercial."
+      "descripcion": "Eran los inicios del aplicativo Plannam. El equipo de desarrollo teníamos que cumplir con el calendario de presentaciones comerciales. Aporté la mejora de los rendimientos en el algoritmo y accesos a los datos hasta en un 75% y fuí proactivo en refactorizaciones para generar código de confianza para los comerciales además de incorporar mejoras respondiendo al calendario y necesidades del departamento comercial."
     },
     {
       "titulo": "Full Stack Developer – PHP, MySQL, HTML, CSS, JavaScript",
