@@ -1,4 +1,4 @@
-import { Mail, Phone, MapPin, User, Edit, Trash2, RotateCcw } from "lucide-react";
+import { Mail, Phone, MapPin, User, Edit, Trash2, RotateCcw, Linkedin } from "lucide-react";
 import InlineEdit from "@/components/ui/inline-edit";
 import { useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -124,31 +124,49 @@ const CVClassic = ({ data, onUpdate, onDeleteExperience, onRestoreExperiences, e
       <header className="border-b-2 pb-6 mb-6" style={{ borderColor: 'var(--cv-accent, #2563eb)' }}>
         <div className="flex justify-between items-start">
           <div className="flex-1">
-            <h1 className="text-3xl font-bold mb-2" style={{ color: 'var(--cv-primary, #1a1a1a)' }}>
-              {data.datos_personales.nombre}
-            </h1>
+            <div className="flex items-end gap-4 mb-2">
+              <h1 className="text-3xl font-bold" style={{ color: 'var(--cv-primary, #1a1a1a)' }}>
+                {data.datos_personales.nombre}
+              </h1>
+              <div className="flex items-center gap-4 text-sm pb-[3px]" style={{ color: 'var(--cv-secondary, #666666)' }}>
+                <div className="flex items-center gap-2">
+                  <User className="w-4 h-4" />
+                  <span>{data.datos_personales.fecha_nacimiento}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <MapPin className="w-4 h-4" />
+                  <span>{data.datos_personales.ciudad}</span>
+                </div>
+              </div>
+            </div>
             <p className="text-xl mb-4 font-medium" style={{ color: 'var(--cv-secondary, #666666)' }}>
               {data.datos_personales.rol_profesional}
             </p>
             
             <div className="grid grid-cols-2 gap-4 text-sm" style={{ color: 'var(--cv-secondary, #666666)' }}>
               <div className="flex items-center gap-2">
-                <Mail className="w-4 h-4" />
-                <span>{data.datos_personales.email}</span>
-              </div>
-              <div className="flex items-center gap-2">
                 <Phone className="w-4 h-4" />
                 <span>{data.datos_personales.telefono}</span>
               </div>
               <div className="flex items-center gap-2">
-                <MapPin className="w-4 h-4" />
-                <span>{data.datos_personales.ciudad}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <User className="w-4 h-4" />
-                <span>{data.datos_personales.fecha_nacimiento}</span>
+                <Mail className="w-4 h-4" />
+                <span>{data.datos_personales.email}</span>
               </div>
             </div>
+            {data.datos_personales.linkedin && (
+              <div className="flex items-center gap-2 text-sm mt-4" style={{ color: 'var(--cv-secondary, #666666)' }}>
+                <Linkedin className="w-4 h-4" />
+                <a 
+                  href={data.datos_personales.linkedin} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  style={{ textDecoration: 'none', color: 'inherit' }}
+                  className="hover:no-underline"
+                >
+                  {data.datos_personales.linkedin}
+                </a>
+              </div>
+            )}
           </div>
           
           {/* Foto */}

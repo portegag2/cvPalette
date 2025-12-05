@@ -10,7 +10,7 @@ export const pedroData = {
     "linkedin": "https://www.linkedin.com/in/pedro-ortega-fullstack-senior/",
     "foto": "fotoDNIPedroOrtegaCV-Palette.png"
   },
-  "perfil_profesional": "Ingeniero informático, 25 años con desarrollo, análisis y refactorización, tanto en proyectos de grandes cuentas, como Iberdrola (SIC/DELTA), Banesto, Gobierno Vasco, o en start-ups de plataformas web con necesidades globales, Full Stack. Dando mucha importancia al cuidado del trabajo en equipo, buscando generar confianza, personal y en el código, a través de la constancia, el compromiso y una comunicación efectiva. \n Última formación relevante: Especialista Automatismos y agentes IA y superación de la piscina de 42 Urduliz.",
+  "perfil_profesional": "Ingeniero informático, 25 años en desarrollo, análisis y refactorización, tanto en proyectos de grandes cuentas, como Iberdrola (SIC/DELTA), Banesto, Gobierno Vasco, o en start-ups de plataformas web con necesidades globales, Full Stack. Para un mejor trabajo en equipo cuido la confianza —personal y en el código— a través de constancia, compromiso y comunicación clara. \n Última formación relevante: Especialista Automatismos y agentes IA y superación de la piscina de 42 Urduliz.",
   "experiencia_laboral": [
     {
       "titulo": "Analista Programador",
