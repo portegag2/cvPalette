@@ -171,6 +171,7 @@ const CVShowcase = () => {
   const [cvData, setCvData] = useState(samplePedroData);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const originalCvDataRef = useRef<typeof samplePedroData | null>(null);
   
   const db = getFirestore();
   
@@ -183,18 +184,25 @@ const CVShowcase = () => {
            const docRef = doc(db, "cvPalette", docId);
            const docSnap = await getDoc(docRef);
            if (docSnap.exists()) {
-            setCvData(docSnap.data() as typeof samplePedroData);
+            const userData = docSnap.data() as typeof samplePedroData;
+            setCvData(userData);
+            originalCvDataRef.current = userData;
            } else {
             // Load ortega data when portegag2 is logged in, otherwise sample data
-            setCvData(isPortegag2 ? ortegaPedroData : samplePedroData);
+            const initialData = isPortegag2 ? ortegaPedroData : samplePedroData;
+            setCvData(initialData);
+            originalCvDataRef.current = initialData;
            }
          } catch (error) {
-          setCvData(user && (user.email === "portegag2@gmail.com" || user.nickname === "portegag2") ? ortegaPedroData : samplePedroData);
+          const initialData = user && (user.email === "portegag2@gmail.com" || user.nickname === "portegag2") ? ortegaPedroData : samplePedroData;
+          setCvData(initialData);
+          originalCvDataRef.current = initialData;
          } finally {
            setLoading(false);
          }
        } else {
         setCvData(samplePedroData); // Default to sample data when not authenticated
+        originalCvDataRef.current = samplePedroData;
          setLoading(false);
        }
      };
@@ -281,7 +289,12 @@ const CVShowcase = () => {
   };
 
   const handleRestoreExperiences = () => {
-    setCvData(samplePedroData);
+    // Restore only the experiences section from the original user data
+    if (originalCvDataRef.current) {
+      const newData = { ...cvData };
+      newData.experiencia_laboral = [...originalCvDataRef.current.experiencia_laboral];
+      setCvData(newData);
+    }
   };
 
   const handleSaveCV = async () => {
@@ -470,7 +483,7 @@ const CVShowcase = () => {
                     title={editMode ? "Guardar los datos del CV" : "Editar todos los datos del CV"}
                   >
                     <Edit2 className="w-4 h-4 mr-1" />
-                    {editMode ? "Guardar" : "Actualiza tus datos"}
+                    {editMode ? "Guardar" : "Adapta tus datos"}
                   </Button>
                 )}
               </div>
