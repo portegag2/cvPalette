@@ -143,6 +143,7 @@ const CVShowcase = () => {
   };
 
   const [selectedDesign, setSelectedDesign] = useState<"classic" | "modern" | "ats">("classic");
+  const [pageBreakIndex, setPageBreakIndex] = useState(2); // Default: after third experience (index 2)
   const [classicStyles, setClassicStyles] = useState<StyleConfig>({
     font: "default",
     fontSize: 16,
@@ -296,6 +297,14 @@ const CVShowcase = () => {
       setCvData(newData);
     }
   };
+
+  // Adjust pageBreakIndex if it's out of bounds (e.g., after deleting experiences)
+  useEffect(() => {
+    const maxIndex = cvData.experiencia_laboral.length - 1;
+    if (pageBreakIndex > maxIndex && maxIndex >= 0) {
+      setPageBreakIndex(maxIndex);
+    }
+  }, [cvData.experiencia_laboral.length, pageBreakIndex]);
 
   const handleSaveCV = async () => {
     if (!user) return;
@@ -517,6 +526,8 @@ const CVShowcase = () => {
                       onDeleteExperience={handleDeleteExperience}
                       onRestoreExperiences={handleRestoreExperiences}
                       editable={editMode}
+                      pageBreakIndex={pageBreakIndex}
+                      onPageBreakIndexChange={setPageBreakIndex}
                     />
                   )}
                   {selectedDesign === "modern" && (
@@ -536,6 +547,8 @@ const CVShowcase = () => {
                       onDeleteExperience={handleDeleteExperience}
                       onRestoreExperiences={handleRestoreExperiences}
                         editable={editMode}
+                      pageBreakIndex={pageBreakIndex}
+                      onPageBreakIndexChange={setPageBreakIndex}
                       styles={{ sectionOrder: classicStyles.sectionOrder }}
                     />
                   )}
@@ -560,6 +573,8 @@ const CVShowcase = () => {
                     data={cvData} 
                     styles={atsStyles}
                     editable={false}
+                    pageBreakIndex={pageBreakIndex}
+                    onPageBreakIndexChange={setPageBreakIndex}
                   />
                 )}
                 {selectedDesign === "modern" && (
@@ -573,6 +588,8 @@ const CVShowcase = () => {
                   <CVClassic 
                     data={cvData}
                     editable={false}
+                    pageBreakIndex={pageBreakIndex}
+                    onPageBreakIndexChange={setPageBreakIndex}
                     styles={{ sectionOrder: classicStyles.sectionOrder }}
                   />
                 )}

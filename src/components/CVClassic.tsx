@@ -1,6 +1,6 @@
-import { Mail, Phone, MapPin, User, Edit, EyeOff, RotateCcw, Linkedin } from "lucide-react";
+import { Mail, Phone, MapPin, User, Edit, EyeOff, RotateCcw, Linkedin, ArrowBigUpDash, ArrowBigDownDash } from "lucide-react";
 import InlineEdit from "@/components/ui/inline-edit";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 
 interface CVClassicProps {
@@ -9,13 +9,40 @@ interface CVClassicProps {
   onDeleteExperience?: (index: number) => void;
   onRestoreExperiences?: () => void;
   editable?: boolean;
+  pageBreakIndex?: number;
+  onPageBreakIndexChange?: (index: number) => void;
   styles?: {
     sectionOrder: "experience-first" | "education-first";
   };
 }
 
-const CVClassic = ({ data, onUpdate, onDeleteExperience, onRestoreExperiences, editable, styles = { sectionOrder: "experience-first" } }: CVClassicProps) => {
+const CVClassic = ({ data, onUpdate, onDeleteExperience, onRestoreExperiences, editable, pageBreakIndex: propPageBreakIndex, onPageBreakIndexChange, styles = { sectionOrder: "experience-first" } }: CVClassicProps) => {
   const { isAuthenticated } = useAuth0();
+  const [localPageBreakIndex, setLocalPageBreakIndex] = useState(2); // Default: after third experience (index 2)
+  
+  // Use prop if provided, otherwise use local state
+  const pageBreakIndex = propPageBreakIndex !== undefined ? propPageBreakIndex : localPageBreakIndex;
+  const setPageBreakIndex = onPageBreakIndexChange || setLocalPageBreakIndex;
+  
+  // Adjust pageBreakIndex if it's out of bounds (e.g., after deleting experiences)
+  useEffect(() => {
+    const maxIndex = data.experiencia_laboral.length - 1;
+    if (pageBreakIndex > maxIndex && maxIndex >= 0) {
+      setPageBreakIndex(maxIndex);
+    }
+  }, [data.experiencia_laboral.length, pageBreakIndex, setPageBreakIndex]);
+  
+  const movePageBreakUp = () => {
+    if (pageBreakIndex > 0) {
+      setPageBreakIndex(pageBreakIndex - 1);
+    }
+  };
+  
+  const movePageBreakDown = () => {
+    if (pageBreakIndex < data.experiencia_laboral.length - 1) {
+      setPageBreakIndex(pageBreakIndex + 1);
+    }
+  };
   
   const renderExperienceSection = () => (
     <section className="mb-6">
@@ -70,7 +97,30 @@ const CVClassic = ({ data, onUpdate, onDeleteExperience, onRestoreExperiences, e
                 <p className="text-gray-700 text-justify whitespace-pre-line">{exp.descripcion}</p>
               )}
             </div>
-            {index === 2 && <div className="page-break"></div>}
+            {index === pageBreakIndex && (
+              <div className="page-break relative">
+                <div className="absolute right-2 top-1/2 -translate-y-1/2 flex flex-row gap-1 print:hidden z-10">
+                  {pageBreakIndex > 0 && (
+                    <button
+                      onClick={movePageBreakUp}
+                      className="text-blue-600 hover:text-blue-800 transition-colors cursor-pointer bg-white/80 rounded p-0.5 hover:bg-white"
+                      title="Mover salto de página hacia arriba"
+                    >
+                      <ArrowBigUpDash className="w-5 h-5" />
+                    </button>
+                  )}
+                  {pageBreakIndex < data.experiencia_laboral.length - 1 && (
+                    <button
+                      onClick={movePageBreakDown}
+                      className="text-blue-600 hover:text-blue-800 transition-colors cursor-pointer bg-white/80 rounded p-0.5 hover:bg-white"
+                      title="Mover salto de página hacia abajo"
+                    >
+                      <ArrowBigDownDash className="w-5 h-5" />
+                    </button>
+                  )}
+                </div>
+              </div>
+            )}
           </>
         ))}
       </div>

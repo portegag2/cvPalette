@@ -1,4 +1,5 @@
-import { Mail, Phone, MapPin, User, EyeOff, RotateCcw } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Mail, Phone, MapPin, User, EyeOff, RotateCcw, ChevronUp, ChevronDown } from "lucide-react";
 import InlineEdit from "@/components/ui/inline-edit";
 import { useAuth0 } from "@auth0/auth0-react";
 
@@ -8,6 +9,8 @@ interface CVAtsProps {
   onDeleteExperience?: (index: number) => void;
   onRestoreExperiences?: () => void;
   editable?: boolean;
+  pageBreakIndex?: number;
+  onPageBreakIndexChange?: (index: number) => void;
   styles?: {
     font: string;
     fontSize: number;
@@ -16,8 +19,33 @@ interface CVAtsProps {
   };
 }
 
-const CVAts = ({ data, onUpdate, onDeleteExperience, onRestoreExperiences, editable, styles = { font: 'arial', fontSize: 11, headingSize: 14.6, sectionOrder: "experience-first" } }: CVAtsProps) => {
+const CVAts = ({ data, onUpdate, onDeleteExperience, onRestoreExperiences, editable, pageBreakIndex: propPageBreakIndex, onPageBreakIndexChange, styles = { font: 'arial', fontSize: 11, headingSize: 14.6, sectionOrder: "experience-first" } }: CVAtsProps) => {
   const { isAuthenticated } = useAuth0();
+  const [localPageBreakIndex, setLocalPageBreakIndex] = useState(2); // Default: after third experience (index 2)
+  
+  // Use prop if provided, otherwise use local state
+  const pageBreakIndex = propPageBreakIndex !== undefined ? propPageBreakIndex : localPageBreakIndex;
+  const setPageBreakIndex = onPageBreakIndexChange || setLocalPageBreakIndex;
+  
+  // Adjust pageBreakIndex if it's out of bounds (e.g., after deleting experiences)
+  useEffect(() => {
+    const maxIndex = data.experiencia_laboral.length - 1;
+    if (pageBreakIndex > maxIndex && maxIndex >= 0) {
+      setPageBreakIndex(maxIndex);
+    }
+  }, [data.experiencia_laboral.length, pageBreakIndex, setPageBreakIndex]);
+  
+  const movePageBreakUp = () => {
+    if (pageBreakIndex > 0) {
+      setPageBreakIndex(pageBreakIndex - 1);
+    }
+  };
+  
+  const movePageBreakDown = () => {
+    if (pageBreakIndex < data.experiencia_laboral.length - 1) {
+      setPageBreakIndex(pageBreakIndex + 1);
+    }
+  };
   
   const renderExperienceSection = () => (
     <section className="mb-8">
@@ -79,7 +107,37 @@ const CVAts = ({ data, onUpdate, onDeleteExperience, onRestoreExperiences, edita
                 <p className="text-justify whitespace-pre-line">{exp.descripcion}</p>
               )}
             </div>
-            {index === 2 && <div className="page-break"></div>}
+            {index === pageBreakIndex && (
+              <>
+                {/* Row to move page-break up */}
+                {pageBreakIndex > 0 && (
+                  <div 
+                    onClick={movePageBreakUp}
+                    className="page-break-control page-break-control-up print:hidden cursor-pointer hover:bg-blue-50 transition-colors"
+                    title="Mover salto de página hacia arriba"
+                  >
+                    <div className="flex items-center justify-center gap-2 text-blue-600 text-xs font-medium">
+                      <ChevronUp className="w-4 h-4" />
+                      <span>Mover arriba</span>
+                    </div>
+                  </div>
+                )}
+                <div className="page-break"></div>
+                {/* Row to move page-break down */}
+                {pageBreakIndex < data.experiencia_laboral.length - 1 && (
+                  <div 
+                    onClick={movePageBreakDown}
+                    className="page-break-control page-break-control-down print:hidden cursor-pointer hover:bg-blue-50 transition-colors"
+                    title="Mover salto de página hacia abajo"
+                  >
+                    <div className="flex items-center justify-center gap-2 text-blue-600 text-xs font-medium">
+                      <ChevronDown className="w-4 h-4" />
+                      <span>Mover abajo</span>
+                    </div>
+                  </div>
+                )}
+              </>
+            )}
           </>
         ))}
       </div>
