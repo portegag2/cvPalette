@@ -174,8 +174,11 @@
     position: relative;
     display: block;
     min-height: 2rem;
-    width: 100%;
-    margin: 1rem 0;
+    margin-left: -2rem;
+    margin-right: -2rem;
+    width: calc(100% + 4rem);
+    margin-top: 1rem;
+    margin-bottom: 1rem;
   }
 
   /* Apply the visual effect to .page-break div on screen */
