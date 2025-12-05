@@ -1,6 +1,7 @@
 import { Mail, Phone, MapPin, User, Edit, Trash2, RotateCcw } from "lucide-react";
 import InlineEdit from "@/components/ui/inline-edit";
 import { useState } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 
 interface CVClassicProps {
   data: any;
@@ -14,6 +15,8 @@ interface CVClassicProps {
 }
 
 const CVClassic = ({ data, onUpdate, onDeleteExperience, onRestoreExperiences, editable, styles = { sectionOrder: "experience-first" } }: CVClassicProps) => {
+  const { isAuthenticated } = useAuth0();
+  
   const renderExperienceSection = () => (
     <section className="mb-6">
       <div className="flex justify-between items-center border-b pb-1 mb-3">
@@ -67,7 +70,7 @@ const CVClassic = ({ data, onUpdate, onDeleteExperience, onRestoreExperiences, e
                 <p className="text-gray-700 text-justify whitespace-pre-line">{exp.descripcion}</p>
               )}
             </div>
-            {index === 2 && <div className="page-break print:mt-[50mm]"></div>}
+            {index === 2 && <div className="page-break"></div>}
           </>
         ))}
       </div>
@@ -150,12 +153,17 @@ const CVClassic = ({ data, onUpdate, onDeleteExperience, onRestoreExperiences, e
           
           {/* Foto */}
           <div className="ml-6">
-            {data.datos_personales.foto ? (
+            {isAuthenticated && data.datos_personales.foto ? (
               <img 
                 src={`/src/assets/profile_photo/${data.datos_personales.foto}`}
                 alt={data.datos_personales.nombre}
                 onError={(e) => {
-                  (e.target as HTMLImageElement).style.display = 'none';
+                  const img = e.target as HTMLImageElement;
+                  img.style.display = 'none';
+                  const placeholder = document.createElement('div');
+                  placeholder.className = 'w-24 h-32 bg-gray-200 border-2 border-gray-300 flex items-center justify-center text-gray-500 text-xs rounded';
+                  placeholder.textContent = 'FOTO';
+                  img.parentElement?.appendChild(placeholder);
                 }}
                 className="w-24 h-32 object-cover border-2 border-gray-300 rounded"
               />

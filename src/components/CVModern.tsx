@@ -1,5 +1,6 @@
 import { Mail, Phone, MapPin, User, Code, Briefcase, GraduationCap, Languages, Trash2, RotateCcw } from "lucide-react";
 import InlineEdit from "@/components/ui/inline-edit";
+import { useAuth0 } from "@auth0/auth0-react";
 
 interface CVModernProps {
   data: any;
@@ -13,6 +14,8 @@ interface CVModernProps {
 }
 
 const CVModern = ({ data, onUpdate, onDeleteExperience, onRestoreExperiences, editable, styles = { sectionOrder: "experience-first" } }: CVModernProps) => {
+  const { isAuthenticated } = useAuth0();
+  
   const renderExperienceSection = () => (
     <section className="mb-6">
       <div className="flex justify-between items-center mb-4">
@@ -35,44 +38,47 @@ const CVModern = ({ data, onUpdate, onDeleteExperience, onRestoreExperiences, ed
       </div>
       <div className="space-y-4">
         {data.experiencia_laboral.map((exp: any, index: number) => (
-          <div key={index} className="relative pl-6">
-            <div className="absolute left-0 top-2 w-3 h-3 bg-blue-600 rounded-full"></div>
-            <div className="absolute left-1.5 top-5 w-0.5 h-full bg-gray-300"></div>
-            
-            <div className="bg-gray-50 p-4 rounded-lg relative">
-              {editable && onDeleteExperience && (
-                <button
-                  onClick={() => onDeleteExperience(index)}
-                  className="absolute -right-8 top-0 text-red-500 hover:text-red-700 transition-colors"
-                  title="Eliminar experiencia"
-                >
-                  <Trash2 className="w-4 h-4" />
-                </button>
-              )}
-              <div className="flex justify-between items-start mb-2">
-                <h3 className="text-[1em] font-bold text-gray-900">{exp.titulo}</h3>
-                <span className="text-[0.75em] px-2 py-1 rounded" 
-                  style={{ 
-                    backgroundColor: 'var(--accent-color)',
-                    color: '#fff' 
-                  }}>
-                  {exp.fecha}
-                </span>
+          <>
+            <div key={index} className="relative pl-6">
+              <div className="absolute left-0 top-2 w-3 h-3 bg-blue-600 rounded-full"></div>
+              <div className="absolute left-1.5 top-5 w-0.5 h-full bg-gray-300"></div>
+              
+              <div className="bg-gray-50 p-4 rounded-lg relative">
+                {editable && onDeleteExperience && (
+                  <button
+                    onClick={() => onDeleteExperience(index)}
+                    className="absolute -right-8 top-0 text-red-500 hover:text-red-700 transition-colors"
+                    title="Eliminar experiencia"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                )}
+                <div className="flex justify-between items-start mb-2">
+                  <h3 className="text-[1em] font-bold text-gray-900">{exp.titulo}</h3>
+                  <span className="text-[0.75em] px-2 py-1 rounded" 
+                    style={{ 
+                      backgroundColor: 'var(--accent-color)',
+                      color: '#fff' 
+                    }}>
+                    {exp.fecha}
+                  </span>
+                </div>
+                <p className="text-[0.875em] text-gray-700 font-semibold mb-2">{exp.entidad}</p>
+                {editable ? (
+                  <InlineEdit
+                    value={exp.descripcion}
+                    onSave={(value) => onUpdate?.(`experiencia_laboral[${index}].descripcion`, value)}
+                    className="relative"
+                    textClassName="text-[0.875em] text-gray-700 text-justify"
+                    multiline={true}
+                  />
+                ) : (
+                  <p className="text-[0.875em] text-gray-700 text-justify whitespace-pre-line">{exp.descripcion}</p>
+                )}
               </div>
-              <p className="text-[0.875em] text-gray-700 font-semibold mb-2">{exp.entidad}</p>
-              {editable ? (
-                <InlineEdit
-                  value={exp.descripcion}
-                  onSave={(value) => onUpdate?.(`experiencia_laboral[${index}].descripcion`, value)}
-                  className="relative"
-                  textClassName="text-[0.875em] text-gray-700 text-justify"
-                  multiline={true}
-                />
-              ) : (
-                <p className="text-[0.875em] text-gray-700 text-justify whitespace-pre-line">{exp.descripcion}</p>
-              )}
             </div>
-          </div>
+            {index === 2 && <div className="page-break"></div>}
+          </>
         ))}
       </div>
     </section>
@@ -119,12 +125,17 @@ const CVModern = ({ data, onUpdate, onDeleteExperience, onRestoreExperiences, ed
           style={{ backgroundColor: 'var(--sidebar-bg)' }}>
           {/* Foto y datos básicos */}
           <div className="text-center mb-6">
-            {data.datos_personales.foto ? (
+            {isAuthenticated && data.datos_personales.foto ? (
               <img 
                 src={`/src/assets/profile_photo/${data.datos_personales.foto}`}
                 alt={data.datos_personales.nombre}
                 onError={(e) => {
-                  (e.target as HTMLImageElement).style.display = 'none';
+                  const img = e.target as HTMLImageElement;
+                  img.style.display = 'none';
+                  const placeholder = document.createElement('div');
+                  placeholder.className = 'w-32 h-40 bg-gray-600 mx-auto mb-4 rounded-lg flex items-center justify-center text-[var(--cv-secondary)] text-[0.75em]';
+                  placeholder.textContent = 'FOTO';
+                  img.parentElement?.appendChild(placeholder);
                 }}
                 className="w-32 h-40 mx-auto mb-4 rounded-lg object-cover"
               />

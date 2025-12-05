@@ -1,5 +1,6 @@
 import { Mail, Phone, MapPin, User, Trash2, RotateCcw } from "lucide-react";
 import InlineEdit from "@/components/ui/inline-edit";
+import { useAuth0 } from "@auth0/auth0-react";
 
 interface CVAtsProps {
   data: any;
@@ -16,6 +17,8 @@ interface CVAtsProps {
 }
 
 const CVAts = ({ data, onUpdate, onDeleteExperience, onRestoreExperiences, editable, styles = { font: 'arial', fontSize: 11, headingSize: 14.6, sectionOrder: "experience-first" } }: CVAtsProps) => {
+  const { isAuthenticated } = useAuth0();
+  
   const renderExperienceSection = () => (
     <section className="mb-8">
       <div className="flex justify-between items-center mb-4">
@@ -34,47 +37,50 @@ const CVAts = ({ data, onUpdate, onDeleteExperience, onRestoreExperiences, edita
       </div>
       <div className="space-y-6">
         {data.experiencia_laboral.map((exp: any, index: number) => (
-          <div key={index} className="relative border-b pb-2">
-            {editable && onDeleteExperience && (
-              <button
-                onClick={() => onDeleteExperience(index)}
-                className="absolute -right-8 top-0 text-red-500 hover:text-red-700 transition-colors"
-                title="Eliminar experiencia"
-              >
-                <Trash2 className="w-4 h-4" />
-              </button>
-            )}
-            <div className="flex flex-wrap gap-2 items-center mb-1">
-              <span className="font-bold">
-                {editable ? (
-                  <InlineEdit value={exp.titulo} onSave={value => onUpdate?.(`experiencia_laboral[${index}].titulo`, value)} className="inline-block" textClassName="font-bold" />
-                ) : exp.titulo}
-              </span>
-              <span className="text-sm text-gray-500">
-                {editable ? (
-                  <InlineEdit value={exp.fecha} onSave={value => onUpdate?.(`experiencia_laboral[${index}].fecha`, value)} className="inline-block" textClassName="text-sm text-gray-500" />
-                ) : exp.fecha}
-              </span>
+          <>
+            <div key={index} className="relative border-b pb-2">
+              {editable && onDeleteExperience && (
+                <button
+                  onClick={() => onDeleteExperience(index)}
+                  className="absolute -right-8 top-0 text-red-500 hover:text-red-700 transition-colors"
+                  title="Eliminar experiencia"
+                >
+                  <Trash2 className="w-4 h-4" />
+                </button>
+              )}
+              <div className="flex flex-wrap gap-2 items-center mb-1">
+                <span className="font-bold">
+                  {editable ? (
+                    <InlineEdit value={exp.titulo} onSave={value => onUpdate?.(`experiencia_laboral[${index}].titulo`, value)} className="inline-block" textClassName="font-bold" />
+                  ) : exp.titulo}
+                </span>
+                <span className="text-sm text-gray-500">
+                  {editable ? (
+                    <InlineEdit value={exp.fecha} onSave={value => onUpdate?.(`experiencia_laboral[${index}].fecha`, value)} className="inline-block" textClassName="text-sm text-gray-500" />
+                  ) : exp.fecha}
+                </span>
+              </div>
+              <div className="mb-1">
+                <span className="font-semibold">
+                  {editable ? (
+                    <InlineEdit value={exp.entidad} onSave={value => onUpdate?.(`experiencia_laboral[${index}].entidad`, value)} className="inline-block" textClassName="font-semibold" />
+                  ) : exp.entidad}
+                </span>
+              </div>
+              {editable ? (
+                <InlineEdit
+                  value={exp.descripcion}
+                  onSave={value => onUpdate?.(`experiencia_laboral[${index}].descripcion`, value)}
+                  className="relative"
+                  textClassName="text-gray-700 text-justify"
+                  multiline={true}
+                />
+              ) : (
+                <p className="text-justify whitespace-pre-line">{exp.descripcion}</p>
+              )}
             </div>
-            <div className="mb-1">
-              <span className="font-semibold">
-                {editable ? (
-                  <InlineEdit value={exp.entidad} onSave={value => onUpdate?.(`experiencia_laboral[${index}].entidad`, value)} className="inline-block" textClassName="font-semibold" />
-                ) : exp.entidad}
-              </span>
-            </div>
-            {editable ? (
-              <InlineEdit
-                value={exp.descripcion}
-                onSave={value => onUpdate?.(`experiencia_laboral[${index}].descripcion`, value)}
-                className="relative"
-                textClassName="text-gray-700 text-justify"
-                multiline={true}
-              />
-            ) : (
-              <p className="text-justify whitespace-pre-line">{exp.descripcion}</p>
-            )}
-          </div>
+            {index === 2 && <div className="page-break"></div>}
+          </>
         ))}
       </div>
     </section>
@@ -136,12 +142,17 @@ const CVAts = ({ data, onUpdate, onDeleteExperience, onRestoreExperiences, edita
       <header className="mb-8">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div className="flex-1">
-            {data.datos_personales.foto ? (
+            {isAuthenticated && data.datos_personales.foto ? (
               <img 
                 src={`/src/assets/profile_photo/${data.datos_personales.foto}`}
                 alt={data.datos_personales.nombre}
                 onError={(e) => {
-                  (e.target as HTMLImageElement).style.display = 'none';
+                  const img = e.target as HTMLImageElement;
+                  img.style.display = 'none';
+                  const placeholder = document.createElement('div');
+                  placeholder.className = 'w-24 h-32 bg-gray-300 rounded border border-gray-300 mb-2 flex items-center justify-center text-gray-500 text-xs';
+                  placeholder.textContent = 'FOTO';
+                  img.parentElement?.appendChild(placeholder);
                 }}
                 className="w-24 h-32 object-cover rounded border border-gray-300 mb-2"
               />
