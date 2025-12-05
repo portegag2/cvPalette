@@ -166,26 +166,38 @@
     position: relative;
   }
 
-  #CvClassic::after, #CvModern::after, #CvAts::after {
+  /* Remove the ::after and ::before styles from CV elements */
+  /* These are now moved to .page-break below */
+
+  /* Make .page-break visible and position it correctly */
+  .page-break {
+    position: relative;
+    display: block;
+    min-height: 2rem;
+    width: 100%;
+    margin: 1rem 0;
+  }
+
+  /* Apply the visual effect to .page-break div on screen */
+  .page-break::after {
     content: "";
     position: absolute;
     left: 0;
     right: 0;
-    top: 277mm;
+    top: 0;
     height: 2rem;
-    background: 
-      rgba(249, 250, 251, 0.8);
+    background: rgba(249, 250, 251, 0.8);
     border-top: 1px dashed rgba(100, 116, 139, 0.3);
     border-bottom: 1px dashed rgba(100, 116, 139, 0.3);
     pointer-events: none;
   }
 
-  #CvClassic::before, #CvModern::before, #CvAts::before {
-    content: "Fin de página";
+  .page-break::before {
+    content: "Salto de página";
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    top: 277mm;
+    top: 0;
     background: rgba(255, 255, 255, 0.8);
     padding: 0 1em;
     font-size: 0.75rem;
