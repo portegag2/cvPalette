@@ -39,33 +39,36 @@ const CVClassic = ({ data, onUpdate, onDeleteExperience, onRestoreExperiences, e
       </div>
       <div className="space-y-4">
         {data.experiencia_laboral.map((exp: any, index: number) => (
-          <div key={index} className="border-l-2 border-gray-300 pl-4 relative">
-            {editable && onDeleteExperience && (
-              <button
-                onClick={() => onDeleteExperience(index)}
-                className="absolute -right-8 top-0 text-red-500 hover:text-red-700 transition-colors"
-                title="Eliminar experiencia"
-              >
-                <Trash2 className="w-4 h-4" />
-              </button>
-            )}
-            <div className="flex justify-between items-start mb-1">
-              <h3 className="font-bold text-gray-900">{exp.titulo}</h3>
-              <span className="text-sm text-gray-600 font-medium">{exp.fecha}</span>
+          <>
+            <div key={index} className="border-l-2 border-gray-300 pl-4 relative">
+              {editable && onDeleteExperience && (
+                <button
+                  onClick={() => onDeleteExperience(index)}
+                  className="absolute -right-8 top-0 text-red-500 hover:text-red-700 transition-colors"
+                  title="Eliminar experiencia"
+                >
+                  <Trash2 className="w-4 h-4" />
+                </button>
+              )}
+              <div className="flex justify-between items-start mb-1">
+                <h3 className="font-bold text-gray-900">{exp.titulo}</h3>
+                <span className="text-sm text-gray-600 font-medium">{exp.fecha}</span>
+              </div>
+              <p className="text-gray-700 font-semibold mb-1">{exp.entidad}</p>
+              {editable ? (
+                <InlineEdit
+                  value={exp.descripcion}
+                  onSave={(value) => onUpdate?.(`experiencia_laboral[${index}].descripcion`, value)}
+                  className="relative"
+                  textClassName="text-gray-700 text-justify"
+                  multiline={true}
+                />
+              ) : (
+                <p className="text-gray-700 text-justify whitespace-pre-line">{exp.descripcion}</p>
+              )}
             </div>
-            <p className="text-gray-700 font-semibold mb-1">{exp.entidad}</p>
-            {editable ? (
-              <InlineEdit
-                value={exp.descripcion}
-                onSave={(value) => onUpdate?.(`experiencia_laboral[${index}].descripcion`, value)}
-                className="relative"
-                textClassName="text-gray-700 text-justify"
-                multiline={true}
-              />
-            ) : (
-              <p className="text-gray-700 text-justify whitespace-pre-line">{exp.descripcion}</p>
-            )}
-          </div>
+            {index === 2 && <div className="page-break print:mt-[50mm]"></div>}
+          </>
         ))}
       </div>
     </section>

@@ -153,6 +153,12 @@
     left: 0;
     top: 0;
   }
+
+  .page-break {
+    page-break-before: always;
+    padding-top: 20mm;
+    display: block !important;
+  }
 }
 
 @media screen {

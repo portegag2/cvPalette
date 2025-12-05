@@ -25,10 +25,10 @@ export const pedroData = {
       "descripcion": "En los inicios del aplicativo Plannam, el equipo de desarrollo teníamos que cumplir con el calendario de presentaciones comerciales. Aporté la mejora de los rendimientos en el algoritmo y accesos a los datos hasta en un 75% y fuí proactivo en refactorizaciones para estabilizar el código e incorporar mejoras respondiendo al calendario y necesidades del departamento comercial."
     },
     {
-      "titulo": "Full Stack Developer – PHP, MySQL, HTML, CSS, JavaScript, SEO, posicionamiento, BootStrap",
+      "titulo": "Full Stack Developer – PHP, MySQL, HTML, CSS, JavaScript",
       "entidad": "Autónomo – B2B Automoción",
       "fecha": "07/2013 – 07/2017",
-      "descripcion": "Creación y mantenimiento de dos portales. Una aventura en la que fuí la parte técnica en esta start-up. Mis tareas eran diseñar, desarrollar, mantener y mejorar los productos."
+      "descripcion": "Creación y mantenimiento de dos portales. Una aventura en la que fuí la parte técnica en esta start-up. Mis tareas eran diseñar, desarrollar, mantener y mejorar los productos. SEO, posicionamiento, BootStrap."
     },
     {
       "titulo": "Full Stack Developer – PHP, MySQL, HTML, CSS, JavaScript",
