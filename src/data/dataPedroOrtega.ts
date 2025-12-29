@@ -2,7 +2,7 @@
 export const pedroData = {
   "datos_personales": {
     "nombre": "Pedro Ortega Goitia",
-    "rol_profesional": "Full Stack Web Developer",
+    "rol_profesional": "Analista programador FullStack",
     "fecha_nacimiento": "21/05/1971",
     "ciudad": "Bilbao",
     "telefono": "620 527 022",
