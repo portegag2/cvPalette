@@ -14,8 +14,8 @@ export const pedroData = {
   "experiencia_laboral": [
     {
       "titulo": "Consultor / Desarrollador IA Agentes Automatización",
-      "entidad": "",
-      "fecha": "10/2025 – actualidad",
+      "entidad": "Autonomo",
+      "fecha": "10/2025 – 02/2026",
       "descripcion": "Desarrollo de automatizaciones mediante IA y agentes, aplicadas a procesos reales de negocio, con foco en fiabilidad y reducción del tiempo operativo en más de un 75%."
     },
     {
