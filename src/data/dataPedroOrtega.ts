@@ -13,6 +13,12 @@ export const pedroData = {
   "perfil_profesional": "Ingeniero informático, 25 años en desarrollo, análisis y refactorización, tanto en proyectos de grandes cuentas, como Iberdrola (SIC/DELTA), Banesto, Gobierno Vasco, o en start-ups de plataformas web con necesidades globales, Full Stack. Para un mejor trabajo en equipo cuido la confianza —personal y en el código— a través de constancia, compromiso y comunicación clara. \n Última formación relevante: Especialista Automatismos y agentes IA y superación de la piscina de 42 Urduliz.",
   "experiencia_laboral": [
     {
+      "titulo": "Consultor / Desarrollador IA Agentes Automatización",
+      "entidad": "",
+      "fecha": "10/2025 – actualidad",
+      "descripcion": "Desarrollo de automatizaciones mediante IA y agentes, aplicadas a procesos reales de negocio, con foco en fiabilidad y reducción del tiempo operativo en más de un 75%."
+    },
+    {
       "titulo": "Analista Programador",
       "entidad": "Iberdrola - Accenture",
       "fecha": "12/2019 – 11/2024",
