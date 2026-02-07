@@ -2,6 +2,7 @@ import { Mail, Phone, MapPin, User, Edit, EyeOff, RotateCcw, Linkedin, ArrowBigU
 import InlineEdit from "@/components/ui/inline-edit";
 import { useState, useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
+import { getPhotoUrl } from "@/utils/photoImports";
 
 interface CVClassicProps {
   data: any;
@@ -223,7 +224,7 @@ const CVClassic = ({ data, onUpdate, onDeleteExperience, onRestoreExperiences, e
           <div className="ml-6">
             {isAuthenticated && data.datos_personales.foto ? (
               <img 
-                src={`/src/assets/profile_photo/${data.datos_personales.foto}`}
+                src={getPhotoUrl(data.datos_personales.foto)}
                 alt={data.datos_personales.nombre}
                 onError={(e) => {
                   const img = e.target as HTMLImageElement;

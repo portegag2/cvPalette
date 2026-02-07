@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Mail, Phone, MapPin, User, EyeOff, RotateCcw, ChevronUp, ChevronDown } from "lucide-react";
 import InlineEdit from "@/components/ui/inline-edit";
 import { useAuth0 } from "@auth0/auth0-react";
+import { getPhotoUrl } from "@/utils/photoImports";
 
 interface CVAtsProps {
   data: any;
@@ -202,7 +203,7 @@ const CVAts = ({ data, onUpdate, onDeleteExperience, onRestoreExperiences, edita
           <div className="flex-1">
             {isAuthenticated && data.datos_personales.foto ? (
               <img 
-                src={`/src/assets/profile_photo/${data.datos_personales.foto}`}
+                src={getPhotoUrl(data.datos_personales.foto)}
                 alt={data.datos_personales.nombre}
                 onError={(e) => {
                   const img = e.target as HTMLImageElement;
