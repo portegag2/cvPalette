@@ -2,7 +2,7 @@
 export const pedroData = {
   "datos_personales": {
     "nombre": "Pedro Ortega Goitia",
-    "rol_profesional": "Analista programador FullStack",
+    "rol_profesional": "Ingeniero de Software Senior – Full Stack | Automatizaciones Agentes IA",
     "fecha_nacimiento": "21/05/1971",
     "ciudad": "Bilbao",
     "telefono": "620 527 022",
