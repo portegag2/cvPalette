@@ -206,7 +206,7 @@ const CVModern = ({ data, onUpdate, onDeleteExperience, onRestoreExperiences, ed
           </div>
 
           {/* Idiomas */}
-          <div>
+          <div className="mb-6">
             <h2 className="text-[0.875em] font-bold mb-3 text-blue-300 uppercase tracking-wide flex items-center gap-2">
               <Languages className="w-4 h-4" />
               Idiomas
@@ -259,6 +259,29 @@ const CVModern = ({ data, onUpdate, onDeleteExperience, onRestoreExperiences, ed
               {renderExperienceSection()}
             </>
           )}
+
+          {/* Carta de Presentación - Siempre visible para editar, oculta en PDF si está vacía */}
+          <section className="mb-6 carta-presentacion-section" data-has-content={(data.carta_presentacion && data.carta_presentacion.trim() !== "") ? 'true' : 'false'}>
+            <h2 className="text-[1.125em] font-bold text-gray-800 mb-3 flex items-center gap-2">
+              <div className="w-1 h-6" style={{ backgroundColor: 'var(--accent-color)' }}></div>
+              Carta Presentación
+            </h2>
+            {editable ? (
+              <InlineEdit
+                value={data.carta_presentacion || ""}
+                onSave={(value) => onUpdate?.('carta_presentacion', value)}
+                className="relative"
+                textClassName="text-[0.875em] text-gray-700 text-justify leading-relaxed"
+                multiline={true}
+              />
+            ) : (
+              data.carta_presentacion && data.carta_presentacion.trim() !== "" && (
+                <p className="text-[0.875em] text-gray-700 text-justify leading-relaxed whitespace-pre-line">
+                  {data.carta_presentacion}
+                </p>
+              )
+            )}
+          </section>
         </div>
       </div>
     </div>

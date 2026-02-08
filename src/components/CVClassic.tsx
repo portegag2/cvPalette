@@ -2,6 +2,7 @@ import { Mail, Phone, MapPin, User, Edit, EyeOff, RotateCcw, Linkedin, ArrowBigU
 import InlineEdit from "@/components/ui/inline-edit";
 import { useState, useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
+import React from "react";
 import { getPhotoUrl } from "@/utils/photoImports";
 
 interface CVClassicProps {
@@ -70,8 +71,8 @@ const CVClassic = ({ data, onUpdate, onDeleteExperience, onRestoreExperiences, e
       </div>
       <div className="space-y-4">
         {data.experiencia_laboral.map((exp: any, index: number) => (
-          <>
-            <div key={index} className="border-l-2 border-gray-300 pl-4 relative">
+          <React.Fragment key={index}>
+            <div className="border-l-2 border-gray-300 pl-4 relative">
               {editable && onDeleteExperience && (
                 <button
                   onClick={() => onDeleteExperience(index)}
@@ -122,7 +123,7 @@ const CVClassic = ({ data, onUpdate, onDeleteExperience, onRestoreExperiences, e
                 </div>
               </div>
             )}
-          </>
+          </React.Fragment>
         ))}
       </div>
     </section>
@@ -300,7 +301,7 @@ const CVClassic = ({ data, onUpdate, onDeleteExperience, onRestoreExperiences, e
       </section>
 
       {/* Idiomas */}
-      <section>
+      <section className="mb-6">
         <h2 className="text-lg font-bold border-b pb-1 mb-3 uppercase"
           style={{ 
             color: 'var(--cv-primary, #1a1a1a)',
@@ -314,6 +315,31 @@ const CVClassic = ({ data, onUpdate, onDeleteExperience, onRestoreExperiences, e
             <p><strong>{lang.idioma}:</strong> {lang.nivel}</p>
           </div>
         ))}
+      </section>
+
+      {/* Carta de Presentación - Siempre visible para editar, oculta en PDF si está vacía */}
+      <section className="mb-6 carta-presentacion-section" data-has-content={(data.carta_presentacion && data.carta_presentacion.trim() !== "") ? 'true' : 'false'}>
+        <h2 className="text-lg font-bold border-b pb-1 mb-3 uppercase"
+          style={{ 
+            color: 'var(--cv-primary, #1a1a1a)',
+            borderColor: 'var(--cv-accent, #2563eb)'
+          }}
+        >
+          Carta Presentación
+        </h2>
+        {editable ? (
+          <InlineEdit
+            value={data.carta_presentacion || ""}
+            onSave={(value) => onUpdate?.('carta_presentacion', value)}
+            className="relative"
+            textClassName="text-gray-700 text-justify"
+            multiline={true}
+          />
+        ) : (
+          data.carta_presentacion && data.carta_presentacion.trim() !== "" && (
+            <p className="text-gray-700 text-justify whitespace-pre-line">{data.carta_presentacion}</p>
+          )
+        )}
       </section>
     </div>
   );

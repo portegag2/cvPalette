@@ -244,6 +244,29 @@
   #CvClassic::after, #CvModern::after, #CvAts::after {
     display: none;
   }
+
+  /* Ocultar sección de carta de presentación si está vacía */
+  .carta-presentacion-section[data-has-content="false"] {
+    display: none !important;
+  }
+
+  /* Asegurar márgenes superiores en la sección de carta de presentación */
+  .carta-presentacion-section[data-has-content="true"] {
+    margin-top: 1.5rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+
+  #CvClassic .carta-presentacion-section[data-has-content="true"] {
+    margin-top: 1.5rem !important;
+  }
+
+  #CvModern .carta-presentacion-section[data-has-content="true"] {
+    margin-top: 1.5rem !important;
+  }
+
+  #CvAts .carta-presentacion-section[data-has-content="true"] {
+    margin-top: 2rem !important;
+  }
 }
 
 @media (max-width: 420px) {

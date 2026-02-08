@@ -76,5 +76,6 @@ export const pedroData = {
       "idioma": "English",
       "nivel": "High proficiency in reading, speaking, and writing"
     }
-  ]
+  ],
+  "carta_presentacion": ""
 };

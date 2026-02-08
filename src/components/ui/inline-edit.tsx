@@ -105,10 +105,10 @@ const InlineEdit = ({
         </div>
       ) : (
         <div 
-          className={`${textClassName} cursor-text hover:bg-gray-50 rounded px-1 -mx-1 transition-colors`}
+          className={`${textClassName} ${multiline ? 'whitespace-pre-line' : ''} cursor-text hover:bg-gray-50 rounded px-1 -mx-1 transition-colors ${!value ? 'min-h-[50px] flex items-start' : ''}`}
           onClick={() => setIsEditing(true)}
         >
-          {value}
+          {value || <span className="text-gray-400 italic">Haz clic para agregar contenido...</span>}
         </div>
       )}
     </div>

@@ -82,5 +82,6 @@ export const pedroData = {
       "idioma": "Inglés",
       "nivel": "Alto en lectura, conversación y escrito"
     }
-  ]
+  ],
+  "carta_presentacion": ""
 };

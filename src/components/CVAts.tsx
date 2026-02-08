@@ -324,7 +324,7 @@ const CVAts = ({ data, onUpdate, onDeleteExperience, onRestoreExperiences, edita
       </section>
 
       {/* Idiomas */}
-      <section>
+      <section className="mb-8">
         <h2 style={{ fontSize: `${styles.headingSize}pt` }} className="font-bold mb-4 uppercase">Idiomas</h2>
         {data.idiomas.map((lang: any, index: number) => (
           <div key={index}>
@@ -337,6 +337,24 @@ const CVAts = ({ data, onUpdate, onDeleteExperience, onRestoreExperiences, edita
             </p>
           </div>
         ))}
+      </section>
+
+      {/* Carta de Presentación - Siempre visible para editar, oculta en PDF si está vacía */}
+      <section className="mb-8 carta-presentacion-section" data-has-content={(data.carta_presentacion && data.carta_presentacion.trim() !== "") ? 'true' : 'false'}>
+        <h2 style={{ fontSize: `${styles.headingSize}pt` }} className="font-bold mb-4 uppercase">Carta Presentación</h2>
+        {editable ? (
+          <InlineEdit
+            value={data.carta_presentacion || ""}
+            onSave={(value) => onUpdate?.('carta_presentacion', value)}
+            className="relative"
+            textClassName="text-justify"
+            multiline={true}
+          />
+        ) : (
+          data.carta_presentacion && data.carta_presentacion.trim() !== "" && (
+            <p className="text-justify whitespace-pre-line">{data.carta_presentacion}</p>
+          )
+        )}
       </section>
     </div>
   );
