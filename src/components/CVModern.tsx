@@ -261,7 +261,14 @@ const CVModern = ({ data, onUpdate, onDeleteExperience, onRestoreExperiences, ed
           )}
 
           {/* Carta de Presentación - Siempre visible para editar, oculta en PDF si está vacía */}
-          <section className="mb-6 carta-presentacion-section" data-has-content={(data.carta_presentacion && data.carta_presentacion.trim() !== "") ? 'true' : 'false'}>
+          <section 
+            className="mb-6 carta-presentacion-section print:break-before-page print:mt-6" 
+            style={{ 
+              pageBreakBefore: 'always',
+              marginTop: '1.5rem' // 6 * 0.25rem = 1.5rem to match other sections
+            }}
+            data-has-content={(data.carta_presentacion && data.carta_presentacion.trim() !== "") ? 'true' : 'false'}
+          >
             <h2 className="text-[1.125em] font-bold text-gray-800 mb-3 flex items-center gap-2">
               <div className="w-1 h-6" style={{ backgroundColor: 'var(--accent-color)' }}></div>
               Carta Presentación

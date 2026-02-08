@@ -317,6 +317,9 @@ const CVClassic = ({ data, onUpdate, onDeleteExperience, onRestoreExperiences, e
         ))}
       </section>
 
+      {/* Add page break before Carta Presentación */}
+      <div className="page-break"></div>
+      
       {/* Carta de Presentación - Siempre visible para editar, oculta en PDF si está vacía */}
       <section className="mb-6 carta-presentacion-section" data-has-content={(data.carta_presentacion && data.carta_presentacion.trim() !== "") ? 'true' : 'false'}>
         <h2 className="text-lg font-bold border-b pb-1 mb-3 uppercase"
